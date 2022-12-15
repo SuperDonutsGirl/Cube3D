@@ -31,3 +31,24 @@ int	*ft_realloc_int(int *tab, int len_tab, int add_len)
 	free(tab);
 	return (new_tab);
 }
+
+char	**ft_realloc_one(char **old, int len, char *new_line)
+{
+	char	**new;
+	int		i;
+
+	new = malloc(sizeof(char *) * (len + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		new[i] = ft_strdup(old[i]);
+		i++;
+	}
+	ft_free_split(old);
+	new[i] = ft_strdup(new_line);
+	free(new_line);
+	new[++i] = 0;
+	return (new);
+}

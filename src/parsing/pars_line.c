@@ -60,7 +60,7 @@ int	cmp_setting(t_struct *data, char *line, char *type, int value)
 	if (!split)
 	{
 		clear_after_init(data, line);
-		exit (EXIT_FAILURE);
+		exit (msg_error(MALLOC));
 	}
 	if (!ft_strcmp(split[0], type))
 	{
@@ -84,17 +84,15 @@ void	is_begin_map(t_struct *data, char *line)
 	if (!map_line_pattern(line))
 	{
 		clear_after_init(data, line);
-		msg_error(INVALID_SET);
-		exit (EXIT_FAILURE);
+		exit (msg_error(INVALID_SET));
 	}
 	else
 	{
 		if (!every_info(data->info))
 		{
 			clear_after_init(data, line);
-			msg_error(MISSING);
-			exit (EXIT_FAILURE);
+			exit (msg_error(MISSING));
 		}
-		printf("map\n");
+		//get_map(data, line);
 	}
 }

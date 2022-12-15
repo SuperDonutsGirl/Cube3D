@@ -42,7 +42,7 @@ void	parsing_texture(t_struct *data, char *line, int type)
 		path = ft_strdup(TEXT_WE);
 	else
 		path = ft_strdup(TEXT_EA);
-	if (ft_strcmp(split[1], path))
+	if (!path)
 	{
 		clear_after_init(data, line);
 		ft_free_split(split);
@@ -50,4 +50,6 @@ void	parsing_texture(t_struct *data, char *line, int type)
 		print_error(type);
 		exit (EXIT_FAILURE);
 	}
+	ft_free_split(split);
+	ft_free(path);
 }

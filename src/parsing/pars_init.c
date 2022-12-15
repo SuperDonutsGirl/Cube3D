@@ -20,8 +20,9 @@ static void	init_info(t_struct *data)
 	data->info = malloc(sizeof(int) * 6);
 	if (!data->info)
 	{
+		close(data->fd);
 		ft_free(data);
-		exit (EXIT_FAILURE);
+		exit (msg_error(MALLOC));
 	}
 	while (i < 6)
 	{
@@ -32,26 +33,20 @@ static void	init_info(t_struct *data)
 
 static void	init_color(t_struct *data)
 {
-	int		i;
+	int	i;
 
-	data->color = malloc(sizeof(char *) * 2 + 1);
+	i = 0;
+	data->color = malloc(sizeof(int) * 2);
 	if (!data->color)
 	{
 		ft_free(data->info);
+		close(data->fd);
 		ft_free(data);
-		exit (EXIT_FAILURE);
+		 (msg_error(MALLOC));
 	}
-	i = 0;
-	while (data->color[i])
+	while (i < 2)
 	{
-		data->color[i] = ft_strdup("\0");
-		if (!data->color[i])
-		{
-			ft_free(data->info);
-			ft_free_split(data->color);
-			ft_free(data);
-			exit (EXIT_FAILURE);
-		}
+		data->color[i] = 0;
 		i++;
 	}
 }
@@ -64,9 +59,10 @@ static void	init_texture(t_struct *data)		//Quid utilité
 	if (!data->texture)
 	{
 		ft_free(data->info);
-		ft_free_split(data->color);
+		ft_free(data->color);
+		close(data->fd);
 		ft_free(data);
-		exit (EXIT_FAILURE);
+		exit (msg_error(MALLOC));
 	}
 	i = 0;
 	while (data->texture[i])
@@ -75,10 +71,11 @@ static void	init_texture(t_struct *data)		//Quid utilité
 		if (!data->texture[i])
 		{
 			ft_free(data->info);
-			ft_free_split(data->color);
+			ft_free(data->color);
 			ft_free_split(data->texture);
+			close(data->fd);
 			ft_free(data);
-			exit (EXIT_FAILURE);
+			exit (msg_error(MALLOC));
 		}
 		i++;
 	}

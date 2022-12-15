@@ -25,6 +25,8 @@ typedef struct s_list
 
 int					ft_abs(int x);
 
+char				**ft_realloc_one(char **old, int len, char *new_line);
+
 int					*ft_realloc_int(int *tab, int len_tab, int add_len);
 
 int					ft_intlen(int nb);

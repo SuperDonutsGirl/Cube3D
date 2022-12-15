@@ -21,7 +21,7 @@ char	**split_line_and_check(t_struct *data, char *line)
 	if (!split)
 	{
 		clear_after_init(data, line);
-		exit (EXIT_FAILURE);
+		exit (msg_error(MALLOC));
 	}
 	i = 0;
 	while (split[i])
@@ -29,8 +29,7 @@ char	**split_line_and_check(t_struct *data, char *line)
 	if (i > 2)
 	{
 		clear_after_init(data, line);
-		msg_error(INVALID_SET);
-		exit (EXIT_FAILURE);
+		exit (msg_error(INVALID_SET));
 	}
 	return (split);
 }
@@ -44,7 +43,7 @@ static char	**split_rgb(t_struct *data, char *line, char **split)
 	{
 		clear_after_init(data, line);
 		ft_free_split(split);
-		exit (EXIT_FAILURE);
+		exit (msg_error(MALLOC));
 	}
 	return (rgb);
 }
@@ -55,6 +54,14 @@ static void	print_msg_exit(int type)
 		exit(msg_error(RGB_C));
 	else
 		exit(msg_error(RGB_F));
+}
+
+static int	get_hexa(char **rgb)
+{
+	int	hexa;
+
+	hexa = ft_atoi(rgb[0]) << 16 | ft_atoi(rgb[1]) << 8 | ft_atoi(rgb[2]);
+	return (hexa);
 }
 
 void	parsing_color(t_struct *data, char *line, int type)
@@ -78,7 +85,7 @@ void	parsing_color(t_struct *data, char *line, int type)
 			print_msg_exit(type);
 		}
 		else
-			data->color[type] = ft_strdup(split[1]);
+			data->color[type] = get_hexa(rgb);
 		i++;
 	}
 	ft_free_split(rgb);

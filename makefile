@@ -32,7 +32,8 @@ LIB 		= 		$(SRC)libft/libft.a
 
 ### COMMANDS
 CC			=		gcc
-FLAGS		=		-g -fsanitize=address -Wall -Wextra -Werror 
+#FLAGS		=		-g -fsanitize=address -Wall -Wextra -Werror
+FLAGS		=		-g  -Wall -Wextra -Werror 
 RM			=		rm -rf
 MAKE 		= 		make
 MAKE_CLEAN	= 		make clean

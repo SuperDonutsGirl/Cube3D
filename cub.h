@@ -72,7 +72,7 @@ typedef struct s_struct
 {
 	int		*info;
 	int		fd;
-	char	**color;
+	int		*color;
 	char	**texture;  //Quid utilité
 }	t_struct;
 
@@ -92,7 +92,7 @@ void	is_begin_map(t_struct *data, char *line);
 int		every_info(int *info);
 		/*utils*/
 char	**split_line_and_check(t_struct *data, char *line);
-int		map_line_pattern(char *line)
+int		map_line_pattern(char *line);
 
 /*GNL*/
 # ifndef BUFFER_SIZE

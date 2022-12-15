@@ -16,7 +16,7 @@ void	clear_after_init(t_struct *data, char *line)
 {
 	ft_free(line);
 	ft_free(data->info);
-	ft_free_split(data->color);
+	ft_free(data->color);
 	ft_free_split(data->texture);
 	close(data->fd);
 	ft_free(data);

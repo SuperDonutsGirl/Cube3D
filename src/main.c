@@ -14,17 +14,11 @@
 
 int	main(int argc, char **argv)
 {
-	int			error;
 	t_struct	*data;
 
 	data = malloc(sizeof(t_struct));
 	if (!data)
-		exit (EXIT_FAILURE);
-	error = parsing(argc, argv, data);
-	if (error)
-	{
-		free(data);
-		exit(1);
-	}
+		exit (msg_error(MALLOC));
+	parsing(argc, argv, data);
 	exit(0);
 }
