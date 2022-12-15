@@ -73,20 +73,26 @@ typedef struct s_struct
 	int		*info;
 	int		fd;
 	char	**color;
-	char	**texture;
+	char	**texture;  //Quid utilité
 }	t_struct;
 
 /*Parsing*/
-void	init_data_parsing(t_struct *data);
-void	parsing_color(t_struct *data, char *line, int type);
-
-int		parsing(int argc, char **argv, t_struct *data);
+		/*Pars arg*/
 int		ft_memcmp_reverse(char *s1, char *s2);
-int		is_empty_line(char *line);
-int		every_info(int *info);
-int		cmp_setting(t_struct *data, char *line, char *type, int value);
-
+		/*Principal functions*/
+void	init_data_parsing(t_struct *data);
 void	clear_after_init(t_struct *data, char *line);
+int		parsing(int argc, char **argv, t_struct *data);
+void	parsing_color(t_struct *data, char *line, int type);
+void	parsing_texture(t_struct *data, char *line, int type);
+		/*Pars line*/
+int		is_empty_line(char *line);
+int		cmp_setting(t_struct *data, char *line, char *type, int value);
+void	is_begin_map(t_struct *data, char *line);
+int		every_info(int *info);
+		/*utils*/
+char	**split_line_and_check(t_struct *data, char *line);
+int		map_line_pattern(char *line)
 
 /*GNL*/
 # ifndef BUFFER_SIZE
@@ -101,6 +107,5 @@ void	*ft_free(void *save);
 int		ft_strcmp(char *s1, char *s2);
 int		msg_error(char *msg);
 
-/*Parsing exit*/
 
 #endif

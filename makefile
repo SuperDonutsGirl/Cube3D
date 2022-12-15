@@ -18,9 +18,11 @@ SRC			=		./src/
 GNL 		= 		$(SRC)gnl/
 PARS 		=		$(SRC)parsing/
 ###FILES
-SRC_MANDA	=		$(GNL)gnl.c $(GNL)gnl_utils.c \
-					$(PARS)parsing.c $(PARS)parsing_init.c $(PARS)parsing_utils.c $(PARS)parsing_map.c $(PARS)parsing_setting.c $(PARS)parsing_clear.c \
-					$(SRC)main.c  $(SRC)utils.c 
+SRC_MANDA	=		$(GNL)gnl.c 				$(GNL)gnl_utils.c \
+					$(PARS)parsing.c 			$(PARS)pars_line.c			$(PARS)pars_init.c 	\
+					$(PARS)pars_set_color.c		$(PARS)pars_set_texture.c 	$(PARS)pars_map.c	\
+					$(PARS)pars_utils.c \
+					$(SRC)main.c  				$(SRC)utils.c 
 					
 OBJ			= 		$(SRC_MANDA:.c=.o)
 

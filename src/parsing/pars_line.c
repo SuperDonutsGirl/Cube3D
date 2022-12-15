@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   pars_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pamartin <pamartin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 17:54:39 by pamartin          #+#    #+#             */
-/*   Updated: 2022/12/14 17:54:44 by pamartin         ###   ########.fr       */
+/*   Created: 2022/12/15 14:42:22 by pamartin          #+#    #+#             */
+/*   Updated: 2022/12/15 14:42:23 by pamartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,6 @@ int	ft_memcmp_reverse(char *s1, char *s2)
 		y++;
 	}
 	return (1);
-}
-
-int	every_info(int *info)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (i < 6)
-	{
-		if (info[i] == 1)
-			count++;
-		i++;
-	}
-	if (count < 6)
-		return (0);
-	else
-		return (1);
 }
 
 int	is_empty_line(char *line)
@@ -98,27 +79,10 @@ int	cmp_setting(t_struct *data, char *line, char *type, int value)
 	return (1);
 }
 
-int	map_line(char *line)
+void	is_begin_map(t_struct *data, char *line)
 {
-	int i;
-
-	i = 0;
-	while (line[i])
+	if (!map_line_pattern(line))
 	{
-		if ((line[i] >= '0' && line[i] <= '9') || (line[i] >= 'A' && line[i] <= 'Z') || line[i] == '\n' || line[i] == ' ')
-			i++;
-		else
-			return (0);
-	}
-	return (1);
-}
-
-
-void	is_map(t_struct *data, char *line)
-{
-	if (!map_line(line))
-	{
-		printf("coucou\n");
 		clear_after_init(data, line);
 		msg_error(INVALID_SET);
 		exit (EXIT_FAILURE);

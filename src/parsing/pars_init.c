@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_init.c                                     :+:      :+:    :+:   */
+/*   pars_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pamartin <pamartin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 18:15:36 by pamartin          #+#    #+#             */
-/*   Updated: 2022/12/14 18:15:58 by pamartin         ###   ########.fr       */
+/*   Created: 2022/12/15 14:57:53 by pamartin          #+#    #+#             */
+/*   Updated: 2022/12/15 14:57:56 by pamartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	init_color(t_struct *data)
 	}
 }
 
-static void	init_texture(t_struct *data)
+static void	init_texture(t_struct *data)		//Quid utilité
 {
 	int	i;
 

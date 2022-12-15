@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_setting.c                                  :+:      :+:    :+:   */
+/*   pars_set_color.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pamartin <pamartin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 17:52:07 by pamartin          #+#    #+#             */
-/*   Updated: 2022/12/14 17:52:09 by pamartin         ###   ########.fr       */
+/*   Created: 2022/12/15 15:00:09 by pamartin          #+#    #+#             */
+/*   Updated: 2022/12/15 15:00:13 by pamartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub.h"
 
-static char	**split_line_and_check(t_struct *data, char *line)
+char	**split_line_and_check(t_struct *data, char *line)
 {
 	char	**split;
 	int		i;
@@ -35,7 +35,7 @@ static char	**split_line_and_check(t_struct *data, char *line)
 	return (split);
 }
 
-char	**split_rgb(t_struct *data, char *line, char **split)
+static char	**split_rgb(t_struct *data, char *line, char **split)
 {
 	char	**rgb;
 
@@ -83,19 +83,4 @@ void	parsing_color(t_struct *data, char *line, int type)
 	}
 	ft_free_split(rgb);
 	ft_free_split(split);
-}
-
-void	parsing_texture(t_struct *data, char *line, int type)
-{
-	char	**split;
-	int		fd;
-
-	split = split_line_and_check(data, line);
-	if (!ft_strcmp(split[1], TEXT_EA))
-	{
-		clear_after_init(data, line);
-		ft_free_split(split);
-		msg_error(PATH_EA);
-		exit (EXIT_FAILURE);
-	}
 }

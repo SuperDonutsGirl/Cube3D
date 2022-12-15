@@ -12,7 +12,7 @@
 
 #include "../../cub.h"
 
-void	check_settings(t_struct *data, char *line)
+static void	check_settings(t_struct *data, char *line)
 {
 	if (!cmp_setting(data, line, "NO", 0))
 		parsing_texture(data, line, NO);
@@ -27,10 +27,10 @@ void	check_settings(t_struct *data, char *line)
 	else if (!cmp_setting(data, line, "C", 5))
 		parsing_color(data, line, CEILING);
 	else
-		is_map(data, line);
+		is_begin_map(data, line);
 }
 
-int	*check_line(char *line, t_struct *data)
+static int	*check_line(char *line, t_struct *data)
 {
 	if (is_empty_line(line))
 		return (data->info);
@@ -39,7 +39,7 @@ int	*check_line(char *line, t_struct *data)
 	return (data->info);
 }
 
-void	check_data(t_struct *data)
+static void	check_data(t_struct *data)
 {
 	char	*line;
 
