@@ -23,13 +23,14 @@ SRCS_PATH		= ./srcs
 
 KEYBIND_PATH	= ./keybinds/
 
-DRAW_PATH		= ./draw_map/
+DRAW_PATH		= ./draw/
 
 INCLUDE_PATH	= ./includes
 
 SRCS			=	$(KEYBIND_PATH)keybinds.c		\
 					$(KEYBIND_PATH)close_on_click.c	\
 					$(DRAW_PATH)draw_map.c			\
+					$(DRAW_PATH)draw_player.c		\
 
 MAIN			= main.c
 

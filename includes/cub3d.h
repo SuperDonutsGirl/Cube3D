@@ -17,7 +17,17 @@
 #include <stdbool.h>
 #include "../mlx/mlx.h"
 
-#define ESC 53
+#define ESC	53
+#define PI	3.141592653589793238
+
+typedef struct s_player
+{
+	float 	px;
+	float	py;
+	float	pdx;
+	float	pdy;
+	float	pa;
+}	t_player;
 
 typedef struct s_key
 {
@@ -42,6 +52,7 @@ typedef struct s_cube
 	int		pos_y;
 
 	t_key	keybinds;
+	t_player player;
 }		t_cube;
 
 //Raccourcis clavier
@@ -53,6 +64,6 @@ int	close_on_click(int keycode);
 //Draw
 void	draw_player(t_cube *cube, int color, int x_size, int y_size);
 void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color);
-void	draw_walls(t_cube *cube, int color, int x_size, int y_size, int pos_x, int pos_y);
+void	draw_walls(t_cube *cube, int color, int x_size, int y_size, int px, int py);
 void	draw_map_2D(t_cube *cube, int color_floor, int color_wall, int *map);
 

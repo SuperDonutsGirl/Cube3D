@@ -30,8 +30,10 @@ int	main(void)
 	cube = malloc(sizeof(t_cube));
 	if (!cube)
 		return 1;
-	cube->pos_x = 50;
-	cube->pos_y = 50;
+	cube->player.px = 50;
+	cube->player.py = 50;
+	cube->player.pdx = cos(cube->player.pa) * 5;
+	cube->player.pdy = sin(cube->player.pa) * 5;
 	cube->mlx = mlx_init();
 	cube->window = mlx_new_window(cube->mlx, 1024, 512, "cub3d");
 	cube->img = mlx_new_image(cube->mlx, 1024, 512);
