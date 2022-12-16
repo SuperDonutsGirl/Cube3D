@@ -12,12 +12,50 @@
 
 #include "../../includes/cub3d.h"
 
-int	keybinds(int keycode, t_cube *cube)
+int	move_player(int keycode, t_cube *cube)
 {
-	if (keycode == ESC || keycode == 12)
+	mlx_clear_window(cube->mlx, cube->window);
+	if (keycode == 0)
+		cube->pos_x -= 5;
+	else if (keycode == 1)
+		cube->pos_y += 5;
+	else if (keycode == 2)
+		cube->pos_x += 5;
+	else if (keycode == 13)
+		cube->pos_y -= 5;
+	mlx_put_image_to_window(cube->mlx, cube->window, cube->img, 0, 0);
+	draw_player(cube, 0xFF0053, 10, 10);
+	return 0;
+}
+
+int keypress(int keycode, t_cube *cube)
+{
+	move_player(keycode, cube);
+	if (keycode == 2) //droite
+		cube->keybinds.key_right = true;
+	else if (keycode == 1) //bas
+		cube->keybinds.key_backward = true;
+	else if (keycode == 0) //gauche
+		cube->keybinds.key_right = true;
+	else if (keycode == 13) //haut
+		cube->keybinds.key_right = true;
+	else if (keycode == ESC || keycode == 12)
 	{
 		mlx_destroy_window(cube->mlx, cube->window);
 		exit(0);
 	}
+	return (0);
+}
+
+int keyrelease(int keycode, t_cube *cube)
+{
+	if (keycode == 2) //droite
+		cube->keybinds.key_right = false;
+	else if (keycode == 1) //bas
+		cube->keybinds.key_backward = false;
+	else if (keycode == 0) //gauche
+		cube->keybinds.key_left = false;
+	else if (keycode == 13) //haut
+		cube->keybinds.key_forward = false;
 	return (0);
 }
