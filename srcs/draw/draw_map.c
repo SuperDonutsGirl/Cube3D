@@ -25,7 +25,15 @@ void	draw_walls(t_cube *cube, int color, int x_size, int y_size, int pos_x, int 
 	for (int i = 0; i < y_size; i++)
 	{
 		for (int j = 0; j < x_size; j++)
-			my_mlx_pixel_put(cube, i + pos_x, j + pos_y, color);
+		{
+			if (i + pos_x % 64 == 0)
+				my_mlx_pixel_put(cube, i + pos_x, j + pos_y, 0xFFFFFF);
+			else if (j + pos_y % 64 == 0)
+				my_mlx_pixel_put(cube, i + pos_x, j + pos_y, 0xFFFFFF);
+			else
+				my_mlx_pixel_put(cube, i + pos_x, j + pos_y, color);
+		}
+
 	}
 }
 
