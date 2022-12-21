@@ -28,12 +28,8 @@ char	*get_map(t_struct *data, char *line)
 		data->map[i] = ft_strdup(line);
 		if (data->map[i][ft_strlen(data->map[i]) - 1] == '\n')
 			data->map[i][ft_strlen(data->map[i]) - 1] = '\0';
-		if (!data->map[i]) ///fonction en une ligne
-		{
-			ft_free_split(data->map);
-			clear_after_init(data, line);
-			exit (msg_error(MALLOC));
-		}
+		if (!data->map[i])
+			exit_map_parsing(data, MALLOC, line);
 		ft_free(line);
 		line = get_next_line(data->fd);
 		i++;
@@ -45,7 +41,7 @@ char	*get_map(t_struct *data, char *line)
 
 void	get_height(t_struct *data)
 {
-	char *line;
+	char	*line;
 
 	data->height = 0;
 	line = ft_strdup("");
@@ -67,4 +63,26 @@ void	get_height(t_struct *data)
 	data->fd = 0;
 	if (data->height < 3)
 		exit (msg_error(INVALID_MAP));
+}
+
+void	check_player(t_struct *data, char elmt, int y, int x)
+{
+	if (elmt == 'N' || elmt == 'S' || elmt == 'E' || elmt == 'W')
+	{
+		if (data->player[0] == -1)
+		{
+			data->player[1] = y;
+			data->player[2] = x;
+			if (elmt == 'N')
+				data->player[0] = NO;
+			if (elmt == 'S')
+				data->player[0] = SO;
+			if (elmt == 'E')
+				data->player[0] = EA;
+			if (elmt == 'W')
+				data->player[0] = WE;
+		}
+		else
+			exit_map_parsing(data, INVALID_MAP, NULL);
+	}
 }

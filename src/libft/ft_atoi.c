@@ -41,9 +41,9 @@ int	ft_atoi(const char *str)
 	if (!str)
 		return (0);
 	nb = 0;
-	if (str[i] == ' ')
-		retrun (-1);
 	i = ft_spacesigne(str, &signe, &neg);
+	if (str[i] == ' ')
+		return (-1);
 	if (signe > 1)
 		return (-1);
 	while (str[i] && str[i] >= '0' && str[i] <= '9')
@@ -51,9 +51,7 @@ int	ft_atoi(const char *str)
 		nb *= 10;
 		nb += str[i] - 48;
 		i++;
-		if (neg == 1 && nb > 2147483648)
-			return (-1);
-		if (neg == 0 && nb > 2147483647)
+		if ((neg == 1 && nb > 2147483648) || (neg == 0 && nb > 2147483647))
 			return (-1);
 	}
 	if (neg == 1)

@@ -51,7 +51,28 @@ static void	init_color(t_struct *data)
 	}
 }
 
-static void	init_texture(t_struct *data)		//Quid utilité
+static void	init_player(t_struct *data)
+{
+	int	i;
+
+	i = 0;
+	data->player = malloc(sizeof(int) * 3);
+	if (!data->player)
+	{
+		ft_free(data->info);
+		ft_free(data->color);
+		close(data->fd);
+		ft_free(data);
+		exit (msg_error(MALLOC));
+	}
+	while (i < 3)
+	{
+		data->player[i] = -1;
+		i++;
+	}
+}
+
+static void	init_texture(t_struct *data)
 {
 	int	i;
 
@@ -70,11 +91,7 @@ static void	init_texture(t_struct *data)		//Quid utilité
 		data->texture[i] = ft_strdup("\0");
 		if (!data->texture[i])
 		{
-			ft_free(data->info);
-			ft_free(data->color);
-			ft_free_split(data->texture);
-			close(data->fd);
-			ft_free(data);
+			clear_after_init(data, NULL);
 			exit (msg_error(MALLOC));
 		}
 		i++;
@@ -85,5 +102,6 @@ void	init_data_parsing(t_struct *data)
 {
 	init_info(data);
 	init_color(data);
+	init_player(data);
 	init_texture(data);
 }

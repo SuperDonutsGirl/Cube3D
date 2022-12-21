@@ -48,7 +48,7 @@ int	ft_count_words(char *str, char *charset)
 	return (words);
 }
 
-static int	ft_strlen_set(char *charset, char *str)
+static int	len_set(char *charset, char *str)
 {
 	int	i;
 
@@ -73,13 +73,13 @@ int	ft_copy(char *dest, char *str, char *charset, int i)
 	return (i);
 }
 
-char	**ft_split_charset(char *str, char *charset)
+char	**ft_split_charset(char *str, char *set)
 {
 	char	**matrice;
 	int		words;
 	int		i;
 
-	words = ft_count_words(str, charset);
+	words = ft_count_words(str, set);
 	matrice = malloc(sizeof(char *) * (words + 1));
 	if (!matrice)
 		return (NULL);
@@ -87,15 +87,14 @@ char	**ft_split_charset(char *str, char *charset)
 	i = 0;
 	while (str[i])
 	{
-		if (ft_check_charset(charset, str[i]) == 1)
+		if (ft_check_charset(set, str[i]) == 1)
 			i++;
 		else
 		{
-			matrice[words] = (char *)malloc (sizeof (char)
-					*  ft_strlen_set(charset, &str[i]) + 1);
+			matrice[words] = malloc(sizeof(char) * len_set(set, &str[i]) + 1);
 			if (!matrice[words])
 				return (ft_free_split(matrice));
-			i = ft_copy(matrice[words], str, charset, i);
+			i = ft_copy(matrice[words], str, set, i);
 			words++;
 		}
 	}

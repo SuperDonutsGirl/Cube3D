@@ -73,8 +73,8 @@ typedef struct s_struct
 	int		*info;
 	int		fd;
 	int		*color;
-	char	**texture;  //Quid utilité
-	char	**player;
+	char	**texture;
+	int		*player;
 	int		height;
 	int		width;
 	char	**map;
@@ -86,7 +86,7 @@ int		ft_memcmp_reverse(char *s1, char *s2);
 		/*Principal functions*/
 void	init_data_parsing(t_struct *data);
 void	clear_after_init(t_struct *data, char *line);
-void	exit_map_parsing(t_struct *data, char *msg);
+void	exit_map_parsing(t_struct *data, char *msg, char *line);
 void	parsing(int argc, char **argv, t_struct *data);
 void	parsing_color(t_struct *data, char *line, int type);
 void	parsing_texture(t_struct *data, char *line, int type);
@@ -99,13 +99,14 @@ int		first_line(char *line, int type);
 		/*Par map*/
 void	get_height(t_struct *data);
 char	*get_map(t_struct *data, char *line);
-void 	only_good_char(t_struct *data);
+void	only_good_char(t_struct *data);
 void	update_with_space(t_struct *data);
 void	check_border(t_struct *data);
 void	check_around_space(t_struct *data);
+void	check_player(t_struct *data, char elmt, int y, int x);
 		/*utils*/
 char	**split_line_and_check(t_struct *data, char *line);
-void 	get_fd(t_struct *data, char *file);
+void	get_fd(t_struct *data, char *file);
 
 /*GNL*/
 # ifndef BUFFER_SIZE
@@ -119,6 +120,5 @@ void	*ft_free(void *save);
 /*Global utils*/
 int		ft_strcmp(char *s1, char *s2);
 int		msg_error(char *msg);
-
 
 #endif

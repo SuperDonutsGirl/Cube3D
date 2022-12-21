@@ -74,7 +74,6 @@ void	parsing(int argc, char **argv, t_struct *data)
 		exit(msg_error(FORMAT));
 	get_fd(data, argv[1]);
 	get_height(data);
-	printf("taille = %d\n", data->height);
 	get_fd(data, argv[1]);
 	check_data(data);
 }

@@ -12,10 +12,10 @@
 
 #include "../../cub.h"
 
-void only_good_char(t_struct *data)
+void	only_good_char(t_struct *data)
 {
 	int	i;
-	int y;
+	int	y;
 	int	len;
 
 	i = 0;
@@ -32,11 +32,8 @@ void only_good_char(t_struct *data)
 				&& data->map[i][y] != '0' && data->map[i][y] != 'N'
 				&& data->map[i][y] != 'S' && data->map[i][y] != 'E'
 				&& data->map[i][y] != 'W')
-				{
-					clear_after_init(data, NULL);
-					ft_free_split(data->map);
-					exit(msg_error(INVALID_MAP));
-				}
+				exit_map_parsing(data, INVALID_MAP, NULL);
+			check_player(data, data->map[i][y], i, y);
 			y++;
 		}
 		i++;
@@ -53,7 +50,7 @@ void	update_with_space(t_struct *data)
 		if (ft_strlen(data->map[i]) < data->width)
 			data->map[i] = realloc_set(data->map[i], data->width, ' ');
 		if (!data->map[i])
-			exit_map_parsing(data, MALLOC);
+			exit_map_parsing(data, MALLOC, NULL);
 		i++;
 	}
 	i = 0;
@@ -67,7 +64,7 @@ void	update_with_space(t_struct *data)
 void	check_border(t_struct *data)
 {
 	int	i;
-	int start;
+	int	start;
 
 	i = 0;
 	while (data->map[i])
@@ -75,20 +72,39 @@ void	check_border(t_struct *data)
 		start = 0;
 		while (data->map[i][start] && data->map[i][start] == ' ')
 			start++;
-		if ((data->map[i][start] && data->map[i][start] != '1') || !data->map[i][start])
-			exit_map_parsing(data, INVALID_MAP);
+		if ((data->map[i][start] && data->map[i][start] != '1')
+			|| !data->map[i][start])
+			exit_map_parsing(data, INVALID_MAP, NULL);
 		while (data->map[i][start])
 			start++;
 		if (data->map[i][start -1] != '1')
-			exit_map_parsing(data, INVALID_MAP);
+			exit_map_parsing(data, INVALID_MAP, NULL);
 		i++;
 	}
 }
 
+static void	check(t_struct *data, int x, int y)
+{
+	if (y > 0 && y < data->height - 1)
+	{
+		if (data->map[y - 1][x] != ' ' && data->map[y - 1][x] != '1')
+			exit_map_parsing(data, INVALID_MAP, NULL);
+		if (data->map[y + 1][x] != ' ' && data->map[y + 1][x] != '1')
+			exit_map_parsing(data, INVALID_MAP, NULL);
+	}
+	if (x > 0 && x < data->width - 1)
+	{
+		if (data->map[y][x - 1] != ' ' && data->map[y][x - 1] != '1')
+			exit_map_parsing(data, INVALID_MAP, NULL);
+		if (data->map[y][x + 1] != ' ' && data->map[y][x + 1] != '1')
+			exit_map_parsing(data, INVALID_MAP, NULL);
+	}	
+}
+
 void	check_around_space(t_struct *data)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (data->map[y])
@@ -96,26 +112,10 @@ void	check_around_space(t_struct *data)
 		x = 0;
 		while (data->map[y][x])
 		{
-			if (data->map[y][x] == ' ') 
-			{
-				if (y > 0 && y < data->height - 1)
-				{
-					if (data->map[y - 1][x] != ' ' && data->map[y - 1][x] != '1')
-						exit_map_parsing(data, INVALID_MAP);
-					if (data->map[y + 1][x] != ' ' && data->map[y + 1][x] != '1')
-						exit_map_parsing(data, INVALID_MAP);
-				}
-				if (x > 0 && x < data->width - 1)
-				{
-					if (data->map[y][x - 1] != ' ' && data->map[y][x - 1] != '1')
-						exit_map_parsing(data, INVALID_MAP);
-					if (data->map[y][x + 1] != ' ' && data->map[y][x + 1] != '1') 
-						exit_map_parsing(data, INVALID_MAP);
-				}	
-			}
+			if (data->map[y][x] == ' ')
+				check(data, x, y);
 			x++;
 		}
 		y++;
 	}
 }
-

@@ -37,7 +37,8 @@ char				*ft_cpy(char *dest, char *src);
 
 char				*ft_strcpy(char *dest, char *src);
 
-char				*ft_strcpy_complete(char *dest, char *src, char charset, int len);
+char				*ft_strcpy_complete(char *dest, char *src,
+						char charset, int len);
 
 int					ft_strfchr(char *str, char c);
 
