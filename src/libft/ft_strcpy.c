@@ -25,3 +25,22 @@ char	*ft_strcpy(char *dest, char *src)
 	dest[i] = '\0';
 	return (dest);
 }
+
+char	*ft_strcpy_complete(char *dest, char *src, char charset, int len)
+{
+	int	i;
+
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	while (i < len)
+	{
+		dest[i] = charset;
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}

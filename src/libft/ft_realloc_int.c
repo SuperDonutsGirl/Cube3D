@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 int	*ft_realloc_int(int *tab, int len_tab, int add_len)
 {
@@ -51,4 +52,18 @@ char	**ft_realloc_one(char **old, int len, char *new_line)
 	free(new_line);
 	new[++i] = 0;
 	return (new);
+}
+
+char	*realloc_set(char *line, int new_len, char charset)
+{
+	char	*new_line;
+
+	new_line = malloc(sizeof(char) * new_len + 1);
+	if (!new_line)
+	{
+		free(line);
+		return (NULL);
+	}
+	ft_strcpy_complete(new_line, line, charset, new_len);
+	return (new_line);
 }

@@ -79,9 +79,9 @@ int	cmp_setting(t_struct *data, char *line, char *type, int value)
 	return (1);
 }
 
-void	is_begin_map(t_struct *data, char *line)
+char	*is_begin_map(t_struct *data, char *line)
 {
-	if (!map_line_pattern(line))
+	if (!first_line(line, 0))
 	{
 		clear_after_init(data, line);
 		exit (msg_error(INVALID_SET));
@@ -93,6 +93,14 @@ void	is_begin_map(t_struct *data, char *line)
 			clear_after_init(data, line);
 			exit (msg_error(MISSING));
 		}
-		//get_map(data, line);
+		line = get_map(data, line);
+		only_good_char(data);
+		printf("width = %d\n", data->width);
+		if (!first_line(data->map[0], 1) || !first_line(data->map[data->height - 1], 1))
+			exit_map_parsing(data, INVALID_MAP);
+		check_border(data);
+		update_with_space(data);
+		check_around_space(data);
 	}
+	return (line);
 }

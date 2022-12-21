@@ -27,6 +27,8 @@ int					ft_abs(int x);
 
 char				**ft_realloc_one(char **old, int len, char *new_line);
 
+char				*realloc_set(char *line, int new_len, char charset);
+
 int					*ft_realloc_int(int *tab, int len_tab, int add_len);
 
 int					ft_intlen(int nb);
@@ -34,6 +36,8 @@ int					ft_intlen(int nb);
 char				*ft_cpy(char *dest, char *src);
 
 char				*ft_strcpy(char *dest, char *src);
+
+char				*ft_strcpy_complete(char *dest, char *src, char charset, int len);
 
 int					ft_strfchr(char *str, char c);
 

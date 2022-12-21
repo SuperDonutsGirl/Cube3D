@@ -42,7 +42,7 @@ static void	init_color(t_struct *data)
 		ft_free(data->info);
 		close(data->fd);
 		ft_free(data);
-		 (msg_error(MALLOC));
+		exit (msg_error(MALLOC));
 	}
 	while (i < 2)
 	{

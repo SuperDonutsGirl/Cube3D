@@ -14,12 +14,21 @@
 
 void	clear_after_init(t_struct *data, char *line)
 {
-	ft_free(line);
+	if (line)
+		ft_free(line);
 	ft_free(data->info);
 	ft_free(data->color);
 	ft_free_split(data->texture);
-	close(data->fd);
+	if (data->fd)
+		close(data->fd);
 	ft_free(data);
+}
+
+void	exit_map_parsing(t_struct *data, char *msg)
+{
+	clear_after_init(data, NULL);
+	ft_free_split(data->map);
+	exit (msg_error(msg));
 }
 
 int	every_info(int *info)
@@ -41,19 +50,28 @@ int	every_info(int *info)
 		return (1);
 }
 
-int	map_line_pattern(char *line) //Penser aà tous les white space
+int first_line(char *line, int type) 				//Segf si il y a un autre char dans la premiere ligne
 {
 	int	i;
 
 	i = 0;
-	while (line[i])
+	while (line[i] && line[i] != '\n')
 	{
-		if ((line[i] >= '0' && line[i] <= '9')
-			|| (line[i] >= 'A' && line[i] <= 'Z')
-			|| line[i] == '\n' || line[i] == ' ')
+		if (line[i] == '1' || line[i] == ' ')
 			i++;
 		else
 			return (0);
 	}
-	return (1);
+	if (type == 0 && line[i] == '\n') 
+		return (1);
+	if (type == 1)
+		return (1);
+	return (0);
+}
+
+void get_fd(t_struct *data, char *file)
+{
+	data->fd = open(file, O_RDONLY);
+	if (data->fd < 0)
+		exit(msg_error(ACCESS));
 }
