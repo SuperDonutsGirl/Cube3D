@@ -96,7 +96,8 @@ char	*is_begin_map(t_struct *data, char *line)
 		line = get_map(data, line);
 		only_good_char(data);
 		printf("width = %d\n", data->width);
-		if (!first_line(data->map[0], 1) || !first_line(data->map[data->height - 1], 1))
+		printf("first line = %s\nlast line = %s\n", data->map[0], data->map[data->height - 1]);
+		if (!first_line(data->map[0], 1) || !first_line(data->map[data->height], 1))
 			exit_map_parsing(data, INVALID_MAP);
 		check_border(data);
 		update_with_space(data);
