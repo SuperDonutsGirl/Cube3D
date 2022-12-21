@@ -20,7 +20,7 @@ void only_good_char(t_struct *data)
 
 	i = 0;
 	data->width = 0;
-	while (data->map[i])
+	while (i < data->height - 1)
 	{
 		len = ft_strlen(data->map[i]);
 		if (len > data->width)

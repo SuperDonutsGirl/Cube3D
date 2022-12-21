@@ -55,19 +55,15 @@ int first_line(char *line, int type) 				//Segf si il y a un autre char dans la 
 	int	i;
 
 	i = 0;
+	printf("function frst line = =%s-\n", line);
 	while (line[i] && line[i] != '\n')
 	{
 		if (line[i] == '1' || line[i] == ' ')
 			i++;
-		else if (type == 0)
-			return (0);
 		else
-		{
-			printf("char de merde = %c dans la ligne %s\n", line[i], line);
 			return (0);
-		}
 	}
-	if (type == 0 && line[i] == '\n') 
+	if (type == 0 && line[i] == '\n' && i > 0) 
 		return (1);
 	if (type == 1)
 		return (1);

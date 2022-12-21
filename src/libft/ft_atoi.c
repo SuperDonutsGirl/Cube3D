@@ -41,6 +41,8 @@ int	ft_atoi(const char *str)
 	if (!str)
 		return (0);
 	nb = 0;
+	if (str[i] == ' ')
+		retrun (-1);
 	i = ft_spacesigne(str, &signe, &neg);
 	if (signe > 1)
 		return (-1);

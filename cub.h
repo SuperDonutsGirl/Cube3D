@@ -74,6 +74,7 @@ typedef struct s_struct
 	int		fd;
 	int		*color;
 	char	**texture;  //Quid utilité
+	char	**player;
 	int		height;
 	int		width;
 	char	**map;

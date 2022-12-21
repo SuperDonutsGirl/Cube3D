@@ -28,7 +28,7 @@ char	*get_map(t_struct *data, char *line)
 		data->map[i] = ft_strdup(line);
 		if (data->map[i][ft_strlen(data->map[i]) - 1] == '\n')
 			data->map[i][ft_strlen(data->map[i]) - 1] = '\0';
-		if (!data->map[i])
+		if (!data->map[i]) ///fonction en une ligne
 		{
 			ft_free_split(data->map);
 			clear_after_init(data, line);
@@ -53,7 +53,7 @@ void	get_height(t_struct *data)
 	{
 		ft_free(line);
 		line = get_next_line(data->fd);
-		if (first_line(line, 0))
+		if (line && first_line(line, 0))
 		{
 			while (line)
 			{
