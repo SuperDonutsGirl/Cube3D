@@ -21,25 +21,26 @@ void	draw_player(t_cube *cube, int color, int x_size, int y_size)
 	}
 }
 
-void	drawline(t_cube *cube, int color)
+void	drawline(t_cube *cube, int color, float x_max, float y_max)
 {
-
 		float x,y,x1,y1,dx,dy,step;
 		int i;
+
 		x1 = cube->player.px + 4;
 		y1 = cube->player.py + 4;
-
+		color++;
 		dx = cube->player.pdx * 5;
 		dy = cube->player.pdy * 5;
-		step = 100; //PLus la valeur est basse, plus les pixels seront espacés
+		step = 35; //PLus la valeur est basse, plus les pixels seront espacés
 		dx = dx / step;
 		dy = dy / step;
 		x = x1;
 		y = y1;
 		i = 1;
-		while(i <= 200)
+		while(i <= 1144 && (x <= x_max || y <= y_max))
 		{
-			mlx_pixel_put(cube->mlx, cube->window, x,y, color);
+		/*	printf("X : %f\nY : %f\nX_MAX : %d\nY_MAX : %d\n", x, y, x_max, y_max);*/
+			mlx_pixel_put(cube->mlx, cube->window, x,y, 0xFF0000);
 			x = x + dx;
 			y = y + dy;
 			i++;
@@ -79,12 +80,13 @@ void	draw_rays(t_cube *cube, int *map)
 		while (dof < 8)
 		{
 			mx = (int) (rx) >> 6;
-			my = (int) (rx) >> 6;
+			my = (int) (ry) >> 6;
 			mp = my * 8 + mx;
+			drawline(cube, *map, rx, ry);
 			if (mp < 8 * 8 && map[mp] == 1)
 			{
 				dof = 8;
-				printf("Je touche une ligne sur X\n");
+				mlx_string_put(cube->mlx, cube->window, rx, ry, 0x0000FF, "X");
 			}
 			else
 			{

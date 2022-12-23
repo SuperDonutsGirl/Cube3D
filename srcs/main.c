@@ -40,7 +40,7 @@ int	main(void)
 									  	&cube->line_length, &cube->endian);
 	draw_map_2D(cube, 0xC5C8BD, 0x545650, map);
 	draw_player(cube, 0xFF0053, 10, 10);
-	drawline(cube, 0xFF0000);
+	/*drawline(cube, 0xFF0000);*/
 	mlx_hook(cube->window, 3, 3, keyrelease, cube);
 	mlx_hook(cube->window, 2, 1L<<0, keypress, cube);
 	mlx_hook(cube->window, 17, 0L, close_on_click, cube);
