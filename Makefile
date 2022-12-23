@@ -7,7 +7,8 @@ NAME	= cub3d
 CC 		= gcc
 CFLAGS	= -Wall -Wextra -Werror -Imlx # -Imlx POUR MINILIBX
 DFLAGS	= -MMD -MF $(@:.o=.d)
-COMPIL	= -Lmlx -lmlx -framework OpenGL -framework AppKit # SERT UNIQUEMENT POUR MINILIBX
+#COMPIL	= -Lmlx -lmlx -framework OpenGL -framework AppKit # SERT UNIQUEMENT POUR MINILIBX
+COMPIL 	= -I /usr/X11/include -g -L /usr/X11/lib -l mlx -framework OpenGL -framework AppKit #Pauline
 AUTHOR	= dduraku
 DATE	= 15/12/2022
 
