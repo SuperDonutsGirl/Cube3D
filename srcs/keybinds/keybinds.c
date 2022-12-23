@@ -12,6 +12,18 @@
 
 #include "../../includes/cub3d.h"
 
+int map[] =
+		{
+				1, 1, 1, 1, 1, 1, 1, 1,
+				1, 0, 0, 1, 0, 0, 0, 1,
+				1, 0, 0, 1, 1, 1, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 1,
+				1, 1, 1, 1, 1, 1, 1, 1
+		};
+
 int	move_player(int keycode, t_cube *cube)
 {
 	mlx_clear_window(cube->mlx, cube->window);
@@ -43,6 +55,8 @@ int	move_player(int keycode, t_cube *cube)
 	}
 	mlx_put_image_to_window(cube->mlx, cube->window, cube->img, 0, 0);
 	draw_player(cube, 0xFF0053, 10, 10);
+	drawline(cube, 0xFF0000);
+	draw_rays(cube, map);
 	return 0;
 }
 

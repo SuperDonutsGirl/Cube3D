@@ -26,7 +26,6 @@ int	main(void)
 					1, 0, 0, 0, 0, 0, 0, 1,
 					1, 1, 1, 1, 1, 1, 1, 1
 			};
-
 	cube = malloc(sizeof(t_cube));
 	if (!cube)
 		return 1;
@@ -39,8 +38,9 @@ int	main(void)
 	cube->img = mlx_new_image(cube->mlx, 1024, 512);
 	cube->address = mlx_get_data_addr(cube->img, &cube->bits_per_pixel,
 									  	&cube->line_length, &cube->endian);
-	draw_map_2D(cube, 0x00FF00, 0x00FFFF, map);
+	draw_map_2D(cube, 0xC5C8BD, 0x545650, map);
 	draw_player(cube, 0xFF0053, 10, 10);
+	drawline(cube, 0xFF0000);
 	mlx_hook(cube->window, 3, 3, keyrelease, cube);
 	mlx_hook(cube->window, 2, 1L<<0, keypress, cube);
 	mlx_hook(cube->window, 17, 0L, close_on_click, cube);
