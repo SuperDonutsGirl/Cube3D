@@ -21,9 +21,8 @@ void	draw_player(t_cube *cube, int color, int x_size, int y_size)
 	}
 }
 
-void	drawline(t_cube *cube, int color)
+void	drawline(t_cube *cube, int color, float x_col, float y_col)
 {
-
 		float x,y,x1,y1,dx,dy,step;
 		int i;
 		x1 = cube->player.px + 4;
@@ -37,13 +36,43 @@ void	drawline(t_cube *cube, int color)
 		x = x1;
 		y = y1;
 		i = 1;
-		while(i <= 200)
+		
+		printf("x     = %f\nx_col = %f\n", x, x_col);
+		printf("y     = %f\ny_col = %f\n\n\n", y, y_col);
+		if (y > y_col)
 		{
-			mlx_pixel_put(cube->mlx, cube->window, x,y, color);
+			while(i <= 150000 &&  y-y_col > 0 && x_col)
+			{
+				mlx_pixel_put(cube->mlx, cube->window, x,y, color);
+			// mlx_string_put(cube->mlx, cube->window, 550, 10, 0xFF0000, ft_itoa((int)x));
+			// mlx_string_put(cube->mlx, cube->window, 550, 50, 0xFF0000, ft_itoa((int)x_col));
+			// mlx_string_put(cube->mlx, cube->window, 550, 90, 0xFF0000, ft_itoa((int)y));
+			// mlx_string_put(cube->mlx, cube->window, 550, 130, 0xFF0000, ft_itoa((int)y_col));
+
+			//printf("y = %f\n avec y_col = %f\n ", y, y_col);
 			x = x + dx;
 			y = y + dy;
 			i++;
+			}
 		}
+		else if (y < y_col)
+		{
+			while(i <= 150000 && y_col-y > 0  && x_col)
+			{
+				mlx_pixel_put(cube->mlx, cube->window, x,y, color);
+			// mlx_string_put(cube->mlx, cube->window, 550, 10, 0xFF0000, ft_itoa((int)x));
+			// mlx_string_put(cube->mlx, cube->window, 550, 50, 0xFF0000, ft_itoa((int)x_col));
+			// mlx_string_put(cube->mlx, cube->window, 550, 90, 0xFF0000, ft_itoa((int)y));
+			// mlx_string_put(cube->mlx, cube->window, 550, 130, 0xFF0000, ft_itoa((int)y_col));
+
+			//printf("y = %f\n avec y_col = %f\n ", y, y_col);
+				x = x + dx;
+				y = y + dy;
+				i++;
+			}
+		}
+		
+
 }
 
 void	draw_rays(t_cube *cube, int *map)
@@ -78,13 +107,17 @@ void	draw_rays(t_cube *cube, int *map)
 		}
 		while (dof < 8)
 		{
+			drawline(cube, 16711680, rx, ry);
+
+			//drawline(cube, 16711680, mx, my);
 			mx = (int) (rx) >> 6;
-			my = (int) (rx) >> 6;
+			my = (int) (ry) >> 6;
 			mp = my * 8 + mx;
 			if (mp < 8 * 8 && map[mp] == 1)
 			{
 				dof = 8;
-				printf("Je touche une ligne sur X\n");
+				//printf("Je touche une ligne sur X\n");
+				mlx_string_put(cube->mlx, cube->window, rx, ry, 0xFF0000, "ICI");
 			}
 			else
 			{

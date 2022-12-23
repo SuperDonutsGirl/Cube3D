@@ -32,6 +32,7 @@ SRCS			=	$(KEYBIND_PATH)keybinds.c		\
 					$(KEYBIND_PATH)close_on_click.c	\
 					$(DRAW_PATH)draw_map.c			\
 					$(DRAW_PATH)draw_player.c		\
+					$(DRAW_PATH)itoa.c\
 
 MAIN			= main.c
 
