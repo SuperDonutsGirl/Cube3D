@@ -67,5 +67,5 @@ void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color);
 void	draw_walls(t_cube *cube, int color, int x_size, int y_size, int px, int py);
 void	draw_map_2D(t_cube *cube, int color_floor, int color_wall, int *map);
 
-void	drawline(t_cube *cube, int color);
+void	drawline(t_cube *cube, int color, float x, float y);
 void	draw_rays(t_cube *cube, int *map);
