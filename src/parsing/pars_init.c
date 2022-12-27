@@ -86,7 +86,7 @@ static void	init_texture(t_struct *data)
 		exit (msg_error(MALLOC));
 	}
 	i = 0;
-	while (data->texture[i])
+	while (i < 4)
 	{
 		data->texture[i] = ft_strdup("\0");
 		if (!data->texture[i])
@@ -96,6 +96,7 @@ static void	init_texture(t_struct *data)
 		}
 		i++;
 	}
+	//data->texture[i] = 0;
 }
 
 void	init_data_parsing(t_struct *data)

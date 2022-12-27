@@ -17,13 +17,13 @@ char	*get_map(t_struct *data, char *line)
 	size_t	i;
 
 	i = 0;
-	data->map = malloc(sizeof(char *) * data->height);
+	data->map = malloc(sizeof(char *) * (data->height + 1));
 	if (!data->map)
 	{
 		clear_after_init(data, line);
 		exit (msg_error(MALLOC));
 	}
-	while (line && i < data->height)
+	while (line && i <= data->height)
 	{
 		data->map[i] = ft_strdup(line);
 		if (data->map[i][ft_strlen(data->map[i]) - 1] == '\n')
@@ -34,6 +34,7 @@ char	*get_map(t_struct *data, char *line)
 		line = get_next_line(data->fd);
 		i++;
 	}
+	data->map[i] = 0;
 	close(data->fd);
 	data->fd = 0;
 	return (line);
