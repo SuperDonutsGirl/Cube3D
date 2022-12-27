@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub.h"
+#include "../../includes/cub.h"
 
 static void	init_info(t_struct *data)
 {

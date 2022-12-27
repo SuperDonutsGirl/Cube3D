@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub.h"
+#include "../../includes/cub.h"
 
 char	**split_line_and_check(t_struct *data, char *line)
 {

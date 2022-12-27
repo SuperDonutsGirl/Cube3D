@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub.h"
+#include "../../includes/cub.h"
 
 int	ft_memcmp_reverse(char *s1, char *s2)
 {

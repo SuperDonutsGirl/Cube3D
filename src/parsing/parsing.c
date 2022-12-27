@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub.h"
+#include "../../includes/cub.h"
 
 static char	*check_settings(t_struct *data, char *line)
 {
