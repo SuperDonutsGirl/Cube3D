@@ -16,9 +16,12 @@
 #include <math.h>
 #include <stdbool.h>
 #include "../mlx/mlx.h"
+#include "keycodes.h"
 
-#define ESC	53
 #define PI	3.141592653589793238
+#define P2  PI / 2
+#define P3  3 * PI / 2
+#define DR  0.0174533
 
 typedef struct s_player
 {
