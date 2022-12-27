@@ -21,7 +21,17 @@ void	draw_player(t_cube *cube, int color, int x_size, int y_size)
 	}
 }
 
-void	drawline(t_cube *cube, int color, float x_col, float y_col)
+
+float dist(float ax, float ay, float bx, float by)
+{
+	float	res;
+	
+	res = sqrt((bx -ax) * (bx - ax) + (by -ay) * (by-ay));
+	return (res);
+}
+
+
+void	drawline(t_cube *cube, int color, float x_col, float y_col, char type)
 {
 		float x,y,x1,y1,dx,dy,step;
 		int i;
@@ -37,44 +47,53 @@ void	drawline(t_cube *cube, int color, float x_col, float y_col)
 		y = y1;
 		i = 1;
 		
-		printf("x     = %f\nx_col = %f\n", x, x_col);
-		printf("y     = %f\ny_col = %f\n\n\n", y, y_col);
-		if (y > y_col)
+		if (type == 'v')
 		{
-			while(i <= 150000 &&  y-y_col > 0 && x_col)
+			if (x > x_col)
 			{
-				mlx_pixel_put(cube->mlx, cube->window, x,y, color);
-			// mlx_string_put(cube->mlx, cube->window, 550, 10, 0xFF0000, ft_itoa((int)x));
-			// mlx_string_put(cube->mlx, cube->window, 550, 50, 0xFF0000, ft_itoa((int)x_col));
-			// mlx_string_put(cube->mlx, cube->window, 550, 90, 0xFF0000, ft_itoa((int)y));
-			// mlx_string_put(cube->mlx, cube->window, 550, 130, 0xFF0000, ft_itoa((int)y_col));
-
-			//printf("y = %f\n avec y_col = %f\n ", y, y_col);
-			x = x + dx;
-			y = y + dy;
-			i++;
+				while(i <= 150000 && x-x_col > 0)
+				{
+					mlx_pixel_put(cube->mlx, cube->window, x,y, color);
+					x = x + dx;
+					y = y + dy;
+					i++;
+				}
+			}
+			else if (x < x_col)
+			{
+				while(i <= 150000 && x_col-x > 0)
+				{
+					mlx_pixel_put(cube->mlx, cube->window, x,y, color);
+					x = x + dx;
+					y = y + dy;
+					i++;
+				}
 			}
 		}
-		else if (y < y_col)
+		else if (type == 'h')
 		{
-			while(i <= 150000 && y_col-y > 0  && x_col)
+			if (y > y_col)
 			{
-				mlx_pixel_put(cube->mlx, cube->window, x,y, color);
-			// mlx_string_put(cube->mlx, cube->window, 550, 10, 0xFF0000, ft_itoa((int)x));
-			// mlx_string_put(cube->mlx, cube->window, 550, 50, 0xFF0000, ft_itoa((int)x_col));
-			// mlx_string_put(cube->mlx, cube->window, 550, 90, 0xFF0000, ft_itoa((int)y));
-			// mlx_string_put(cube->mlx, cube->window, 550, 130, 0xFF0000, ft_itoa((int)y_col));
-
-			//printf("y = %f\n avec y_col = %f\n ", y, y_col);
-				x = x + dx;
-				y = y + dy;
-				i++;
+				while(i <= 150000 &&  y-y_col > 0)
+				{
+					mlx_pixel_put(cube->mlx, cube->window, x,y, color);
+					x = x + dx;
+					y = y + dy;
+					i++;
+				}
+			}
+			else if (y < y_col)
+			{
+				while(i <= 150000 && y_col-y > 0)
+				{
+					mlx_pixel_put(cube->mlx, cube->window, x,y, color);
+					x = x + dx;
+					y = y + dy;
+					i++;
+				}
 			}
 		}
-		
-
 }
-
 void	draw_rays(t_cube *cube, int *map)
 {
 	int r, mx, my, mp, dof;
@@ -83,7 +102,11 @@ void	draw_rays(t_cube *cube, int *map)
 	ra = cube->player.pa;
 	for (r = 0; r < 1; r++)
 	{
+		//horizontal
 		dof = 0;
+		float distH = 1000000000;
+		float hx = cube->player.px;
+		float hy = cube->player.py;
 		float aTan = -1 / tan(ra);
 		if (ra > PI)
 		{
@@ -107,17 +130,17 @@ void	draw_rays(t_cube *cube, int *map)
 		}
 		while (dof < 8)
 		{
-			drawline(cube, 16711680, rx, ry);
-
-			//drawline(cube, 16711680, mx, my);
+			//drawline(cube, 16711680, rx, ry);
 			mx = (int) (rx) >> 6;
 			my = (int) (ry) >> 6;
 			mp = my * 8 + mx;
 			if (mp < 8 * 8 && map[mp] == 1)
 			{
+				hx = rx;
+				hy = ry;
+				distH = dist(cube->player.px, cube->player.py, hx, hy);
 				dof = 8;
-				//printf("Je touche une ligne sur X\n");
-				mlx_string_put(cube->mlx, cube->window, rx, ry, 0xFF0000, "ICI");
+				//mlx_string_put(cube->mlx, cube->window, rx, ry, 0xFF0000, "ICI");
 			}
 			else
 			{
@@ -125,6 +148,72 @@ void	draw_rays(t_cube *cube, int *map)
 				ry += yo;
 				dof += 1;
 			}
+		}
+		//vertical
+		dof = 0;
+		float distV = 1000000000;
+		float vx = cube->player.px;
+		float vy = cube->player.py;
+		float nTan = -tan(ra);
+		if (ra > P2 && ra < P3)
+		{
+			rx = (((int) cube->player.px >> 6) << 6) - 0.0001;
+			ry = (cube->player.px - rx) * nTan + cube->player.py;
+			xo = -64;
+			yo = -xo * nTan;
+		}
+		if (ra < P2 || ra > P3)
+		{
+			rx = (((int) cube->player.py >> 6) << 6) + 64;
+			ry = (cube->player.py - rx) * nTan + cube->player.px;
+			xo = 64;
+			yo = -xo * nTan;
+		}
+		if (ra == 0 || ra == PI)
+		{
+			rx = cube->player.px;
+			ry = cube->player.py;
+			dof = 8;
+		}
+		while (dof < 8)
+		{
+			//drawline(cube, 16711680, rx, ry);
+			mx = (int) (rx) >> 6;
+			my = (int) (ry) >> 6;
+			mp = my * 8 + mx;
+			printf("mp = %d\n", mp);
+			if (mp < 8 * 8 && map[mp] == 1)
+			{
+				vx = rx;
+				vy = ry;
+				distV = dist(cube->player.px, cube->player.py, vx, vy);
+				dof = 8;
+				printf("dist V = %f\ndist H = %f \n", distV, distH);
+				if (distV < distH || distH == 1000000000) 
+				{
+					rx = vx;
+					ry = vy;
+					drawline(cube, 0x00FF00, rx, ry, 'v');
+					printf("coll vertical \n");
+					mlx_string_put(cube->mlx, cube->window, rx, ry, 0x00FF00, "ICI");
+				}
+				if (distH < distV || distV == 1000000000)
+				{
+					rx = hx;
+					ry = hy;
+					drawline(cube, 0xFF0000, rx, ry, 'h');
+					printf("coll horizonrtal \n");
+					mlx_string_put(cube->mlx, cube->window, rx, ry, 0xFF0000, "ICI");
+				}
+				//mlx_string_put(cube->mlx, cube->window, rx, ry, 0xFF0000, "ICI");
+			}
+			else
+			{
+				rx += xo;
+				ry += yo;
+				dof += 1;
+			}
+
 		}
 	}
 }

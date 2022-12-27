@@ -19,6 +19,8 @@
 
 #define ESC	53
 #define PI	3.141592653589793238
+#define P2	PI/2
+#define P3	3 * PI/2
 
 typedef struct s_player
 {
@@ -67,7 +69,7 @@ void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color);
 void	draw_walls(t_cube *cube, int color, int x_size, int y_size, int px, int py);
 void	draw_map_2D(t_cube *cube, int color_floor, int color_wall, int *map);
 
-void	drawline(t_cube *cube, int color, float x_col, float y_col);
+void	drawline(t_cube *cube, int color, float x_col, float y_col, char type);
 char	*ft_itoa(int n);
 
 //void	drawline(t_cube *cube, int color);
