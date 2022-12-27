@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub.h"
 
 void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color)
 {
@@ -37,23 +37,30 @@ void	draw_walls(t_cube *cube, int color, int x_size, int y_size, int pos_x, int 
 	}
 }
 
-void	draw_map_2D(t_cube *cube, int color_floor, int color_wall, int *map)
+void	draw_map_2D(t_struct *data, int color_floor, int color_wall)
 {
-	int mapX = 8, mapY = 8, mapS = 64;
-	int pos_x = 0, pos_y = 0;
-	int x, y;
-	for (y = 0; y < mapY; y++)
+	size_t mapS = 64;
+	int	pos_x = 0, pos_y = 0;
+	size_t x, y;
+	for (y = 0; y < data->height; y++)
 	{
-		for (x = 0; x < mapX; x++)
+		for (x = 0; x < data->width; x++)
 		{
-			if (map[y * mapX + x] == 1)
-				draw_walls(cube, color_wall, mapS, mapS, pos_x, pos_y);
+			if (data->map[y][x] == '1')
+				draw_walls(data->cube, color_wall, mapS, mapS, pos_x, pos_y);
+			else if (data->map[y][x] == '0')
+				draw_walls(data->cube, color_floor, mapS, mapS, pos_x, pos_y);
 			else
-				draw_walls(cube, color_floor, mapS, mapS, pos_x, pos_y);
+			{
+				if (data->map[y][x] == 'S' || data->map[y][x] == 'N' || data->map[y][x] == 'E' || data->map[y][x] == 'W')
+					draw_walls(data->cube, 0x0000FF, mapS, mapS, pos_x, pos_y);
+				else
+					draw_walls(data->cube, 0x00FF00, mapS, mapS, pos_x, pos_y);
+			}
 			pos_x += 64;
 		}
 		pos_y += 64;
 		pos_x = 0;
-		mlx_put_image_to_window(cube->mlx, cube->window, cube->img, 0, 0);
+		mlx_put_image_to_window(data->cube->mlx, data->cube->window, data->cube->img, 0, 0);
 	}
 }

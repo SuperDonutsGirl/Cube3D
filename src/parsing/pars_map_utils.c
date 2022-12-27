@@ -14,9 +14,9 @@
 
 void	only_good_char(t_struct *data)
 {
-	int	i;
-	int	y;
-	int	len;
+	size_t	i;
+	size_t	y;
+	size_t	len;
 
 	i = 0;
 	data->width = 0;
@@ -83,7 +83,7 @@ void	check_border(t_struct *data)
 	}
 }
 
-static void	check(t_struct *data, int x, int y)
+static void	check(t_struct *data, size_t x, size_t y)
 {
 	if (y > 0 && y < data->height - 1)
 	{
@@ -103,8 +103,8 @@ static void	check(t_struct *data, int x, int y)
 
 void	check_around_space(t_struct *data)
 {
-	int	x;
-	int	y;
+	size_t	x;
+	size_t	y;
 
 	y = 0;
 	while (data->map[y])

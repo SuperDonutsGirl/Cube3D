@@ -56,7 +56,7 @@ static void	init_player(t_struct *data)
 	int	i;
 
 	i = 0;
-	data->player = malloc(sizeof(int) * 3);
+	data->player = malloc(sizeof(double) * 3);
 	if (!data->player)
 	{
 		ft_free(data->info);

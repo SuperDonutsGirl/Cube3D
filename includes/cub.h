@@ -20,8 +20,10 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>
-# include <fcntl.h>
 # include <limits.h>
+# include <math.h>
+# include "../mlx/mlx.h"
+# include "keycodes.h"
 
 /*Error messages for argument parding*/
 # define ARG "This program requires only one argument"
@@ -38,11 +40,13 @@
 # define LOT_OF_SET "Too many settings"
 # define MISSING "Missing setting informations"
 # define INVALID_SET "Invalid setting's line"
+
 /*Error message for map*/
 # define INVALID_MAP "Invalid map"
 
 /*Global error messages*/
 # define MALLOC "Malloc failed"
+
 /*Gobal define*/
 # define WHITE "\t\v\r\f "
 
@@ -51,6 +55,17 @@
 # define TEXT_SO "../../map/bluestone.png"
 # define TEXT_EA "../../map/bluestone.png"
 # define TEXT_WE "../../map/bluestone.png"
+
+/*Define MATH */
+# define PI	3.141592653589793238
+# define P2  PI / 2
+# define P3  3 * PI / 2
+# define DR  0.0174533
+
+# define SOUTH  PI / 2
+# define NORTH  3 * PI / 2
+# define WEST	PI
+# define EAST	2 * PI
 
 /*enum color*/
 enum e_color
@@ -68,16 +83,43 @@ enum e_texture
 	EA
 };
 
+typedef struct s_player
+{
+	float 	px;
+	float	py;
+	float	pdx;
+	float	pdy;
+	float	pa;
+}	t_player;
+
+typedef struct s_cube
+{
+	void	*mlx;
+	void	*window;
+	void	*img;
+	char	*address;
+
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+
+	int		pos_x;
+	int		pos_y;
+
+	t_player player;
+}		t_cube;
+
 typedef struct s_struct
 {
 	int		*info;
 	int		fd;
 	int		*color;
 	char	**texture;
-	int		*player;
-	int		height;
-	int		width;
+	double	*player;
+	size_t		height;
+	size_t		width;
 	char	**map;
+	t_cube	*cube;
 }	t_struct;
 
 /*Parsing*/
@@ -120,5 +162,17 @@ void	*ft_free(void *save);
 /*Global utils*/
 int		ft_strcmp(char *s1, char *s2);
 int		msg_error(char *msg);
+
+//Raccourcis clavier
+int	close_on_click(int keycode);
+int keypress(int keycode, t_struct *data);
+
+//Draw
+void	draw_player(t_cube *cube, int color, int x_size, int y_size);
+void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color);
+void	draw_walls(t_cube *cube, int color, int x_size, int y_size, int px, int py);
+void	draw_map_2D(t_struct *data, int color_floor, int color_wall);
+void	drawline(t_cube *cube, int color, float x, float y);
+void	draw_rays(t_struct *data);
 
 #endif

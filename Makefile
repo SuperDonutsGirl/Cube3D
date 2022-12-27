@@ -7,13 +7,16 @@ NAME	= cub3d
 CC 		= gcc
 CFLAGS	= -Wall -Wextra -Werror -Imlx # -Imlx POUR MINILIBX
 DFLAGS	= -MMD -MF $(@:.o=.d)
+MAKE 		= 		make
+MAKE_CLEAN	= 		make clean
+MAKE_FCLEAN = 		make fclean
 #COMPIL	= -Lmlx -lmlx -framework OpenGL -framework AppKit # SERT UNIQUEMENT POUR MINILIBX 19
 #COMPIL 	= -I /usr/X11/include -g -L /usr/X11/lib -l mlx -framework OpenGL -framework AppKit #Pauline
 COMPIL	= -I/usr/X11R6/include -I/usr/X11/include -L/usr/X11R6/lib -L/usr/X11/lib -lX11 -lXext -Lmlx -lmlx -framework OpenGL -framework AppKit
-AUTHOR	= dduraku
+AUTHOR	= dduraku && pamartin
 DATE	= 15/12/2022
 
-NOVISU 	= 0 # 1 = no progress bar usefull when tty is not available
+NOVISU 	= 1 # 1 = no progress bar usefull when tty is not available
 
 ################################################################################
 #                                 PROGRAM'S SRCS                               #
@@ -21,7 +24,11 @@ NOVISU 	= 0 # 1 = no progress bar usefull when tty is not available
 
 FILE_EXTENSION	= .c
 
-SRCS_PATH		= ./srcs
+SRCS_PATH		= ./src/
+
+GNL				= ./gnl/
+
+PARS			= ./parsing/
 
 KEYBIND_PATH	= ./keybinds/
 
@@ -29,10 +36,17 @@ DRAW_PATH		= ./draw/
 
 INCLUDE_PATH	= ./includes
 
+LIB 			= $(SRCS_PATH)libft/libft.a
+
 SRCS			=	$(KEYBIND_PATH)keybinds.c		\
 					$(KEYBIND_PATH)close_on_click.c	\
 					$(DRAW_PATH)draw_map.c			\
 					$(DRAW_PATH)draw_player.c		\
+					$(GNL)gnl.c 				$(GNL)gnl_utils.c \
+                    $(PARS)parsing.c 			$(PARS)pars_line.c			$(PARS)pars_init.c 	\
+					$(PARS)pars_set_color.c		$(PARS)pars_set_texture.c 	$(PARS)pars_map.c	\
+                    $(PARS)pars_utils.c 		$(PARS)pars_map_utils.c \
+					utils.c
 
 MAIN			= main.c
 
@@ -217,7 +231,8 @@ endif
 -include $(DEPS) $(DEPS_MAIN)
 $(NAME):	${OBJS} ${OBJ_MAIN}
 			@$(call display_progress_bar)
-			@$(call run_and_test,$(CC) $(CFLAGS) $(DFLAGS) -I$(INCLUDE_PATH) -o $@ ${COMPIL} ${OBJS} ${OBJ_MAIN}) # ${COMPIL} SERT QUE POUR MINILIBX
+			@$(MAKE) -C $(SRCS_PATH)libft
+			@$(call run_and_test,$(CC) $(CFLAGS) $(DFLAGS) -I$(INCLUDE_PATH) -o $@ ${COMPIL} ${OBJS} ${OBJ_MAIN} $(LIB)) # ${COMPIL} SERT QUE POUR MINILIBX
 			@printf "\n\n$(WARN_COLOR)Project Ready :)$(NO_COLOR)\n"
 
 setup:
@@ -230,10 +245,12 @@ objs/%.o: 	$(SRCS_PATH)/%$(FILE_EXTENSION)
 
 clean:		header
 			@rm -rf objs objs_tests
+			@$(MAKE_CLEAN) -C $(SRCS_PATH)libft
 			@printf "%-53b%b" "$(ERROR_COLOR)clean:" "$(OK_COLOR)[✓]$(NO_COLOR)\n"
 
 fclean:		header clean
 			@rm -rf $(NAME)
+			@$(MAKE_FCLEAN) -C $(SRCS_PATH)libft
 			@printf "%-53b%b" "$(ERROR_COLOR)fclean:" "$(OK_COLOR)[✓]$(NO_COLOR)\n"
 
 re:			fclean all

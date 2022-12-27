@@ -14,7 +14,7 @@
 
 char	*get_map(t_struct *data, char *line)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	data->map = malloc(sizeof(char *) * data->height);
@@ -74,13 +74,13 @@ void	check_player(t_struct *data, char elmt, int y, int x)
 			data->player[1] = y;
 			data->player[2] = x;
 			if (elmt == 'N')
-				data->player[0] = NO;
+				data->player[0] = NORTH;
 			if (elmt == 'S')
-				data->player[0] = SO;
+				data->player[0] = SOUTH;
 			if (elmt == 'E')
-				data->player[0] = EA;
+				data->player[0] = EAST;
 			if (elmt == 'W')
-				data->player[0] = WE;
+				data->player[0] = WEST;
 		}
 		else
 			exit_map_parsing(data, INVALID_MAP, NULL);
