@@ -30,6 +30,7 @@ int	main(int argc, char **argv)
 	data->cube->player.pdx = cos(data->cube->player.pa) * 5;
 	data->cube->player.pdy = sin(data->cube->player.pa) * 5;
 	data->cube->mlx = mlx_init();
+	mlx_do_key_autorepeaton(data->cube->mlx);
 	data->cube->window = mlx_new_window(data->cube->mlx, data->width * 64, data->height * 64, "cub3d");
 	data->cube->img = mlx_new_image(data->cube->mlx, data->width * 64, data->height * 64);
 	data->cube->address = mlx_get_data_addr(data->cube->img, &data->cube->bits_per_pixel,
