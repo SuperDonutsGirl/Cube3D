@@ -27,8 +27,8 @@ void	clear_after_init(t_struct *data, char *line)
 
 void	exit_map_parsing(t_struct *data, char *msg, char *line)
 {
-	clear_after_init(data, line);
 	ft_free_split(data->map);
+	clear_after_init(data, line);
 	exit (msg_error(msg));
 }
 

@@ -76,7 +76,7 @@ static void	init_texture(t_struct *data)
 {
 	int	i;
 
-	data->texture = malloc(sizeof(char *) * 4 + 1);
+	data->texture = malloc(sizeof(char *) * (4 + 1));
 	if (!data->texture)
 	{
 		ft_free(data->info);
@@ -96,7 +96,7 @@ static void	init_texture(t_struct *data)
 		}
 		i++;
 	}
-	//data->texture[i] = 0;
+	data->texture[i] = 0;
 }
 
 void	init_data_parsing(t_struct *data)
