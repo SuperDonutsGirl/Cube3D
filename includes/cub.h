@@ -93,7 +93,7 @@ enum e_texture
 
 typedef struct s_player
 {
-	float 	px;
+	float	px;
 	float	py;
 	float	pdx;
 	float	pdy;
@@ -102,20 +102,20 @@ typedef struct s_player
 
 typedef struct s_cube
 {
-	void	*mlx;
-	void	*window;
-	void	*img;
-	char	*address;
+	void		*mlx;
+	void		*window;
+	void		*img;
+	char		*address;
 
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
 
-	int		pos_x;
-	int		pos_y;
+	int			pos_x;
+	int			pos_y;
 
-	t_player player;
-}		t_cube;
+	t_player	player;
+}	t_cube;
 
 typedef struct s_struct
 {
@@ -126,7 +126,7 @@ typedef struct s_struct
 	double	*player;
 	size_t	height;
 	size_t	width;
-	size_t	mapS;
+	size_t	map_s;
 	char	**map;
 	t_cube	*cube;
 }	t_struct;
@@ -173,8 +173,8 @@ int		ft_strcmp(char *s1, char *s2);
 int		msg_error(char *msg);
 
 //Raccourcis clavier
-int	close_on_click(int keycode);
-int keypress(int keycode, t_struct *data);
+int		close_on_click(int keycode);
+int		keypress(int keycode, t_struct *data);
 
 //Draw
 void	draw_player(t_cube *cube, int color, int size_player);

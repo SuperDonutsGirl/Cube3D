@@ -27,14 +27,14 @@ static void	draw_element(t_struct *data, int color, int *pos)
 	size_t	j;
 
 	i = 0;
-	while (i < data->mapS)
+	while (i < data->map_s)
 	{
 		j = 0;
-		while (j < data->mapS)
+		while (j < data->map_s)
 		{
-			if (i + pos[X] % data->mapS == 0)
+			if (i + pos[X] % data->map_s == 0)
 				my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], 0xFFFFFF);
-			else if (j + pos[Y] % data->mapS == 0)
+			else if (j + pos[Y] % data->map_s == 0)
 				my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], 0xFFFFFF);
 			else
 				my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], color);
@@ -75,10 +75,10 @@ void	draw_map_2d(t_struct *data)
 		while (x < data->width)
 		{
 			put_elements(data, pos, x, y);
-			pos[X] += data->mapS;
+			pos[X] += data->map_s;
 			x++;
 		}
-		pos[Y] += data->mapS;
+		pos[Y] += data->map_s;
 		pos[X] = 0;
 		mlx_put_image_to_window(data->cube->mlx, data->cube->window,
 			data->cube->img, 0, 0);
