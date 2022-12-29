@@ -21,7 +21,7 @@ void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	draw_element(t_struct *data, int color, int *pos)
+static void	draw_element(t_struct *data, int color, int *pos)
 {
 	size_t	i;
 	size_t	j;

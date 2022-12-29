@@ -44,7 +44,7 @@ int	move_player(int keycode, t_struct *data)
 	else if (keycode == ESC) //53 ECOLE, 65307 MBP M1
 		exit(0);
 	mlx_put_image_to_window(data->cube->mlx, data->cube->window, data->cube->img, 0, 0);
-	draw_player(data->cube, 0xFF0053, 10, 10);
+	draw_player(data->cube, 0xFF0053, 10);
 //	draw_rays(data);
 	return 0;
 }

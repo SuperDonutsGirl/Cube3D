@@ -12,18 +12,44 @@
 
 #include "../../includes/cub.h"
 
-void	draw_player(t_cube *cube, int color, int x_size, int y_size)
+static void	draw_orientation_player(t_cube *cube)
 {
-	for (int i = 0; i < y_size; i++)
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < 5)
 	{
-		for (int j = 0; j < x_size; j++)
-			mlx_pixel_put(cube->mlx, cube->window, j + cube->player.px, i + cube->player.py, color);
+		j = 0;
+		while (j < 5)
+		{
+			j++;
+			mlx_pixel_put(cube->mlx, cube->window,
+				j + cube->player.px + cube->player.pdx * 5,
+				i + cube->player.py + cube->player.pdy * 5, 0x000000);
+		}
+		i++;
 	}
-	for (int i = 0; i < 5; i++)
+}
+
+void	draw_player(t_cube *cube, int color, int size_player)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < size_player)
 	{
-		for (int j = 0; j < 5; j++)
-			mlx_pixel_put(cube->mlx, cube->window, j + cube->player.px + cube->player.pdx * 5, i + cube->player.py + cube->player.pdy * 5, 0x000000);
+		i++;
+		j = 0;
+		while (j < size_player)
+		{
+			mlx_pixel_put(cube->mlx, cube->window, j + cube->player.px,
+				i + cube->player.py, color);
+			j++;
+		}
 	}
+	draw_orientation_player(cube);
 }
 
 float	dist(float ax, float ay, float bx, float by)

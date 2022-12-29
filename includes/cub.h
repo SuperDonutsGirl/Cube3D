@@ -176,9 +176,8 @@ int	close_on_click(int keycode);
 int keypress(int keycode, t_struct *data);
 
 //Draw
-void	draw_player(t_cube *cube, int color, int x_size, int y_size);
+void	draw_player(t_cube *cube, int color, int size_player);
 void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color);
-void	draw_element(t_struct *data, int color, int *pos);
 void	draw_map_2d(t_struct *data);
 void	drawline(t_cube *cube, int color, float x, float y);
 void	draw_rays(t_struct *data);
