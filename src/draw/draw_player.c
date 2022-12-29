@@ -26,9 +26,12 @@ void	draw_player(t_cube *cube, int color, int x_size, int y_size)
 	}
 }
 
-float   dist(float ax, float ay, float bx, float by)
+float	dist(float ax, float ay, float bx, float by)
 {
-    return (sqrtf((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
+	float	dist;
+
+	dist = sqrtf((bx - ax) * (bx - ax) + (by - ay) * (by - ay));
+	return (dist);
 }
 
 //void	draw_rays(t_struct *data)

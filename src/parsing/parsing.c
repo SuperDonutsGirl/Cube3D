@@ -76,4 +76,5 @@ void	parsing(int argc, char **argv, t_struct *data)
 	get_height(data);
 	get_fd(data, argv[1]);
 	check_data(data);
+	data->mapS = 64;
 }

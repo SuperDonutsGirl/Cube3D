@@ -16,51 +16,72 @@ void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = cube->address + (y * cube->line_length + x * (cube->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	dst = cube->address + (y * cube->line_length + x
+			* (cube->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
 
-void	draw_walls(t_cube *cube, int color, int x_size, int y_size, int pos_x, int pos_y)
+void	draw_element(t_struct *data, int color, int *pos)
 {
-	for (int i = 0; i < y_size; i++)
-	{
-		for (int j = 0; j < x_size; j++)
-		{
-			if (i + pos_x % 64 == 0)
-				my_mlx_pixel_put(cube, i + pos_x, j + pos_y, 0xFFFFFF);
-			else if (j + pos_y % 64 == 0)
-				my_mlx_pixel_put(cube, i + pos_x, j + pos_y, 0xFFFFFF);
-			else
-				my_mlx_pixel_put(cube, i + pos_x, j + pos_y, color);
-		}
+	size_t	i;
+	size_t	j;
 
+	i = 0;
+	while (i < data->mapS)
+	{
+		j = 0;
+		while (j < data->mapS)
+		{
+			if (i + pos[X] % data->mapS == 0)
+				my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], 0xFFFFFF);
+			else if (j + pos[Y] % data->mapS == 0)
+				my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], 0xFFFFFF);
+			else
+				my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], color);
+			j++;
+		}
+		i++;
 	}
 }
 
-void	draw_map_2D(t_struct *data, int color_floor, int color_wall)
+static void	put_elements(t_struct *data, int *pos, size_t x, size_t y)
 {
-	size_t mapS = 64;
-	int	pos_x = 0, pos_y = 0;
-	size_t x, y;
-	for (y = 0; y < data->height; y++)
+	if (data->map[y][x] == '1')
+		draw_element(data, 0x545650, pos);
+	else if (data->map[y][x] == '0')
+		draw_element(data, 0xC5C8BD, pos);
+	else
 	{
-		for (x = 0; x < data->width; x++)
+		if (data->map[y][x] == 'S' || data->map[y][x] == 'N'
+			|| data->map[y][x] == 'E' || data->map[y][x] == 'W')
+			draw_element(data, 0x0000FF, pos);
+		else
+			draw_element(data, 0x00FF00, pos);
+	}
+}
+
+void	draw_map_2d(t_struct *data)
+{
+	size_t	x;
+	size_t	y;
+	int		pos[2];
+
+	pos[X] = 0;
+	pos[Y] = 0;
+	y = 0;
+	while (y < data->height)
+	{
+		x = 0;
+		while (x < data->width)
 		{
-			if (data->map[y][x] == '1')
-				draw_walls(data->cube, color_wall, mapS, mapS, pos_x, pos_y);
-			else if (data->map[y][x] == '0')
-				draw_walls(data->cube, color_floor, mapS, mapS, pos_x, pos_y);
-			else
-			{
-				if (data->map[y][x] == 'S' || data->map[y][x] == 'N' || data->map[y][x] == 'E' || data->map[y][x] == 'W')
-					draw_walls(data->cube, 0x0000FF, mapS, mapS, pos_x, pos_y);
-				else
-					draw_walls(data->cube, 0x00FF00, mapS, mapS, pos_x, pos_y);
-			}
-			pos_x += 64;
+			put_elements(data, pos, x, y);
+			pos[X] += data->mapS;
+			x++;
 		}
-		pos_y += 64;
-		pos_x = 0;
-		mlx_put_image_to_window(data->cube->mlx, data->cube->window, data->cube->img, 0, 0);
+		pos[Y] += data->mapS;
+		pos[X] = 0;
+		mlx_put_image_to_window(data->cube->mlx, data->cube->window,
+			data->cube->img, 0, 0);
+		y++;
 	}
 }

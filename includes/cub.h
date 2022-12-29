@@ -67,6 +67,13 @@
 # define WEST	PI
 # define EAST	2 * PI
 
+/*Enum pos*/
+enum e_position
+{
+	X,
+	Y
+};
+
 /*enum color*/
 enum e_color
 {
@@ -116,8 +123,9 @@ typedef struct s_struct
 	int		*color;
 	char	**texture;
 	double	*player;
-	size_t		height;
-	size_t		width;
+	size_t	height;
+	size_t	width;
+	size_t	mapS;
 	char	**map;
 	t_cube	*cube;
 }	t_struct;
@@ -170,8 +178,8 @@ int keypress(int keycode, t_struct *data);
 //Draw
 void	draw_player(t_cube *cube, int color, int x_size, int y_size);
 void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color);
-void	draw_walls(t_cube *cube, int color, int x_size, int y_size, int px, int py);
-void	draw_map_2D(t_struct *data, int color_floor, int color_wall);
+void	draw_element(t_struct *data, int color, int *pos);
+void	draw_map_2d(t_struct *data);
 void	drawline(t_cube *cube, int color, float x, float y);
 void	draw_rays(t_struct *data);
 
