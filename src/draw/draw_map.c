@@ -12,13 +12,23 @@
 
 #include "../../includes/cub.h"
 
+// void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color)
+// {
+// 	char	*dst;
+
+// 	dst = cube->address + (y * cube->line_length + x
+// 			* (cube->bits_per_pixel / 8));
+// 	*(unsigned int *)dst = color;
+// }
+
 void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color)
 {
-	char	*dst;
+	int	pix;
 
-	dst = cube->address + (y * cube->line_length + x
-			* (cube->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	pix = (x * cube->bits_per_pixel / 8) + (y * cube->line_length);
+	cube->address[pix] = color;
+	cube->address[pix + 1] = color >> 8;
+	cube->address[pix + 2] = color >> 16;
 }
 
 static void	draw_element(t_struct *data, int color, int *pos)
@@ -33,11 +43,20 @@ static void	draw_element(t_struct *data, int color, int *pos)
 		while (j < data->map_s)
 		{
 			if (i + pos[X] % data->map_s == 0)
+			{
+				//if (i + pos[X] < (data->width * data->map_s ) / 2&& j + pos[Y] < (data->height * data->map_s) / 2)
 				my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], 0xFFFFFF);
+			}
 			else if (j + pos[Y] % data->map_s == 0)
+			{
+				//if (i + pos[X] < (data->width * data->map_s ) / 2&& j + pos[Y] < (data->height * data->map_s) / 2)
 				my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], 0xFFFFFF);
+			}
 			else
-				my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], color);
+			{
+				//if (i + pos[X] < (data->width * data->map_s ) / 2&& j + pos[Y] < (data->height * data->map_s) / 2)
+					my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], color);
+			}
 			j++;
 		}
 		i++;
