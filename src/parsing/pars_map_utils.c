@@ -40,6 +40,7 @@ void	only_good_char(t_struct *data)
 	}
 	if (data->player[0] == -1)
 		exit_map_parsing(data, INVALID_MAP, NULL);
+	printf("data->width = %zu\n", data->width);
 }
 
 void	update_with_space(t_struct *data)

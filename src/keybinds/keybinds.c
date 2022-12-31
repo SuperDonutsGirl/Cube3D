@@ -57,10 +57,9 @@ int	move_player(int keycode, t_struct *data)
 		exit(0); //Leaks
 	mlx_put_image_to_window(data->cube->mlx, data->cube->window,
 		data->cube->img, 0, 0);
-	//mlx_put_image_to_window(data->cube->mlx, data->cube->window, data->cube->mini, 0, 0);
 	draw_player(data, 0xFF0053, 16);
+	draw_rays(data);
 	draw_mini_map(data);
-	// draw_rays(data);
 	return (0);
 }
 

@@ -129,6 +129,7 @@ typedef struct s_struct
 	size_t	map_s;
 	size_t	mini_s;
 	char	**map;
+	int		*int_map;
 	t_cube	*cube;
 }	t_struct;
 
@@ -156,6 +157,7 @@ void	update_with_space(t_struct *data);
 void	check_border(t_struct *data);
 void	check_around_space(t_struct *data);
 void	check_player(t_struct *data, char elmt, int y, int x);
+void	get_int_map(t_struct *data);
 		/*utils*/
 char	**split_line_and_check(t_struct *data, char *line);
 void	get_fd(t_struct *data, char *file);

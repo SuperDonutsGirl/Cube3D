@@ -136,8 +136,6 @@ void	draw_mini_map(t_struct *data)
 		while (x < center[X] + 8)
 		{
 			put_elements(data, pos, x, y, data->mini_s);
-			if (data->map[(size_t)y][(size_t)x] == 'S')
-				printf("carré perso commence a x = %f et y = %f\n", x, y);
 			pos[X] += data->mini_s;
 			x++;
 		}
@@ -145,12 +143,7 @@ void	draw_mini_map(t_struct *data)
 		pos[X] = 0;
 		y++;
 	}
-	printf("xplayer -map            = %f\n", data->cube->player.px);
-	printf("xplayer -mini           = %f\n", player[X]);
-	printf("player position x       = %f\n\n", data->player[2]);
-	printf("yplayer -map            = %f\n", data->cube->player.py);
-	printf("yplayer -mini           = %f\n", player[Y]);
-	printf("player position y       = %f\n\n\n\n", data->player[1]);
+
 	float	i;
 	float	j;
 

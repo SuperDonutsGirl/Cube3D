@@ -37,6 +37,8 @@ char	*get_map(t_struct *data, char *line)
 	data->map[i] = 0;
 	close(data->fd);
 	data->fd = 0;
+
+
 	return (line);
 }
 
@@ -85,5 +87,40 @@ void	check_player(t_struct *data, char elmt, int y, int x)
 		}
 		else
 			exit_map_parsing(data, INVALID_MAP, NULL);
+	}
+}
+
+
+void	get_int_map(t_struct *data)
+{
+	size_t	i;
+	data->int_map = malloc(sizeof(int) * (data->height * data->width));
+	if (!data->int_map)
+		exit (msg_error(MALLOC));
+	i = 0;
+
+	while (i < (data->height * data->width))
+	{
+		for (size_t y = 0; y < data->height; y++)
+		{
+			for (size_t x = 0; x < data->width; x++)
+			{
+				if (data->map[y][x] == '1')
+					data->int_map[i] = 1;
+				else if (data->map[y][x] == '0')
+					data->int_map[i] = 0;
+				else if (data->map[y][x] == ' ')
+					data->int_map[i] = -1;
+				else if (data->map[y][x] == 'N')
+					data->int_map[i] = 2;
+				else if (data->map[y][x] == 'S')
+					data->int_map[i] = 3;
+				else if (data->map[y][x] == 'E')
+					data->int_map[i] = 4;
+				else if (data->map[y][x] == 'W')
+					data->int_map[i] = 5;
+				i++;
+			}
+		}
 	}
 }
