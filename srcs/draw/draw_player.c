@@ -94,53 +94,54 @@ void	drawline(t_cube *cube, int color, float x_col, float y_col, char type)
 			}
 		}
 }
-void	draw_rays(t_cube *cube, int *map)
+
+void	draw_rays(t_struct *data)
 {
 	int r, mx, my, mp, dof;
 	float rx, ry, ra, xo, yo;
 
-	ra = cube->player.pa;
-	for (r = 0; r < 1; r++)
+	ra = data->cube->player.pa - DR * 360;
+   if (ra < 0)
+       ra += 2 * PI;
+   if (ra > 2 * PI)
+       ra -= 2 * PI;
+	for (r = 0; r < 360; r++)
 	{
-		//horizontal
+       //----------------HORIZONTALES----------------
 		dof = 0;
-		float distH = 1000000000;
-		float hx = cube->player.px;
-		float hy = cube->player.py;
+       float disH = 1000000, hx = data->cube->player.px, hy = data->cube->player.py;
 		float aTan = -1 / tan(ra);
 		if (ra > PI)
 		{
-			ry = (((int) cube->player.py >> 6) << 6) - 0.0001;
-			rx = (cube->player.py - ry) * aTan + cube->player.px;
+			ry = (((int) data->cube->player.py >> 6) << 6) - 0.0001;
+			rx = (data->cube->player.py - ry) * aTan + data->cube->player.px;
 			yo = -64;
 			xo = -yo * aTan;
 		}
 		if (ra < PI)
 		{
-			ry = (((int) cube->player.py >> 6) << 6) + 64;
-			rx = (cube->player.py - ry) * aTan + cube->player.px;
+			ry = (((int) data->cube->player.py >> 6) << 6) + 64;
+			rx = (data->cube->player.py - ry) * aTan + data->cube->player.px;
 			yo = 64;
 			xo = -yo * aTan;
 		}
 		if (ra == 0 || ra == PI)
 		{
-			rx = cube->player.px;
-			ry = cube->player.py;
+			rx = data->cube->player.px;
+			ry = data->cube->player.py;
 			dof = 8;
 		}
 		while (dof < 8)
 		{
-			//drawline(cube, 16711680, rx, ry);
 			mx = (int) (rx) >> 6;
 			my = (int) (ry) >> 6;
 			mp = my * 8 + mx;
-			if (mp < 8 * 8 && map[mp] == 1)
+			if (mp > 0 && mp < 8 * 8 && map[mp] == 1)
 			{
-				hx = rx;
-				hy = ry;
-				distH = dist(cube->player.px, cube->player.py, hx, hy);
+               hx = rx;
+               hy = ry;
+               disH = dist(data->cube->player.px, data->cube->player.py, hx, hy);
 				dof = 8;
-				//mlx_string_put(cube->mlx, cube->window, rx, ry, 0xFF0000, "ICI");
 			}
 			else
 			{
@@ -149,63 +150,41 @@ void	draw_rays(t_cube *cube, int *map)
 				dof += 1;
 			}
 		}
-		//vertical
-		dof = 0;
-		float distV = 1000000000;
-		float vx = cube->player.px;
-		float vy = cube->player.py;
+       //----------------VERTICALES
+       dof = 0;
+       float disV = 1000000, vx = data->cube->player.px, vy = data->cube->player.py;
 		float nTan = -tan(ra);
 		if (ra > P2 && ra < P3)
 		{
-			rx = (((int) cube->player.px >> 6) << 6) - 0.0001;
-			ry = (cube->player.px - rx) * nTan + cube->player.py;
+			rx = (((int) data->cube->player.px >> 6) << 6) - 0.0001;
+			ry = (data->cube->player.px - rx) * nTan + data->cube->player.py;
 			xo = -64;
 			yo = -xo * nTan;
 		}
 		if (ra < P2 || ra > P3)
 		{
-			rx = (((int) cube->player.py >> 6) << 6) + 64;
-			ry = (cube->player.py - rx) * nTan + cube->player.px;
+			rx = (((int) data->cube->player.px >> 6) << 6) + 64;
+			ry = (data->cube->player.px - rx) * nTan + data->cube->player.py;
 			xo = 64;
 			yo = -xo * nTan;
 		}
 		if (ra == 0 || ra == PI)
 		{
-			rx = cube->player.px;
-			ry = cube->player.py;
+			rx = data->cube->player.px;
+			ry = data->cube->player.py;
 			dof = 8;
 		}
 		while (dof < 8)
 		{
-			//drawline(cube, 16711680, rx, ry);
 			mx = (int) (rx) >> 6;
 			my = (int) (ry) >> 6;
 			mp = my * 8 + mx;
-			printf("mp = %d\n", mp);
-			if (mp < 8 * 8 && map[mp] == 1)
+			if (mp > 0 && mp < 8 * 8 && map[mp] == 1)
 			{
-				vx = rx;
-				vy = ry;
-				distV = dist(cube->player.px, cube->player.py, vx, vy);
+               vx = rx;
+               vy = ry;
+               disV = dist(data->cube->player.px, data->cube->player.py, vx, vy);
 				dof = 8;
-				printf("dist V = %f\ndist H = %f \n", distV, distH);
-				if (distV < distH || distH == 1000000000) 
-				{
-					rx = vx;
-					ry = vy;
-					drawline(cube, 0x00FF00, rx, ry, 'v');
-					printf("coll vertical \n");
-					mlx_string_put(cube->mlx, cube->window, rx, ry, 0x00FF00, "ICI");
-				}
-				if (distH < distV || distV == 1000000000)
-				{
-					rx = hx;
-					ry = hy;
-					drawline(cube, 0xFF0000, rx, ry, 'h');
-					printf("coll horizonrtal \n");
-					mlx_string_put(cube->mlx, cube->window, rx, ry, 0xFF0000, "ICI");
-				}
-				//mlx_string_put(cube->mlx, cube->window, rx, ry, 0xFF0000, "ICI");
 			}
 			else
 			{
@@ -213,7 +192,22 @@ void	draw_rays(t_cube *cube, int *map)
 				ry += yo;
 				dof += 1;
 			}
-
 		}
+       if (disV < disH)
+       {
+           rx = vx;
+           ry = vy;
+       }
+       if (disH < disV)
+       {
+           rx = hx;
+           ry = hy;
+       }
+       mlx_string_put(data->cube->mlx, data->cube->window, rx, ry, 0xFF0000, ".");
+       ra += DR;
+       if (ra < 0)
+           ra += 2 * PI;
+       if (ra > 2 * PI)
+           ra -= 2 * PI;
 	}
 }
