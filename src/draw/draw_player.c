@@ -32,7 +32,7 @@ static void	draw_orientation_player(t_cube *cube)
 	}
 }
 
-void	draw_player(t_cube *cube, int color, int size_player)
+void	draw_player(t_struct *data, int color, int size_player)
 {
 	int	i;
 	int	j;
@@ -44,12 +44,12 @@ void	draw_player(t_cube *cube, int color, int size_player)
 		j = 0;
 		while (j < size_player)
 		{
-			mlx_pixel_put(cube->mlx, cube->window, j + cube->player.px,
-				i + cube->player.py, color);
+			mlx_pixel_put(data->cube->mlx, data->cube->window, j + data->cube->player.px,
+				i + data->cube->player.py, color);
 			j++;
 		}
 	}
-	draw_orientation_player(cube);
+	draw_orientation_player(data->cube);
 }
 
 float	dist(float ax, float ay, float bx, float by)

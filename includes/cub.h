@@ -104,9 +104,9 @@ typedef struct s_cube
 {
 	void		*mlx;
 	void		*window;
+
 	void		*img;
 	char		*address;
-
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
@@ -127,6 +127,7 @@ typedef struct s_struct
 	size_t	height;
 	size_t	width;
 	size_t	map_s;
+	size_t	mini_s;
 	char	**map;
 	t_cube	*cube;
 }	t_struct;
@@ -177,7 +178,8 @@ int		close_on_click(int keycode);
 int		keypress(int keycode, t_struct *data);
 
 //Draw
-void	draw_player(t_cube *cube, int color, int size_player);
+void	draw_player(t_struct *data, int color, int size_player);
+void	draw_mini_map(t_struct *data);
 void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color);
 void	draw_map_2d(t_struct *data);
 void	drawline(t_cube *cube, int color, float x, float y);
