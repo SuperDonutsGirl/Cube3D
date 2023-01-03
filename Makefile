@@ -42,6 +42,7 @@ SRCS			=	$(KEYBIND_PATH)keybinds.c		\
 					$(KEYBIND_PATH)close_on_click.c	\
 					$(DRAW_PATH)draw_map.c			\
 					$(DRAW_PATH)draw_player.c		\
+					$(DRAW_PATH)ray_casting.c 		\
 					$(GNL)gnl.c 				$(GNL)gnl_utils.c \
                     $(PARS)parsing.c 			$(PARS)pars_line.c			$(PARS)pars_init.c 	\
 					$(PARS)pars_set_color.c		$(PARS)pars_set_texture.c 	$(PARS)pars_map.c	\

@@ -72,7 +72,15 @@
 enum e_position
 {
 	X,
-	Y
+	Y,
+	DIST
+};
+
+/*Enum type*/
+enum e_type
+{
+	HORIZONTAL,
+	VERTICAL
 };
 
 /*enum color*/
