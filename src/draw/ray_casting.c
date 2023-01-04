@@ -27,7 +27,10 @@ void	bresenham(t_struct *data, float ox, float oy, float rx, float ry)
 	while (ft_abs(rx-ox) != 0 || ft_abs(ry-oy) != 0)
 	{
 		if (ox >= 0 && ox < data->width*data->map_s && oy >=0 && oy < data->height*data->map_s)
-			my_mlx_pixel_put(data->cube, ox, oy, 0xFF0000);
+		{
+			mlx_pixel_put(data->cube->mlx, data->cube->window, ox, oy, 0xFF0000);
+			//my_mlx_pixel_put(data->cube, ox, oy, 0xFF0000);
+		}
 		ox += dist_x / max;
 		oy += dist_y / max;
 	}
@@ -36,6 +39,8 @@ void	bresenham(t_struct *data, float ox, float oy, float rx, float ry)
 float	dist(float ax, float ay, float bx, float by)
 {
 	float	dist;
+
+
 
 	dist = sqrtf((bx - ax) * (bx - ax) + (by - ay) * (by - ay));
 	return (dist);
@@ -85,7 +90,7 @@ int	check_ra_vertical(t_struct *data, float *ray, float *o, float ra, float tang
 	{
 		ray[X] = (((int) data->cube->player.px >> 6) << 6) + data->map_s;
 		ray[Y] = (data->cube->player.px - ray[X]) * tang + data->cube->player.py;
-		o[X] = data->map_s;
+		o[X] =data->map_s;
 		o[Y] = -o[X] * tang;
 	}
 	if (ra == 0 || ra == PI)
@@ -104,6 +109,7 @@ float	*get_data_ray(t_struct *data, float *data_ray, float ra, int type)
 	float	ray[2];
 	float	o[2];
 	float	tang;
+	int boucle;
 
 	data_ray = malloc(sizeof(float) * 3);
 	dof = 0;
@@ -114,13 +120,15 @@ float	*get_data_ray(t_struct *data, float *data_ray, float ra, int type)
 	{
 		tang = -tan(ra);
 		dof = check_ra_vertical(data, ray, o, ra, tang);
+		boucle = data->width;
 	}
 	else
 	{
 		tang = -1 / tan(ra);
 		dof = check_ra_horizontal(data, ray, o, ra, tang);
+		boucle = data->height;
 	}
-	while (dof < (int)(data->height * data->width))
+	while (dof < boucle)
 	{
 		m[X] = (int)ray[X] >> 6;
 		m[Y] = (int)ray[Y] >> 6;
@@ -132,7 +140,7 @@ float	*get_data_ray(t_struct *data, float *data_ray, float ra, int type)
 			//x = %f px = %f\npdy = %f py= %f",data->cube->player.pdx, data->cube->player.px, data->cube->player.pdy, data->cube->player.py);
 			data_ray[DIST] = dist(data->cube->player.px, data->cube->player.py, data_ray[X], data_ray[Y]);
 			//mlx_string_put(data->cube->mlx, data->cube->window, ray[X], ray[Y], 0xFF0000, "X");
-			dof = data->height * data->width;
+			dof = boucle;
 		}
 		else
 		{
@@ -178,9 +186,9 @@ void	draw_rays(t_struct *data)
 			//printf("horizontal\n");
 		}
 		bresenham(data, data->cube->player.px, data->cube->player.py, rx, ry);
-		//mlx_string_put(data->cube->mlx, data->cube->window, rx, ry, 0xFF0000, ".");
+		mlx_string_put(data->cube->mlx, data->cube->window, rx, ry, 0x00FF00, ".");
 		ra += DR;
-		printf("ra = %f\n", ra);
+		//printf("ra = %f\n", ra);
 		if (ra < 0)
 			ra += 2 * PI;
 		if (ra > 2 * PI)
