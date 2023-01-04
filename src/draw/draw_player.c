@@ -50,4 +50,5 @@ void	draw_player(t_struct *data, int color, int size_player)
 		}
 	}
 	draw_orientation_player(data->cube);
+	//draw_rays(data);
 }

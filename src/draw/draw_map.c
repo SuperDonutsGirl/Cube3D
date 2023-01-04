@@ -12,24 +12,24 @@
 
 #include "../../includes/cub.h"
 
-// void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color)
-// {
-// 	char	*dst;
-
-// 	dst = cube->address + (y * cube->line_length + x
-// 			* (cube->bits_per_pixel / 8));
-// 	*(unsigned int *)dst = color;
-// }
-
 void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color)
 {
-	int	pix;
+	char	*dst;
 
-	pix = (x * cube->bits_per_pixel / 8) + (y * cube->line_length);
-	cube->address[pix] = color;
-	cube->address[pix + 1] = color >> 8;
-	cube->address[pix + 2] = color >> 16;
+	dst = cube->address + (y * cube->line_length + x
+			* (cube->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
+
+// void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color)
+// {
+// 	int	pix;
+
+// 	pix = (x * cube->bits_per_pixel / 8) + (y * cube->line_length);
+// 	cube->address[pix] = color;
+// 	cube->address[pix + 1] = color >> 8;
+// 	cube->address[pix + 2] = color >> 16;
+// }
 
 static void	draw_element(t_struct *data, int color, int *pos, size_t size)
 {

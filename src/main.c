@@ -18,7 +18,6 @@ void	init_cube(t_struct *data)
 	if (!data->cube)
 		exit_map_parsing(data, MALLOC, NULL);
 	data->cube->player.px = data->player[2] * data->map_s + 28;
-	// a quoi correspond le 28 ?
 	data->cube->player.py = data->player[1] * data->map_s + 28;
 	data->cube->player.pa = data->player[0];
 	data->cube->player.pdx = cos(data->cube->player.pa) * 5;
@@ -48,6 +47,7 @@ int	main(int argc, char **argv)
 	//get_int_map(data);
 	draw_map_2d(data);
 	draw_player(data, 0xFF0053, 16); //Quid modif pour minimap
+	//draw_rays(data);
 	//draw_mini_map(data);
 	mlx_hook(data->cube->window, 3, 3, keypress, data);
 	mlx_hook(data->cube->window, 17, 0L, close_on_click, data->cube);
