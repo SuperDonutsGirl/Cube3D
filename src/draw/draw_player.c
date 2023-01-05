@@ -44,8 +44,8 @@ void	draw_player(t_struct *data, int color, int size_player)
 		j = 0;
 		while (j < size_player)
 		{
-			mlx_pixel_put(data->cube->mlx, data->cube->window, j + data->cube->player.px,
-				i + data->cube->player.py, color);
+			mlx_pixel_put(data->cube->mlx, data->cube->window,
+				j + data->cube->player.px, i + data->cube->player.py, color);
 			j++;
 		}
 	}

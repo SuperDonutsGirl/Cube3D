@@ -44,11 +44,9 @@ int	main(int argc, char **argv)
 		exit (msg_error(MALLOC));
 	parsing(argc, argv, data);
 	init_cube(data);
-	//get_int_map(data);
 	draw_map_2d(data);
 	draw_player(data, 0xFF0053, 16); //Quid modif pour minimap
-	//draw_rays(data);
-	//draw_mini_map(data);
+	draw_rays(data);
 	mlx_hook(data->cube->window, 3, 3, keypress, data);
 	mlx_hook(data->cube->window, 17, 0L, close_on_click, data->cube);
 	mlx_loop(data->cube->mlx);

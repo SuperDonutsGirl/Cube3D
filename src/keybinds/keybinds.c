@@ -59,7 +59,6 @@ int	move_player(int keycode, t_struct *data)
 		data->cube->img, 0, 0);
 	draw_player(data, 0xFF0053, 16);
 	draw_rays(data);
-	//draw_mini_map(data);
 	return (0);
 }
 

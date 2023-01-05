@@ -1,0 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pamartin <pamartin@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/05 18:09:56 by pamartin          #+#    #+#             */
+/*   Updated: 2023/01/05 18:09:57 by pamartin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/cub.h"
+
+void	bresenham(t_struct *data, float ox, float oy, float *r)
+{
+	float	dist_x;
+	float	dist_y;
+	float	max;
+
+	dist_x = r[X] - ox;
+	dist_y = r[Y] - oy;
+	if (ft_abs(dist_x) > ft_abs(dist_y))
+		max = ft_abs(dist_x);
+	else
+		max = ft_abs(dist_y);
+	while (ft_abs(r[X] - ox) != 0 || ft_abs(r[Y] - oy) != 0)
+	{
+		if (ox >= 0 && ox < data->width * data->map_s && oy >= 0
+			&& oy < data->height * data->map_s)
+		{
+			mlx_pixel_put(data->cube->mlx, data->cube->window,
+				ox, oy, 0xFF0000);
+		}
+		ox += dist_x / max;
+		oy += dist_y / max;
+	}
+}
+
+float	dist(float ax, float ay, float bx, float by)
+{
+	float	dist;
+
+	dist = sqrtf((bx - ax) * (bx - ax) + (by - ay) * (by - ay));
+	return (dist);
+}

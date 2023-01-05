@@ -59,14 +59,14 @@
 
 /*Define MATH */
 # define PI	3.141592653589793238
-# define P2  PI / 2
-# define P3  3 * PI / 2
+# define P2  1.57079632679
+# define P3  4.71238898038
 # define DR  0.0174533
 
-# define SOUTH  PI / 2
-# define NORTH  3 * PI / 2
+# define SOUTH  1.57079632679
+# define NORTH  4.71238898038
 # define WEST	PI
-# define EAST	2 * PI
+# define EAST	6.28318530718
 
 /*Enum pos*/
 enum e_position
@@ -161,11 +161,11 @@ int		first_line(char *line, int type);
 void	get_height(t_struct *data);
 char	*get_map(t_struct *data, char *line);
 void	only_good_char(t_struct *data);
+int		good_char(char c);
 void	update_with_space(t_struct *data);
 void	check_border(t_struct *data);
 void	check_around_space(t_struct *data);
 void	check_player(t_struct *data, char elmt, int y, int x);
-void	get_int_map(t_struct *data);
 		/*utils*/
 char	**split_line_and_check(t_struct *data, char *line);
 void	get_fd(t_struct *data, char *file);
@@ -193,6 +193,12 @@ void	draw_mini_map(t_struct *data);
 void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color);
 void	draw_map_2d(t_struct *data);
 void	drawline(t_cube *cube, int color, float x, float y);
+
+//Raycasting
+void	bresenham(t_struct *data, float ox, float oy, float *r);
+float	dist(float ax, float ay, float bx, float by);
+int		*dof_vertical(t_struct *data, float *ray, float *o, float ra);
+int		*dof_horizontal(t_struct *data, float *ray, float *o, float ra);
 void	draw_rays(t_struct *data);
 
 #endif
