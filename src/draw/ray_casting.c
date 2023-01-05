@@ -56,22 +56,21 @@ float	*get_data_ray(t_struct *data, float *data_ray, float ra, int type)
 	return (data_ray);
 }
 
-float	*check_dist(float *ver, float *hor)
+float	check_dist(float *ver, float *hor, float dist_t, float *ray)
 {
-	float	*ray;
-
-	ray = malloc(sizeof(float) * 2);
 	if (ver[DIST] < hor[DIST])
 	{
 		ray[X] = ver[X];
 		ray[Y] = ver[Y];
+		dist_t = ver[DIST];
 	}
 	else
 	{
 		ray[X] = hor[X];
 		ray[Y] = hor[Y];
+		dist_t = hor[DIST];
 	}
-	return (ray);
+	return (dist_t);
 }
 
 void	draw_rays(t_struct *data)
@@ -81,19 +80,35 @@ void	draw_rays(t_struct *data)
 	float	*ray;
 	float	*hor;
 	float	*ver;
+	float dist_t;
 
-	ra = data->cube->player.pa - DR * 45;
+	ray = malloc(sizeof(float) * 2);
+	ra = data->cube->player.pa - DR * 30;
 	if (ra < 0)
 		ra += 2 * PI;
 	if (ra > 2 * PI)
 		ra -= 2 * PI;
 	r = 0;
-	while (r < 90)
+	while (r < 60)
 	{
 		hor = get_data_ray(data, hor, ra, HORIZONTAL);
 		ver = get_data_ray(data, ver, ra, VERTICAL);
-		ray = check_dist(ver, hor);
-		bresenham(data, data->cube->player.px, data->cube->player.py, ray);
+		dist_t = check_dist(ver, hor, dist_t, ray);
+		bresenham(data, data->cube->player.px + 8, data->cube->player.py + 8, ray);
+		float	ca;
+		float line_o;
+		float line_h;
+		ca = data->cube->player.pa - ra;
+		if (ca < 0)
+			ca += 2 * PI;
+		if (ca > 2 * PI)
+			ca -= 2 * PI;
+		dist_t = dist_t * cos(ca);
+		line_h = data->map_s * 320 / dist_t;
+		line_o = 160 - line_h / 2;
+		if (line_h > 320)
+			line_h = 320;	
+		bresenham3d(data, r * 8 + 530, line_o, r * 8 + 530, line_h + line_o);
 		ra += DR;
 		if (ra < 0)
 			ra += 2 * PI;

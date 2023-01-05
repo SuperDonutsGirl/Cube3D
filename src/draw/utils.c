@@ -37,6 +37,37 @@ void	bresenham(t_struct *data, float ox, float oy, float *r)
 	}
 }
 
+void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry)
+{
+	float	dist_x;
+	float	dist_y;
+	float	max;
+	int		i;
+
+	dist_x = rx - ox;
+	dist_y = ry - oy;
+	if (ft_abs(dist_x) > ft_abs(dist_y))
+		max = ft_abs(dist_x);
+	else
+		max = ft_abs(dist_y);
+	while (ft_abs(rx - ox) != 0 || ft_abs(ry - oy) != 0)
+	{
+		if (ox >= 0 && ox < 1024 * data->map_s && oy >= 0
+			&& oy < 512 * data->map_s)
+		{
+			i = 0;
+			while (i < 8)
+			{
+				mlx_pixel_put(data->cube->mlx, data->cube->window,
+					ox + i, oy, 0xFF0000);
+				i++;
+			}
+		}
+		ox += dist_x / max;
+		oy += dist_y / max;
+	}
+}
+
 float	dist(float ax, float ay, float bx, float by)
 {
 	float	dist;

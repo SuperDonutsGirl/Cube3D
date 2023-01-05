@@ -201,4 +201,7 @@ int		*dof_vertical(t_struct *data, float *ray, float *o, float ra);
 int		*dof_horizontal(t_struct *data, float *ray, float *o, float ra);
 void	draw_rays(t_struct *data);
 
+//3D
+void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry);
+
 #endif
