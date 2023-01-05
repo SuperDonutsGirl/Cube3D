@@ -72,7 +72,15 @@
 enum e_position
 {
 	X,
-	Y
+	Y,
+	DIST
+};
+
+/*Enum type*/
+enum e_type
+{
+	HORIZONTAL,
+	VERTICAL
 };
 
 /*enum color*/
@@ -104,9 +112,9 @@ typedef struct s_cube
 {
 	void		*mlx;
 	void		*window;
+
 	void		*img;
 	char		*address;
-
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
@@ -126,8 +134,10 @@ typedef struct s_struct
 	double	*player;
 	size_t	height;
 	size_t	width;
-	size_t	map_s;
+	float	map_s;
+	size_t	mini_s;
 	char	**map;
+	int		*int_map;
 	t_cube	*cube;
 }	t_struct;
 
@@ -155,6 +165,7 @@ void	update_with_space(t_struct *data);
 void	check_border(t_struct *data);
 void	check_around_space(t_struct *data);
 void	check_player(t_struct *data, char elmt, int y, int x);
+void	get_int_map(t_struct *data);
 		/*utils*/
 char	**split_line_and_check(t_struct *data, char *line);
 void	get_fd(t_struct *data, char *file);
@@ -177,7 +188,8 @@ int		close_on_click(int keycode);
 int		keypress(int keycode, t_struct *data);
 
 //Draw
-void	draw_player(t_cube *cube, int color, int size_player);
+void	draw_player(t_struct *data, int color, int size_player);
+void	draw_mini_map(t_struct *data);
 void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color);
 void	draw_map_2d(t_struct *data);
 void	drawline(t_cube *cube, int color, float x, float y);

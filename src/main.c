@@ -18,7 +18,6 @@ void	init_cube(t_struct *data)
 	if (!data->cube)
 		exit_map_parsing(data, MALLOC, NULL);
 	data->cube->player.px = data->player[2] * data->map_s + 28;
-	// a quoi correspond le 28 ?
 	data->cube->player.py = data->player[1] * data->map_s + 28;
 	data->cube->player.pa = data->player[0];
 	data->cube->player.pdx = cos(data->cube->player.pa) * 5;
@@ -26,12 +25,14 @@ void	init_cube(t_struct *data)
 	data->cube->mlx = mlx_init();
 	mlx_do_key_autorepeaton(data->cube->mlx);
 	data->cube->window = mlx_new_window(data->cube->mlx,
-			data->width * data->map_s, data->height * data->map_s, "cub3d");
+			1024, 768, "cub3d");
 	data->cube->img = mlx_new_image(data->cube->mlx, data->width * data->map_s,
 			data->height * data->map_s);
 	data->cube->address = mlx_get_data_addr(data->cube->img,
 			&data->cube->bits_per_pixel, &data->cube->line_length,
 			&data->cube->endian);
+	//data->cube->mini = mlx_new_image(data->cube->img, 300, 300);
+	//data->cube->address = mlx_get_data_addr(data->cube->mini, &data->cube->bpp_mini, &data->cube->ll_mini, &data->cube->end_mini);
 }
 
 int	main(int argc, char **argv)
@@ -43,8 +44,11 @@ int	main(int argc, char **argv)
 		exit (msg_error(MALLOC));
 	parsing(argc, argv, data);
 	init_cube(data);
+	//get_int_map(data);
 	draw_map_2d(data);
-	draw_player(data->cube, 0xFF0053, 10); //Quid modif pour minimap
+	draw_player(data, 0xFF0053, 16); //Quid modif pour minimap
+	//draw_rays(data);
+	//draw_mini_map(data);
 	mlx_hook(data->cube->window, 3, 3, keypress, data);
 	mlx_hook(data->cube->window, 17, 0L, close_on_click, data->cube);
 	mlx_loop(data->cube->mlx);
