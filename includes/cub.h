@@ -134,7 +134,7 @@ typedef struct s_struct
 	double	*player;
 	size_t	height;
 	size_t	width;
-	size_t	map_s;
+	float	map_s;
 	size_t	mini_s;
 	char	**map;
 	int		*int_map;

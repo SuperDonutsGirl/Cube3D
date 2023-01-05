@@ -85,6 +85,7 @@ int	check_ra_vertical(t_struct *data, float *ray, float *o, float ra, float tang
 		ray[Y] = (data->cube->player.px - ray[X]) * tang + data->cube->player.py;
 		o[X] = -data->map_s;
 		o[Y] = -o[X] * tang;
+		//printf("ici avec ox = %f oy =%f\n", o[X], o[Y]);
 	}
 	if (ra < P2 || ra > P3)
 	{
@@ -92,6 +93,7 @@ int	check_ra_vertical(t_struct *data, float *ray, float *o, float ra, float tang
 		ray[Y] = (data->cube->player.px - ray[X]) * tang + data->cube->player.py;
 		o[X] =data->map_s;
 		o[Y] = -o[X] * tang;
+		//printf("la avec ox = %f oy =%f\n", o[X], o[Y]);
 	}
 	if (ra == 0 || ra == PI)
 	{
@@ -132,8 +134,11 @@ float	*get_data_ray(t_struct *data, float *data_ray, float ra, int type)
 	{
 		m[X] = (int)ray[X] >> 6;
 		m[Y] = (int)ray[Y] >> 6;
-		//printf("dof = %d avec mx = %d et my = %d\n", dof, m[X], m[Y]);
-		if (m[Y] > 0 && m[X] > 0 && m[Y] < (int)data->height && m[X] < (int)data->width && data->map[m[Y]][m[X]] == '1')
+		m[Y] = ft_abs(m[Y]);
+		m[X] = ft_abs(m[X]);
+		// printf("avec ray x = %f et ray y = %f\n", ray[X], ray[Y]);
+		// printf("dof = %d avec mx = %d et my = %d\n", dof, m[X], m[Y]);
+		if (m[Y] >= 0 && m[X] >= 0 && m[Y] < (int)data->height && m[X] < (int)data->width && data->map[m[Y]][m[X]] == '1')
 		{
 			data_ray[X] = ray[X];
 			data_ray[Y] = ray[Y];
@@ -141,6 +146,7 @@ float	*get_data_ray(t_struct *data, float *data_ray, float ra, int type)
 			data_ray[DIST] = dist(data->cube->player.px, data->cube->player.py, data_ray[X], data_ray[Y]);
 			//mlx_string_put(data->cube->mlx, data->cube->window, ray[X], ray[Y], 0xFF0000, "X");
 			dof = boucle;
+			//printf("STOP\n");
 		}
 		else
 		{
@@ -172,7 +178,7 @@ void	draw_rays(t_struct *data)
 	{
 		hor = get_data_ray(data, hor, ra, HORIZONTAL);
 		ver = get_data_ray(data, ver, ra, VERTICAL);
-		//printf("dist horizontale = %f\ndist verticale = %f\n", hor[DIST], ver[DIST]);
+		// printf("dist horizontale = %f\ndist verticale = %f\n\n\n\n", hor[DIST], ver[DIST]);
 		if (ver[DIST] < hor[DIST])
 		{
 			rx = ver[X];
@@ -186,7 +192,7 @@ void	draw_rays(t_struct *data)
 			//printf("horizontal\n");
 		}
 		bresenham(data, data->cube->player.px, data->cube->player.py, rx, ry);
-		mlx_string_put(data->cube->mlx, data->cube->window, rx, ry, 0x00FF00, ".");
+		//mlx_string_put(data->cube->mlx, data->cube->window, rx, ry, 0x00FF00, ".");
 		ra += DR;
 		//printf("ra = %f\n", ra);
 		if (ra < 0)
