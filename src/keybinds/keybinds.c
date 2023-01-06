@@ -12,23 +12,23 @@
 
 #include "../../includes/cub.h"
 
-static void	key_move_player(int keycode, t_struct *data)
+static void	key_move_player(t_struct *data)
 {
-	if (keycode == KEY_S && data->key.s == 1)
+	if (data->key.s == 1)
 	{
 		data->cube->player.px -= data->cube->player.pdx;
 		data->cube->player.py -= data->cube->player.pdy;
 	}
-	else if (keycode == KEY_W && data->key.w == 1)
+	else if (data->key.w == 1)
 	{
 		data->cube->player.px += data->cube->player.pdx;
 		data->cube->player.py += data->cube->player.pdy;
 	}
 }
 
-static void	key_move_cam(int keycode, t_struct *data)
+static void	key_move_cam(t_struct *data)
 {
-	if (keycode == KEY_A && data->key.a == 1)
+	if (data->key.a == 1)
 	{
 		data->cube->player.pa -= 0.1;
 		if (data->cube->player.pa < 0)
@@ -36,7 +36,7 @@ static void	key_move_cam(int keycode, t_struct *data)
 		data->cube->player.pdx = cos(data->cube->player.pa) * 5;
 		data->cube->player.pdy = sin(data->cube->player.pa) * 5;
 	}
-	else if (keycode == KEY_D && data->key.d == 1)
+	else if (data->key.d == 1)
 	{
 		data->cube->player.pa += 0.1;
 		if (data->cube->player.pa > 2 * PI)
@@ -49,10 +49,10 @@ static void	key_move_cam(int keycode, t_struct *data)
 int	move_player(int keycode, t_struct *data)
 {
 	mlx_clear_window(data->cube->mlx, data->cube->window);
-	if (keycode == KEY_A || keycode == KEY_D)
-		key_move_cam(keycode, data);
-	else if (keycode == KEY_S || keycode == KEY_W)
-		key_move_player(keycode, data);
+	if (data->key.a == 1 || data->key.d == 1)
+		key_move_cam(data);
+	if (data->key.s == 1 || data->key.w == 1)
+		key_move_player(data);
 	else if (keycode == ESC)
 		exit(0); //Leaks
 	data->cube->img = mlx_new_image(data->cube->mlx, 1024, 512);
