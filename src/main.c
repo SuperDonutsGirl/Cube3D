@@ -35,7 +35,7 @@ void	init_cube(t_struct *data)
 
 int	move_player(int keycode, t_struct *data);
 
-static int yo(void *arg) {
+static int moving(void *arg) {
 	t_struct *data = arg;
 	move_player(-1, data);
 	return 0;
@@ -56,7 +56,7 @@ int	main(int argc, char **argv)
 	mlx_hook(data->cube->window, 3, 3, keyrelease, data);
 	mlx_hook(data->cube->window, 2, 2, keypress, data);
 	mlx_hook(data->cube->window, 17, 0L, close_on_click, data->cube);
-	mlx_loop_hook(data->cube->mlx, yo, data);
+	mlx_loop_hook(data->cube->mlx, moving, data);
 	mlx_loop(data->cube->mlx);
 	exit(0);
 }
