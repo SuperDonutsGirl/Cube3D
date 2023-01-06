@@ -38,7 +38,7 @@ void	bresenham(t_struct *data, float ox, float oy, float *r)
 	}
 }
 
-void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry)
+void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry, int color)
 {
 	float	dist_x;
 	float	dist_y;
@@ -60,7 +60,7 @@ void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry)
 			while (i < 8)
 			{
 				//mlx_pixel_put(data->cube->mlx, data->cube->window, ox + i, oy, 0xFF0000);
-				my_mlx_pixel_put(data->cube, ox + i, oy, 0xFF0000);
+				my_mlx_pixel_put(data->cube, ox + i, oy, color);
 				i++;
 			}
 		}
