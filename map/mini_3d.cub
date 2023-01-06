@@ -1,0 +1,16 @@
+NO ../../map/bluestone.png
+SO ../../map/bluestone.png
+WE ../../map/bluestone.png
+EA ../../map/bluestone.png
+
+F 220,100,0
+C 225,30,0
+
+11111111
+10000101
+10S00001
+11001101
+10001001
+1101 101
+10001001
+11111111
