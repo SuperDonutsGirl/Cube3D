@@ -49,11 +49,9 @@ static void	key_move_cam(t_struct *data)
 int	move_player(int keycode, t_struct *data)
 {
 	mlx_clear_window(data->cube->mlx, data->cube->window);
-	if (data->key.a == 1 || data->key.d == 1)
-		key_move_cam(data);
-	if (data->key.s == 1 || data->key.w == 1)
-		key_move_player(data);
-	else if (keycode == ESC)
+	key_move_cam(data);
+	key_move_player(data);
+	if (keycode == ESC)
 		exit(0); //Leaks
 	data->cube->img = mlx_new_image(data->cube->mlx, 1024, 512);
 	data->cube->address = mlx_get_data_addr(data->cube->img,
@@ -90,6 +88,7 @@ int	keypress(int keycode, t_struct *data)
 		data->key.s = 1;
 	if (keycode == KEY_D)
 		data->key.d = 1;
-	move_player(keycode, data);
+	if (keycode == ESC)
+		exit(0);
 	return (0);
 }

@@ -28,11 +28,7 @@ void	bresenham(t_struct *data, float ox, float oy, float *r)
 	{
 		if (ox >= 0 && ox < data->width * data->map_s && oy >= 0
 			&& oy < data->height * data->map_s)
-		{
 			my_mlx_pixel_put(data->cube, ox, oy, 0xFF0000);
-			// mlx_pixel_put(data->cube->mlx, data->cube->window,
-			// 	ox, oy, 0xFF0000);
-		}
 		ox += dist_x / max;
 		oy += dist_y / max;
 	}
@@ -60,8 +56,6 @@ void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry)
 			while (i < 8)
 			{
 				my_mlx_pixel_put(data->cube, ox + i, oy, 0xFF0000);
-				// mlx_pixel_put(data->cube->mlx, data->cube->window,
-				// 	ox + i, oy, 0xFF0000);
 				i++;
 			}
 		}

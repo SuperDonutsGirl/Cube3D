@@ -22,7 +22,6 @@
 # include <sys/stat.h>
 # include <limits.h>
 # include <math.h>
-# include <mlx.h>
 //# include "../mlx/mlx.h"
 # include </usr/X11/include/mlx.h> //Path de la minilibx Pauline
 # include "keycodes.h"

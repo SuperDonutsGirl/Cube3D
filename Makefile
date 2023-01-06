@@ -5,14 +5,14 @@
 
 NAME	= cub3d
 CC 		= gcc
-CFLAGS	= -Wall -Wextra -Werror -Imlx -g# -Imlx POUR MINILIBX
+CFLAGS	= -Wall -Wextra -Werror -Imlx -g -O3# -Imlx POUR MINILIBX
 DFLAGS	= -MMD -MF $(@:.o=.d)
 MAKE 		= 		make
 MAKE_CLEAN	= 		make clean
 MAKE_FCLEAN = 		make fclean
-COMPIL	= -Lmlx -lmlx -framework OpenGL -framework AppKit # SERT UNIQUEMENT POUR MINILIBX 19
+#COMPIL	= -Lmlx -lmlx -framework OpenGL -framework AppKit # SERT UNIQUEMENT POUR MINILIBX 19
 #COMPIL 	= -I /usr/X11/include -g -L /usr/X11/lib -l mlx -framework OpenGL -framework AppKit #Pauline
-#COMPIL	= -I/usr/X11R6/include -I/usr/X11/include -L/usr/X11R6/lib -L/usr/X11/lib -lX11 -lXext -Lmlx -lmlx -framework OpenGL -framework AppKit
+COMPIL	= -I/usr/X11R6/include -I/usr/X11/include -L/usr/X11R6/lib -L/usr/X11/lib -lX11 -lXext -Lmlx -lmlx -framework OpenGL -framework AppKit
 AUTHOR	= dduraku && pamartin
 DATE	= 15/12/2022
 

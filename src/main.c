@@ -31,8 +31,14 @@ void	init_cube(t_struct *data)
 	data->cube->address = mlx_get_data_addr(data->cube->img,
 			&data->cube->bits_per_pixel, &data->cube->line_length,
 			&data->cube->endian);
-	//data->cube->mini = mlx_new_image(data->cube->img, 300, 300);
-	//data->cube->address = mlx_get_data_addr(data->cube->mini, &data->cube->bpp_mini, &data->cube->ll_mini, &data->cube->end_mini);
+}
+
+int	move_player(int keycode, t_struct *data);
+
+static int yo(void *arg) {
+	t_struct *data = arg;
+	move_player(-1, data);
+	return 0;
 }
 
 int	main(int argc, char **argv)
@@ -47,10 +53,10 @@ int	main(int argc, char **argv)
 	draw_map_2d(data);
 	draw_player(data, 0xFF0053, 16); //Quid modif pour minimap
 	draw_rays(data);
-//	mlx_hook(data->cube->window, 3, 3, keypress, data);
 	mlx_hook(data->cube->window, 3, 3, keyrelease, data);
 	mlx_hook(data->cube->window, 2, 2, keypress, data);
 	mlx_hook(data->cube->window, 17, 0L, close_on_click, data->cube);
+	mlx_loop_hook(data->cube->mlx, yo, data);
 	mlx_loop(data->cube->mlx);
 	exit(0);
 }
