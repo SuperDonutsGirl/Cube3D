@@ -99,6 +99,16 @@ enum e_texture
 	EA
 };
 
+typedef struct s_key
+{
+	int w;
+	int	a;
+	int s;
+	int d;
+	int right;
+	int left;
+}	t_key;
+
 typedef struct s_player
 {
 	float	px;
@@ -139,6 +149,7 @@ typedef struct s_struct
 	char	**map;
 	int		*int_map;
 	t_cube	*cube;
+	t_key	key;
 }	t_struct;
 
 /*Parsing*/
@@ -203,5 +214,10 @@ void	draw_rays(t_struct *data);
 
 //3D
 void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry);
+
+
+
+int keyrelease(int keycode, t_struct *data);
+int	keypress(int keycode, t_struct *data);
 
 #endif

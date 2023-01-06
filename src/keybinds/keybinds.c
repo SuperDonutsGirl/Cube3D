@@ -14,12 +14,12 @@
 
 static void	key_move_player(int keycode, t_struct *data)
 {
-	if (keycode == KEY_S)
+	if (keycode == KEY_S && data->key.s == 1)
 	{
 		data->cube->player.px -= data->cube->player.pdx;
 		data->cube->player.py -= data->cube->player.pdy;
 	}
-	else if (keycode == KEY_W)
+	else if (keycode == KEY_W && data->key.w == 1)
 	{
 		data->cube->player.px += data->cube->player.pdx;
 		data->cube->player.py += data->cube->player.pdy;
@@ -28,7 +28,7 @@ static void	key_move_player(int keycode, t_struct *data)
 
 static void	key_move_cam(int keycode, t_struct *data)
 {
-	if (keycode == KEY_A)
+	if (keycode == KEY_A && data->key.a == 1)
 	{
 		data->cube->player.pa -= 0.1;
 		if (data->cube->player.pa < 0)
@@ -36,7 +36,7 @@ static void	key_move_cam(int keycode, t_struct *data)
 		data->cube->player.pdx = cos(data->cube->player.pa) * 5;
 		data->cube->player.pdy = sin(data->cube->player.pa) * 5;
 	}
-	else if (keycode == KEY_D)
+	else if (keycode == KEY_D && data->key.d == 1)
 	{
 		data->cube->player.pa += 0.1;
 		if (data->cube->player.pa > 2 * PI)
@@ -67,8 +67,29 @@ int	move_player(int keycode, t_struct *data)
 	return (0);
 }
 
+int keyrelease(int keycode, t_struct *data)
+{
+	if (keycode == KEY_W)
+		data->key.w = 0;
+	if (keycode == KEY_A)
+		data->key.a = 0;
+	if (keycode == KEY_S)
+		data->key.s = 0;
+	if (keycode == KEY_D)
+		data->key.d = 0;
+	return (0);
+}
+
 int	keypress(int keycode, t_struct *data)
 {
+	if (keycode == KEY_W)
+		data->key.w = 1;
+	if (keycode == KEY_A)
+		data->key.a = 1;
+	if (keycode == KEY_S)
+		data->key.s = 1;
+	if (keycode == KEY_D)
+		data->key.d = 1;
 	move_player(keycode, data);
 	return (0);
 }

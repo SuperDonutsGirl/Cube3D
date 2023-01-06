@@ -47,7 +47,9 @@ int	main(int argc, char **argv)
 	draw_map_2d(data);
 	draw_player(data, 0xFF0053, 16); //Quid modif pour minimap
 	draw_rays(data);
-	mlx_hook(data->cube->window, 3, 3, keypress, data);
+//	mlx_hook(data->cube->window, 3, 3, keypress, data);
+	mlx_hook(data->cube->window, 3, 3, keyrelease, data);
+	mlx_hook(data->cube->window, 2, 2, keypress, data);
 	mlx_hook(data->cube->window, 17, 0L, close_on_click, data->cube);
 	mlx_loop(data->cube->mlx);
 	exit(0);
