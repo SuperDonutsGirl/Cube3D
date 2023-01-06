@@ -107,8 +107,10 @@ void	draw_rays(t_struct *data)
 		line_h = data->map_s * 320 / dist_t;
 		line_o = 160 - line_h / 2;
 		if (line_h > 320)
-			line_h = 320;	
-		bresenham3d(data, r * 8 + 530, line_o, r * 8 + 530, line_h + line_o);
+			line_h = 320;
+		bresenham3d(data, r * 8 + 530, line_o, r * 8 + 530, 0, data->color[CEILING]);
+		bresenham3d(data, r * 8 + 530, line_o, r * 8 + 530, line_h + line_o, 0xFF0000);
+		bresenham3d(data, r * 8 + 530, line_h + line_o, r * 8 + 530, 530, data->color[FLOOR]);
 		ra += DR;
 		if (ra < 0)
 			ra += 2 * PI;

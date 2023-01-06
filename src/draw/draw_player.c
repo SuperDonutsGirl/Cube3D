@@ -12,25 +12,25 @@
 
 #include "../../includes/cub.h"
 
-static void	draw_orientation_player(t_cube *cube)
-{
-	int	i;
-	int	j;
+// static void	draw_orientation_player(t_cube *cube)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = 0;
-	while (i < 5)
-	{
-		j = 0;
-		while (j < 5)
-		{
-			j++;
-			mlx_pixel_put(cube->mlx, cube->window,
-				j + cube->player.px + cube->player.pdx * 5,
-				i + cube->player.py + cube->player.pdy * 5, 0x000000);
-		}
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < 5)
+// 	{
+// 		j = 0;
+// 		while (j < 5)
+// 		{
+// 			j++;
+// 			mlx_pixel_put(cube->mlx, cube->window,
+// 				j + cube->player.px + cube->player.pdx * 5,
+// 				i + cube->player.py + cube->player.pdy * 5, 0x000000);
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	draw_player(t_struct *data, int color, int size_player)
 {
@@ -49,6 +49,6 @@ void	draw_player(t_struct *data, int color, int size_player)
 			j++;
 		}
 	}
-	draw_orientation_player(data->cube);
+	//draw_orientation_player(data->cube);
 	//draw_rays(data);
 }

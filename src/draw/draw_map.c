@@ -90,8 +90,8 @@ void	draw_map_2d(t_struct *data)
 		}
 		pos[Y] += data->map_s;
 		pos[X] = 0;
-		mlx_put_image_to_window(data->cube->mlx, data->cube->window,
-			data->cube->img, 0, 0);
 		y++;
 	}
+		mlx_put_image_to_window(data->cube->mlx, data->cube->window,
+			data->cube->img, 0, 0);
 }
