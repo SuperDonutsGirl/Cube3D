@@ -26,8 +26,8 @@ void	init_cube(t_struct *data)
 	mlx_do_key_autorepeaton(data->cube->mlx);
 	data->cube->window = mlx_new_window(data->cube->mlx,
 			1024, 512, "cub3d");
-	data->cube->img = mlx_new_image(data->cube->mlx, data->width * data->map_s,
-			data->height * data->map_s);
+	data->cube->img = mlx_new_image(data->cube->mlx, 1024,
+			512);
 	data->cube->address = mlx_get_data_addr(data->cube->img,
 			&data->cube->bits_per_pixel, &data->cube->line_length,
 			&data->cube->endian);
