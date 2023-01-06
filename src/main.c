@@ -50,8 +50,8 @@ int	main(int argc, char **argv)
 		exit (msg_error(MALLOC));
 	parsing(argc, argv, data);
 	init_cube(data);
-	draw_map_2d(data);
-	draw_player(data, 0xFF0053, 16); //Quid modif pour minimap
+	//draw_map_2d(data);
+	//draw_player(data, 0xFF0053, 16); //Quid modif pour minimap
 	draw_rays(data);
 	mlx_hook(data->cube->window, 3, 3, keyrelease, data);
 	mlx_hook(data->cube->window, 2, 2, keypress, data);

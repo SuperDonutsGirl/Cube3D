@@ -94,7 +94,7 @@ void	draw_rays(t_struct *data)
 		hor = get_data_ray(data, hor, ra, HORIZONTAL);
 		ver = get_data_ray(data, ver, ra, VERTICAL);
 		dist_t = check_dist(ver, hor, dist_t, ray);
-		bresenham(data, data->cube->player.px + 8, data->cube->player.py + 8, ray);
+		//bresenham(data, data->cube->player.px + 8, data->cube->player.py + 8, ray);
 		float	ca;
 		float line_o;
 		float line_h;
@@ -110,7 +110,7 @@ void	draw_rays(t_struct *data)
 			line_h = 320;
 		bresenham3d(data, r * 8 + 530, line_o, r * 8 + 530, 0, data->color[CEILING]);
 		bresenham3d(data, r * 8 + 530, line_o, r * 8 + 530, line_h + line_o, 0xFF0000);
-		bresenham3d(data, r * 8 + 530, line_h + line_o, r * 8 + 530, 530, data->color[FLOOR]);
+		bresenham3d(data, r * 8 + 530, line_h + line_o, r * 8 + 530, 512, data->color[FLOOR]);
 		ra += DR;
 		if (ra < 0)
 			ra += 2 * PI;
