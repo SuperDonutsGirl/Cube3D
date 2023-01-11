@@ -190,6 +190,7 @@ int		keypress(int keycode, t_struct *data);
 
 //Draw
 void	draw_player(t_struct *data, int color, int size_player);
+void	draw_player_mini(t_struct *data, int color, int size_player, int x, int y);
 void	draw_mini_map(t_struct *data);
 void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color);
 void	draw_map_2d(t_struct *data);

@@ -19,8 +19,9 @@ static void	key_move_player(int keycode, t_struct *data)
 		data->cube->player.px -= data->cube->player.pdx;
 		data->cube->player.py -= data->cube->player.pdy;
 
-		data->cube->mini.px -= data->cube->mini.pdx;
-		data->cube->mini.py -= data->cube->mini.pdy;
+
+		data->cube->mini.px = data->cube->player.px / 2 + data->mini_s;
+		data->cube->mini.py = data->cube->player.py / 2 + data->mini_s;
 	}
 	else if (keycode == KEY_W)
 	{
@@ -28,29 +29,10 @@ static void	key_move_player(int keycode, t_struct *data)
 		data->cube->player.px += data->cube->player.pdx;
 		data->cube->player.py += data->cube->player.pdy;
 
-		data->cube->mini.px += data->cube->mini.pdx;
-		data->cube->mini.py += data->cube->mini.pdy;
+		data->cube->mini.px = data->cube->player.px / 2 + data->mini_s;
+		data->cube->mini.py = data->cube->player.py / 2 + data->mini_s;
 	}
-	// if (keycode == KEY_W)
-	// {
-	// 	data->cube->player.py += data->cube->player.pdy;
-	// 	data->cube->mini.py += data->cube->mini.pdy;
-	// }
-	// if (keycode == KEY_S)
-	// {
-	// 	data->cube->player.py -= data->cube->player.pdy;
-	// 	data->cube->mini.py -= data->cube->mini.pdy;
-	// }
-	// if (keycode == KEY_A)
-	// {
-	// 	data->cube->player.px -= data->cube->player.pdx;
-	// 	data->cube->mini.px -= data->cube->mini.pdx;
-	// }
-	// if (keycode == KEY_D)
-	// {
-	// 	data->cube->player.px += data->cube->player.pdx;
-	// 	data->cube->mini.px += data->cube->mini.pdx;
-	// }
+
 
 }
 
@@ -63,12 +45,6 @@ static void	key_move_cam(int keycode, t_struct *data)
 			data->cube->player.pa += 2 * PI;
 		data->cube->player.pdx = cos(data->cube->player.pa) * 5;
 		data->cube->player.pdy = sin(data->cube->player.pa) * 5;
-
-		data->cube->mini.pa -= 0.1;
-		if (data->cube->mini.pa < 0)
-			data->cube->mini.pa += 2 * PI;
-		data->cube->mini.pdx = cos(data->cube->mini.pa) * 5;
-		data->cube->mini.pdy = sin(data->cube->mini.pa) * 5;
 	}
 	else if (keycode == KEY_RIGHT)
 	{
@@ -77,12 +53,6 @@ static void	key_move_cam(int keycode, t_struct *data)
 			data->cube->player.pa -= 2 * PI;
 		data->cube->player.pdx = cos(data->cube->player.pa) * 5;
 		data->cube->player.pdy = sin(data->cube->player.pa) * 5;
-
-		data->cube->mini.pa += 0.1;
-		if (data->cube->mini.pa > 2 * PI)
-			data->cube->mini.pa -= 2 * PI;
-		data->cube->mini.pdx = cos(data->cube->mini.pa) * 5;
-		data->cube->mini.pdy = sin(data->cube->mini.pa) * 5;
 	}
 }
 
@@ -94,7 +64,6 @@ int	move_player(int keycode, t_struct *data)
 	data->cube->address = mlx_get_data_addr(data->cube->img,
 			&data->cube->bits_per_pixel, &data->cube->line_length,
 			&data->cube->endian);
-	draw_map_2d(data);	
 	if (keycode == KEY_LEFT || keycode == KEY_RIGHT)
 		key_move_cam(keycode, data);
 	else if (keycode == KEY_S || keycode == KEY_W)
@@ -106,8 +75,9 @@ int	move_player(int keycode, t_struct *data)
 
 
 
-	draw_player(data, 0xFF0053, 16);
-	//draw_mini_map(data);
+	//draw_map_2d(data);	
+	//draw_player(data, 0xFF0053, 16);
+	draw_mini_map(data);
 	draw_rays(data);
 	mlx_put_image_to_window(data->cube->mlx, data->cube->window,
 		data->cube->img, 0, 0);

@@ -42,7 +42,33 @@ static void	draw_element(t_struct *data, int color, int *pos, size_t size)
 		j = 0;
 		while (j < size)
 		{
-			if (i + pos[X] < 511 && j + pos[Y] < 1023)
+			if (i + pos[X] < data->width *data->map_s && j + pos[Y] < data->height * data->map_s)
+			{
+				if (i + pos[X] % size == 0)
+					my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], 0xFFFFFF);
+				else if (j + pos[Y] % size == 0)
+					my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], 0xFFFFFF);
+				else
+					my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], color);
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+static void	draw_element_mini(t_struct *data, int color, int *pos, size_t size)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			if (i + pos[X] < data->width *data->mini_s && j + pos[Y] < data->height * data->mini_s)
 			{
 				if (i + pos[X] % size == 0)
 					my_mlx_pixel_put(data->cube, i + pos[X], j + pos[Y], 0xFFFFFF);
@@ -70,6 +96,22 @@ static void	put_elements(t_struct *data, int *pos, size_t x, size_t y)
 			draw_element(data, 0x0000FF, pos, data->map_s);
 		else
 			draw_element(data, 0x000000, pos, data->map_s);
+	}
+}
+
+ void	put_elements_mini(t_struct *data, int *pos, size_t x, size_t y)
+{
+	if (data->map[y][x] == '1')
+		draw_element_mini(data, 0x545650, pos, data->mini_s);
+	else if (data->map[y][x] == '0')
+		draw_element_mini(data, 0xC5C8BD, pos, data->mini_s);
+	else
+	{
+		if (data->map[y][x] == 'S' || data->map[y][x] == 'N'
+			|| data->map[y][x] == 'E' || data->map[y][x] == 'W')
+			draw_element_mini(data, 0x0000FF, pos, data->mini_s);
+		else
+			draw_element_mini(data, 0x000000, pos, data->mini_s);
 	}
 }
 
@@ -105,16 +147,22 @@ void	draw_mini_map(t_struct *data)
 	size_t	x;
 	size_t	y;
 	int		pos[2];
+	double		center[2];
 
 	pos[X] = 0;
 	pos[Y] = 0;
-	y = 0;
-	while (y < data->height)
+	center[Y] = 0;
+	while (data->cube->player.py / data->map_s > center[Y] + 5 && center[Y] + 10 < data->height)
+		center[Y]++;
+	while (data->cube->player.px / data->map_s > center[X] + 5 && center[X] + 10 < data->width)
+			center[X]++;
+	y = center[Y];
+	while (y < center[Y] + 10)
 	{
-		x = 0;
-		while (x < data->width)
+		x = center[X];
+		while (x < center[X] + 10)
 		{
-			put_elements(data, pos, x , y);
+			put_elements_mini(data, pos, x , y);
 			pos[X] += data->mini_s;
 			x++;
 		}
@@ -123,7 +171,7 @@ void	draw_mini_map(t_struct *data)
 		
 		y++;
 	}
-	draw_player(data, 0xFF0000, 8);
+	draw_player_mini(data, 0xFF0000, 8, center[X], center[Y]);
 	mlx_put_image_to_window(data->cube->mlx, data->cube->window,
 		data->cube->img, 0, 0);
 }

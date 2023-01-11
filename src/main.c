@@ -17,16 +17,13 @@ void	init_cube(t_struct *data)
 	data->cube = malloc(sizeof(t_cube));
 	if (!data->cube)
 		exit_map_parsing(data, MALLOC, NULL);
-	data->cube->player.px = data->player[2] * data->map_s + 28;
-	data->cube->player.py = data->player[1] * data->map_s + 28;
+	data->cube->player.px = data->player[2] * data->map_s;
+	data->cube->player.py = data->player[1] * data->map_s;
 	data->cube->player.pa = data->player[0];
 	data->cube->player.pdx = cos(data->cube->player.pa) * 5;
 	data->cube->player.pdy = sin(data->cube->player.pa) * 5;
-	data->cube->mini.px = data->player[2] * data->mini_s + 40;
-	data->cube->mini.py = data->player[1] * data->mini_s + 40;
-	data->cube->mini.pa = data->player[0];
-	data->cube->mini.pdx = cos(data->cube->mini.pa) * 5;
-	data->cube->mini.pdy = sin(data->cube->mini.pa) * 5;
+	data->cube->mini.px = data->cube->player.px / 2 + data->mini_s;
+	data->cube->mini.py = data->cube->player.py / 2 + data->mini_s;
 	data->cube->mlx = mlx_init();
 	mlx_do_key_autorepeaton(data->cube->mlx);
 	data->cube->window = mlx_new_window(data->cube->mlx,
@@ -49,10 +46,10 @@ int	main(int argc, char **argv)
 		exit (msg_error(MALLOC));
 	parsing(argc, argv, data);
 	init_cube(data);
-	draw_map_2d(data);
-	draw_player(data, 0xFF0053, 16); //Quid modif pour minimap
+	//draw_map_2d(data);
+	//draw_player(data, 0xFF0053, 16); //Quid modif pour minimap
 	draw_rays(data);
-	//draw_mini_map(data);
+	draw_mini_map(data);
 	mlx_put_image_to_window(data->cube->mlx, data->cube->window,
 			data->cube->img, 0, 0);
 	mlx_hook(data->cube->window, 3, 3, keypress, data);
