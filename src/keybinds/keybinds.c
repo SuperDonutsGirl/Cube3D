@@ -14,15 +14,44 @@
 
 static void	key_move_player(t_struct *data)
 {
+	int	xo;
+	int	yo;
+	int	ipx;
+	int	ipx_add_xo;
+	int	ipx_sub_xo;
+	int	ipy;
+	int	ipy_add_yo;
+	int	ipy_sub_yo;
+
+	xo = 0;
+	yo = 0;
+	if (data->cube->player.pdx < 0)
+		xo = -20;
+	else
+		xo = 20;
+	if (data->cube->player.pdy < 0)
+		yo = -20;
+	else
+		yo = 20;
+	ipx = data->cube->player.px / 64.0;
+	ipx_add_xo = (data->cube->player.px + xo) / 64.0;
+	ipx_sub_xo = (data->cube->player.px - xo) / 64.0;
+	ipy = data->cube->player.py / 64.0;
+	ipy_add_yo = (data->cube->player.py + yo) / 64.0;
+	ipy_sub_yo = (data->cube->player.py - yo) / 64.0;
+
+
+
 	if (data->key.s == 1)
 	{
-		data->cube->player.px -= data->cube->player.pdx;
-		data->cube->player.py -= data->cube->player.pdy;
+		data->cube->player.px -= data->cube->player.pdx * MOVE_SPEED;
+		data->cube->player.py -= data->cube->player.pdy * MOVE_SPEED;
+
 	}
 	else if (data->key.w == 1)
 	{
-		data->cube->player.px += data->cube->player.pdx;
-		data->cube->player.py += data->cube->player.pdy;
+		data->cube->player.px += data->cube->player.pdx * MOVE_SPEED;	
+		data->cube->player.py += data->cube->player.pdy * MOVE_SPEED;
 	}
 }
 
@@ -30,7 +59,7 @@ static void	key_move_cam(t_struct *data)
 {
 	if (data->key.a == 1)
 	{
-		data->cube->player.pa -= 0.1;
+		data->cube->player.pa -= ROT_SPEED;
 		if (data->cube->player.pa < 0)
 			data->cube->player.pa += 2 * PI;
 		data->cube->player.pdx = cos(data->cube->player.pa) * 5;
@@ -38,7 +67,7 @@ static void	key_move_cam(t_struct *data)
 	}
 	else if (data->key.d == 1)
 	{
-		data->cube->player.pa += 0.1;
+		data->cube->player.pa += ROT_SPEED;
 		if (data->cube->player.pa > 2 * PI)
 			data->cube->player.pa -= 2 * PI;
 		data->cube->player.pdx = cos(data->cube->player.pa) * 5;

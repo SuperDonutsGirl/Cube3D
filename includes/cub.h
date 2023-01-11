@@ -68,6 +68,14 @@
 # define WEST	PI
 # define EAST	6.28318530718
 
+/*Define Movement and rotation speed*/
+# define MOVE_SPEED	0.3
+# define ROT_SPEED	0.04
+
+
+
+
+
 /*Enum pos*/
 enum e_position
 {
@@ -150,6 +158,7 @@ typedef struct s_struct
 	int		*int_map;
 	t_cube	*cube;
 	t_key	key;
+	int		pos_ray[2];
 }	t_struct;
 
 /*Parsing*/
