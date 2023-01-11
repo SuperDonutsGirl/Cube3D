@@ -49,11 +49,11 @@ void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry, int col
 		max = ft_abs(dist_y);
 	while (ft_abs(rx - ox) != 0 || ft_abs(ry - oy) != 0)
 	{
-		if (ox >= 0 && ox < 1024 * data->map_s && oy >= 0
-			&& oy < 512 * data->map_s)
+		if (ox >= 0 && ox < 1024 && oy >= 0
+			&& oy < 512)
 		{
 			i = 0;
-			while (i < 8)
+			while (i < 8 && ox + i < 1024)
 			{
 				my_mlx_pixel_put(data->cube, ox + i, oy, color);
 				i++;
