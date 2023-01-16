@@ -83,15 +83,15 @@ int	move_player(int keycode, t_struct *data)
 	key_move_player(data);
 	if (keycode == ESC)
 		exit(0); //Leaks
-	data->cube->img = mlx_new_image(data->cube->mlx, 1024, 512);
-	data->cube->address = mlx_get_data_addr(data->cube->img,
-			&data->cube->bits_per_pixel, &data->cube->line_length,
-			&data->cube->endian);
+	data->cube->image.img = mlx_new_image(data->cube->mlx, WIN_WIDTH, WIN_HEIGHT);
+	data->cube->image.address = mlx_get_data_addr(data->cube->image.img,
+			&data->cube->image.bits_per_pixel, &data->cube->image.line_length,
+			&data->cube->image.endian);
 	//draw_map_2d(data);
 	//draw_player(data, 0xFF0053, 16);
 	draw_rays(data);
 	mlx_put_image_to_window(data->cube->mlx, data->cube->window,
-		data->cube->img, 0, 0);
+		data->cube->image.img, 0, 0);
 	return (0);
 }
 

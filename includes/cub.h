@@ -72,6 +72,10 @@
 # define MOVE_SPEED	0.3
 # define ROT_SPEED	0.04
 
+/*Define Window */
+# define WIN_WIDTH	1024
+# define WIN_HEIGHT 512
+
 
 
 
@@ -81,7 +85,8 @@ enum e_position
 {
 	X,
 	Y,
-	DIST
+	DIST,
+	COLOR
 };
 
 /*Enum type*/
@@ -126,17 +131,25 @@ typedef struct s_player
 	float	pa;
 }	t_player;
 
-typedef struct s_cube
+typedef struct s_img
 {
-	void		*mlx;
-	void		*window;
-
 	void		*img;
 	char		*address;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
 
+	int			w_text;
+	int			h_text;
+
+}	t_img;
+
+typedef struct s_cube
+{
+	void		*mlx;
+	void		*window;
+	t_img		image;
+	t_img		*tex;
 	int			pos_x;
 	int			pos_y;
 
@@ -157,8 +170,10 @@ typedef struct s_struct
 	char	**map;
 	int		*int_map;
 	t_cube	*cube;
+
 	t_key	key;
 	int		pos_ray[2];
+	
 }	t_struct;
 
 /*Parsing*/

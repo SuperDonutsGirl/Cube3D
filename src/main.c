@@ -12,6 +12,46 @@
 
 #include "../includes/cub.h"
 
+void	init_img(t_struct *data)
+{
+	data->cube->image.img = mlx_new_image(data->cube->mlx, WIN_WIDTH,
+			WIN_HEIGHT);
+	data->cube->image.address = mlx_get_data_addr(data->cube->image.img,
+			&data->cube->image.bits_per_pixel, &data->cube->image.line_length,
+			&data->cube->image.endian);
+}
+
+void	init_textures(t_struct *data)
+{
+	//data->cube->image = malloc(sizeof(t_img) * 1);
+	//protection malloc
+
+	// data->cube->image.img = mlx_new_image(data->cube->mlx, WIN_WIDTH,
+	// 		WIN_HEIGHT);
+	// data->cube->image.address = mlx_get_data_addr(data->cube->image.img,
+	// 		&data->cube->image.bits_per_pixel, &data->cube->image.line_length,
+	// 		&data->cube->image.endian);
+
+	data->cube->tex = malloc(sizeof(t_img) * 5);
+	//protection malloc
+	int face = NO;
+	while (face < 4)
+	{
+		data->cube->tex[face].img = mlx_xpm_file_to_image(&data->cube->mlx, data->texture[face], &data->cube->tex[face].w_text, &data->cube->tex[face].h_text);
+		if (!data->cube->tex[face].img)
+			printf("bordel de merde\n");
+		data->cube->tex[face].address = mlx_get_data_addr(data->cube->tex[face].img,
+													&data->cube->tex[face].bits_per_pixel,
+													&data->cube->tex[face].line_length,
+													&data->cube->tex[face].endian);
+		face++;
+	}
+	printf("addr = %p\ncol = %c", data->cube->tex[NO].address, data->cube->tex[NO].address[15]);
+	printf("addr = %p\ncol = %c", data->cube->tex[SO].address, data->cube->tex[NO].address[15]);
+	printf("addr = %p\ncol = %c", data->cube->tex[EA].address, data->cube->tex[NO].address[15]);
+	printf("addr = %p\ncol = %c", data->cube->tex[WE].address, data->cube->tex[NO].address[15]);
+}
+
 void	init_cube(t_struct *data)
 {
 	data->cube = malloc(sizeof(t_cube));
@@ -25,12 +65,14 @@ void	init_cube(t_struct *data)
 	data->cube->mlx = mlx_init();
 	mlx_do_key_autorepeaton(data->cube->mlx);
 	data->cube->window = mlx_new_window(data->cube->mlx,
-			1024, 512, "cub3d");
-	data->cube->img = mlx_new_image(data->cube->mlx, 1024,
-			512);
-	data->cube->address = mlx_get_data_addr(data->cube->img,
-			&data->cube->bits_per_pixel, &data->cube->line_length,
-			&data->cube->endian);
+			WIN_WIDTH, WIN_HEIGHT, "cub3d");
+	init_img(data);
+	init_textures(data);
+	// data->cube->img = mlx_new_image(data->cube->mlx, WIN_WIDTH,
+	// 		WIN_HEIGHT);
+	// data->cube->address = mlx_get_data_addr(data->cube->img,
+	// 		&data->cube->bits_per_pixel, &data->cube->line_length,
+	// 		&data->cube->endian);
 }
 
 int	move_player(int keycode, t_struct *data);
@@ -50,8 +92,8 @@ int	main(int argc, char **argv)
 		exit (msg_error(MALLOC));
 	parsing(argc, argv, data);
 	init_cube(data);
-	//draw_map_2d(data);
-	//draw_player(data, 0xFF0053, 16); //Quid modif pour minimap
+	// draw_map_2d(data);
+	// draw_player(data, 0xFF0053, 16); //Quid modif pour minimap
 	draw_rays(data);
 	mlx_hook(data->cube->window, 3, 3, keyrelease, data);
 	mlx_hook(data->cube->window, 2, 2, keypress, data);

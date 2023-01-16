@@ -1,7 +1,7 @@
-NO ../../map/bluestone.png
-SO ../../map/bluestone.png
-WE ../../map/bluestone.png
-EA ../../map/bluestone.png
+NO ./map/bluestone.xpm
+SO ./map/bluestone.xpm
+WE ./map/bluestone.xpm
+EA ./map/bluestone.xpm
 
 F 220,100,0
 C 176,224,230

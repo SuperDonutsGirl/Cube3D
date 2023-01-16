@@ -19,12 +19,26 @@ void	update_data_ray(float *ray, float *o, int *dof)
 	dof[0] += 1;
 }
 
-void	get_ray_value(t_struct *data, float *data_ray, float *ray, int *dof)
+void	get_ray_value(t_struct *data, float *data_ray, float *ray, int *dof, int type)
 {
 	data_ray[X] = ray[X];
 	data_ray[Y] = ray[Y];
 	data_ray[DIST] = dist(data->cube->player.px, data->cube->player.py,
 			data_ray[X], data_ray[Y]);
+	if (type == HORIZONTAL)
+	{
+		if ((int)ray[Y] % 2 == 1)
+			data_ray[COLOR] = 0xFF0000;
+		else
+			data_ray[COLOR] = 0x00FF00;
+	}
+	else
+	{
+		if ((int)ray[X] % 2 == 1)
+			data_ray[COLOR] = 0x0000FF;
+		else
+			data_ray[COLOR] = 0xBB39EB;
+	}
 	dof[0] = dof[1];
 }
 
@@ -49,7 +63,7 @@ float	*get_data_ray(t_struct *data, float *data_ray, float ra, int type)
 		m[X] = ((int)ray[X] >> 6);
 		if (m[Y] >= 0 && m[X] >= 0 && m[Y] < (int)data->height
 			&& m[X] < (int)data->width && data->map[m[Y]][m[X]] == '1')
-			get_ray_value(data, data_ray, ray, dof);
+			get_ray_value(data, data_ray, ray, dof, type);
 		else
 			update_data_ray(ray, o, dof);
 	}
@@ -63,12 +77,14 @@ float	check_dist(float *ver, float *hor, float dist_t, float *ray)
 		ray[X] = ver[X];
 		ray[Y] = ver[Y];
 		dist_t = ver[DIST];
+		ray[COLOR] = ver[COLOR];
 	}
 	else
 	{
 		ray[X] = hor[X];
 		ray[Y] = hor[Y];
 		dist_t = hor[DIST];
+		ray[COLOR] = hor[COLOR];
 	}
 	return (dist_t);
 }
@@ -120,8 +136,8 @@ void	draw_rays(t_struct *data)
 		line_h = data->map_s * 320 / dist_t;
 		line_o = 160 - line_h / 2;
 		bresenham3d(data, r * 8 + 530, line_o, r * 8 + 530, 0, data->color[CEILING]);
-		bresenham3d(data, r * 8 + 530, line_o, r * 8 + 530, line_h + line_o, 0xFF0000);
-		bresenham3d(data, r * 8 + 530, line_h + line_o, r * 8 + 530, 512, data->color[FLOOR]);
+		bresenham3d(data, r * 8 + 530, line_o, r * 8 + 530, line_h + line_o, ray[COLOR]);
+		bresenham3d(data, r * 8 + 530, line_h + line_o, r * 8 + 530, WIN_HEIGHT, data->color[FLOOR]);
 		ra += DR;
 		if (ra < 0)
 			ra += 2 * PI;

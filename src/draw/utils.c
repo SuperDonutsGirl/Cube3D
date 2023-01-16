@@ -49,12 +49,17 @@ void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry, int col
 		max = ft_abs(dist_y);
 	while (ft_abs(rx - ox) != 0 || ft_abs(ry - oy) != 0)
 	{
-		if (ox >= 0 && ox < 1024 && oy >= 0
-			&& oy < 512)
+		if (ox >= 0 && ox < WIN_WIDTH && oy >= 0
+			&& oy < WIN_HEIGHT)
 		{
 			i = 0;
-			while (i < 8 && ox + i < 1024)
+			while (i < 8 && ox + i < WIN_WIDTH)
 			{
+				// if (color == 0xFF0000)
+				// {
+				// 	data->texture[0] = malloc(sizeof(t_cube) * 1)
+
+				// }
 				my_mlx_pixel_put(data->cube, ox + i, oy, color);
 				i++;
 			}
