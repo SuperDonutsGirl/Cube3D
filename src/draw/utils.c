@@ -64,13 +64,14 @@ void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry, int col
 	}
 }
 
-void	draw3d(t_struct *data, float *draw, int color)
+void	draw3d(t_struct *data, float *draw, int color, float end, t_line *line)
 {
 	float	dist_x;
 	float	dist_y;
 	float	max;
 	int		i;
 
+	(void)line;
 	dist_x = draw[X + 2] - draw[X];
 	dist_y = draw[Y + 2] - draw[Y];
 	if (ft_abs(dist_x) > ft_abs(dist_y))
@@ -83,9 +84,18 @@ void	draw3d(t_struct *data, float *draw, int color)
 			&& draw[Y] <= WIN_HEIGHT)
 		{
 			i = 0;
-			while (i < 40 && draw[X] + i < WIN_WIDTH)
+			while (i < 8 && draw[X] + i < WIN_WIDTH)
 			{
-				my_mlx_pixel_put(data->cube, draw[X] + i, draw[Y], color);
+				if (end == 0 || end == WIN_HEIGHT)
+				{
+					//printf("coucocu\n");
+					my_mlx_pixel_put(data->cube, draw[X] + i, draw[Y], color);
+				}
+				else
+				{
+					//printf("bordel\n");
+					my_mlx_pixel_text_put(data->cube, data->cube->tex[NO], draw[X] + i, draw[Y]);
+				}
 				i++;
 			}
 		}
@@ -125,11 +135,12 @@ float	update_end(float end, t_ray ray)
 	return (end);
 }
 
-void	draw_cwf(t_struct *data, int i, t_ray ray)
+void	draw_cwf(t_struct *data, int i, t_ray ray, t_line *line)
 {
 	float	*draw;
 	float	end;
 
+	(void)line;
 	draw = malloc(sizeof(float) * 5);
 	//protection
 	draw[X] = i * 8 + 530;
@@ -137,8 +148,9 @@ void	draw_cwf(t_struct *data, int i, t_ray ray)
 	end = 0;
 	while (end < INT_MAX)
 	{
+		//printf("draw cwf\n");
 		update_y_color(draw, data, end, ray);
-		draw3d(data, draw, draw[4]);
+		draw3d(data, draw, draw[4], end, line);
 		end = update_end(end, ray);
 	}
 }

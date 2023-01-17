@@ -19,6 +19,9 @@ void	init_img(t_struct *data)
 	data->cube->image.address = mlx_get_data_addr(data->cube->image.img,
 			&data->cube->image.bits_per_pixel, &data->cube->image.line_length,
 			&data->cube->image.endian);
+
+	// printf("img = %s adr.img = %p\n", data->cube->image.address, data->cube->image.address);
+	
 }
 
 void	init_textures(t_struct *data)
@@ -46,10 +49,18 @@ void	init_textures(t_struct *data)
 													&data->cube->tex[face].endian);
 		face++;
 	}
-	printf("addr = %p\ncol = %c", data->cube->tex[NO].address, data->cube->tex[NO].address[15]);
-	printf("addr = %p\ncol = %c", data->cube->tex[SO].address, data->cube->tex[NO].address[15]);
-	printf("addr = %p\ncol = %c", data->cube->tex[EA].address, data->cube->tex[NO].address[15]);
-	printf("addr = %p\ncol = %c", data->cube->tex[WE].address, data->cube->tex[NO].address[15]);
+	// printf("textNO = %s adr.No = %p\n", data->cube->tex[1].address, data->cube->tex[1].address);
+	// printf("textNO = %s adr.No = %p\n", data->cube->tex[0].address, data->cube->tex[0].address);
+
+	int	y = 0;
+	int x = 0;
+	int pix;
+	for (int i = 0; i < 64; i++){
+		//pix = x * (data->cube->tex[0].bits_per_pixel / 8);
+		pix = (x * data->cube->tex[0].bits_per_pixel / 8) + (y * data->cube->tex[0].line_length);
+		printf("xpm[%d] = %d\n", pix, data->cube->tex[0].address[pix]);
+		x++;
+	}
 }
 
 void	init_cube(t_struct *data)

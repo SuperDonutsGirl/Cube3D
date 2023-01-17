@@ -42,7 +42,7 @@ void	update_data_ray(float *ray, float *o, int *dof)
 	dof[0] += 1;
 }
 
-void	get_ray_value(t_struct *data, t_ray ray, int *dof, int type)
+void	get_ray_value(t_struct *data, t_ray ray, int *dof, int type, t_line *line)
 {
 	if (type == HORIZONTAL)
 	{
@@ -51,9 +51,15 @@ void	get_ray_value(t_struct *data, t_ray ray, int *dof, int type)
 		ray.hor[DIST] = dist(data->cube->player.px, data->cube->player.py,
 			ray.r[X], ray.r[Y]);
 		if ((int)ray.r[Y] % 2 == 1)
+		{
 			ray.hor[COLOR] = 0xFF0000;
+			line->tex_x = ray.r[X + 2] * data->cube->tex[SO].w_text;
+		}
 		else
+		{
 			ray.hor[COLOR] = 0x00FF00;
+			line->tex_x = ray.r[X + 2] * data->cube->tex[NO].w_text;
+		}
 	}
 	else
 	{
@@ -62,14 +68,20 @@ void	get_ray_value(t_struct *data, t_ray ray, int *dof, int type)
 		ray.ver[DIST] = dist(data->cube->player.px, data->cube->player.py,
 			ray.r[X], ray.r[Y]);
 		if ((int)ray.r[X] % 2 == 1)
+		{
+			line->tex_x = ray.r[X + 2] * data->cube->tex[EA].w_text;
 			ray.ver[COLOR] = 0x0000FF;
+		}
 		else
+		{
+			line->tex_x = ray.r[X + 2] * data->cube->tex[WE].w_text;
 			ray.ver[COLOR] = 0xBB39EB;
+		}
 	}
 	dof[0] = dof[1];
 }
 
-float	*get_data_ray(t_struct *data, t_ray ray, int type)
+float	*get_data_ray(t_struct *data, t_ray ray, int type, t_line *line)
 {
 	int		*dof;
 	float	o[2];
@@ -97,7 +109,7 @@ float	*get_data_ray(t_struct *data, t_ray ray, int type)
 		m[X] = ((int)ray.r[X] >> 6);
 		if (m[Y] >= 0 && m[X] >= 0 && m[Y] < (int)data->height
 			&& m[X] < (int)data->width && data->map[m[Y]][m[X]] == '1')
-				get_ray_value(data, ray, dof, type);
+				get_ray_value(data, ray, dof, type, line);
 		else
 			update_data_ray(ray.r, o, dof);
 	}
@@ -130,16 +142,20 @@ void	draw_rays(t_struct *data)
 {
 	int			i;
 	t_ray		ray;
+	t_line		*line;
 
 	ray.r = malloc(sizeof(float) * 3);
+	//protection
+	line = malloc(sizeof(t_line));
 	//protection
 	ray.ra = data->cube->player.pa - DR * 30;
 	ray.ra = update_angle(ray.ra);
 	i = 0;
 	while (i < 60)
 	{
-		ray.hor = get_data_ray(data, ray, HORIZONTAL);
-		ray.ver = get_data_ray(data, ray, VERTICAL);
+		line->x = i;
+		ray.hor = get_data_ray(data, ray, HORIZONTAL, line);
+		ray.ver = get_data_ray(data, ray, VERTICAL, line);
 		ray.dist = check_dist(ray);
 		if (ray.dist < 20)
 			collision(data);
@@ -148,7 +164,7 @@ void	draw_rays(t_struct *data)
 		ray.dist = ray.dist * cos(ray.ca);
 		ray.line_h = data->map_s * 320 / ray.dist;
 		ray.line_o = 160 - ray.line_h / 2;
-		draw_cwf(data, i, ray);
+		draw_cwf(data, i, ray, line);
 		ray.ra += DR;
 		ray.ra = update_angle(ray.ra);
 		i++;

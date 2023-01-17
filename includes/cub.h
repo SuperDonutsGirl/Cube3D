@@ -122,6 +122,16 @@ typedef struct s_key
 	int left;
 }	t_key;
 
+typedef struct		s_line
+{
+	int				x;
+	int				y;
+	int				y0;
+	int				y1;
+	int				tex_x;
+	int				tex_y;
+}					t_line;
+
 typedef struct s_player
 {
 	float	px;
@@ -251,7 +261,8 @@ void	draw_rays(t_struct *data);
 
 //3D
 void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry, int color);
-void	draw_cwf(t_struct *data, int i, t_ray ray);
+void	draw_cwf(t_struct *data, int i, t_ray ray, t_line *line);
+void	my_mlx_pixel_text_put(t_cube *cube, t_img tex, int x, int y);
 
 
 int keyrelease(int keycode, t_struct *data);
