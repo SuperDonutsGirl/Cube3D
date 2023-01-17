@@ -12,25 +12,34 @@
 
 #include "../../includes/cub.h"
 
-// void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color)
-// {
-// 	char	*dst;
-
-// 	dst = cube->image->address + (y * cube->image->line_length + x
-// 			* (cube->image->bits_per_pixel / 8));
-// 	*(unsigned int *)dst = color;
-// }
-
 void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color)
 {
-	int	pix;
+	char	*dst;
 
-	//printf("laddr de bpp %d\n", cube->image.bits_per_pixel);
-	pix = (x * cube->image.bits_per_pixel / 8) + (y * cube->image.line_length);
-	cube->image.address[pix] = color;
-	cube->image.address[pix + 1] = color >> 8;
-	cube->image.address[pix + 2] = color >> 16;
+	dst = cube->image.address + (y * cube->image.line_length + x
+			* (cube->image.bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
+
+// void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color)
+// {
+// 	int	pix;
+
+// 	//printf("laddr de bpp %d\n", cube->image.bits_per_pixel);
+// 	pix = (x * cube->image.bits_per_pixel / 8) + (y * cube->image.line_length);
+// 	cube->image.address[pix] = color;
+// 	cube->image.address[pix + 1] = color >> 8;
+// 	cube->image.address[pix + 2] = color >> 16;
+// }
+
+// void	my_mlx_pixel_text_put(t_struct *data)
+// {
+
+// 	data->cube->image.address[?] =;
+// 	data->cube->image.address[? + 1] = ;
+// 	data->cube->image.address[? + 2] = ;
+
+// }
 
 static void	draw_element(t_struct *data, int color, int *pos, size_t size)
 {

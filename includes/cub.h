@@ -144,6 +144,18 @@ typedef struct s_img
 
 }	t_img;
 
+typedef	struct s_ray
+{
+	float		*r;
+	float		*hor;
+	float		*ver;
+	float		dist;
+	float		line_o;
+	float		line_h;
+	float		ra;
+	float		ca;
+}	t_ray;
+
 typedef struct s_cube
 {
 	void		*mlx;
@@ -154,6 +166,7 @@ typedef struct s_cube
 	int			pos_y;
 
 	t_player	player;
+	t_ray		ray;
 }	t_cube;
 
 typedef struct s_struct
@@ -238,7 +251,7 @@ void	draw_rays(t_struct *data);
 
 //3D
 void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry, int color);
-
+void	draw_cwf(t_struct *data, int i, t_ray ray);
 
 
 int keyrelease(int keycode, t_struct *data);
