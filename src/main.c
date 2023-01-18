@@ -35,32 +35,35 @@ void	init_textures(t_struct *data)
 	// 		&data->cube->image.bits_per_pixel, &data->cube->image.line_length,
 	// 		&data->cube->image.endian);
 
-	data->cube->tex = malloc(sizeof(t_img) * 5);
+	data->cube->tex = malloc(sizeof(t_img) * 4);
 	//protection malloc
 	int face = NO;
 	while (face < 4)
 	{
 		data->cube->tex[face].img = mlx_xpm_file_to_image(&data->cube->mlx, data->texture[face], &data->cube->tex[face].w_text, &data->cube->tex[face].h_text);
 		if (!data->cube->tex[face].img)
-			printf("bordel de merde\n");
+			printf("bordel de merde %s\n", data->texture[face]);
 		data->cube->tex[face].address = mlx_get_data_addr(data->cube->tex[face].img,
 													&data->cube->tex[face].bits_per_pixel,
 													&data->cube->tex[face].line_length,
 													&data->cube->tex[face].endian);
+		data->cube->tex[face].tex_x = 0;
+		data->cube->tex[face].tex_y = 0;
+		data->cube->tex[face].tex_step = 0;
 		face++;
 	}
-	// printf("textNO = %s adr.No = %p\n", data->cube->tex[1].address, data->cube->tex[1].address);
-	// printf("textNO = %s adr.No = %p\n", data->cube->tex[0].address, data->cube->tex[0].address);
+	printf("textNO = %s adr.No = %p\n", data->cube->tex[EA].address, data->cube->tex[EA].address);
+	
 
-	int	y = 0;
-	int x = 0;
-	int pix;
-	for (int i = 0; i < 64; i++){
-		//pix = x * (data->cube->tex[0].bits_per_pixel / 8);
-		pix = (x * data->cube->tex[0].bits_per_pixel / 8) + (y * data->cube->tex[0].line_length);
-		printf("xpm[%d] = %d\n", pix, data->cube->tex[0].address[pix]);
-		x++;
-	}
+
+	// int pix;
+	// for (int y = 0; y < 64; y++){
+	// 	for (int x = 0; x < 64; x++){
+	// 		pix = (x * data->cube->tex[0].bits_per_pixel / 8) + (y * data->cube->tex[0].line_length);
+	// 		printf("xpm[%d] = %d --", pix, data->cube->tex[0].address[pix]);
+	// 	}
+	// 	printf("\n");
+	// }
 }
 
 void	init_cube(t_struct *data)
@@ -86,7 +89,6 @@ void	init_cube(t_struct *data)
 	// 		&data->cube->endian);
 }
 
-int	move_player(int keycode, t_struct *data);
 
 static int moving(void *arg) {
 	t_struct *data = arg;

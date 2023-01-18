@@ -1,7 +1,7 @@
 NO ./map/bluestone.xpm
-SO ./map/purplestone.xpm
-WE ./map/mossy.xpm
-EA ./map/greystone.xpm
+SO ./map/greystone.xpm
+WE ./map/purplestone.xpm
+EA ./map/mossy.xpm
 
 F 220,100,0
 C 225,30,0

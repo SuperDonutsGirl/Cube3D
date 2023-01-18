@@ -52,13 +52,15 @@ void	get_ray_value(t_struct *data, t_ray ray, int *dof, int type, t_line *line)
 			ray.r[X], ray.r[Y]);
 		if ((int)ray.r[Y] % 2 == 1)
 		{
-			ray.hor[COLOR] = 0xFF0000;
+			// ray.hor[COLOR] = 0xFF0000;
 			line->tex_x = ray.r[X + 2] * data->cube->tex[SO].w_text;
+			ray.texture[HORIZONTAL] = data->cube->tex[4];
 		}
 		else
 		{
-			ray.hor[COLOR] = 0x00FF00;
+			// ray.hor[COLOR] = 0x00FF00;
 			line->tex_x = ray.r[X + 2] * data->cube->tex[NO].w_text;
+			ray.texture[HORIZONTAL] = data->cube->tex[3];
 		}
 	}
 	else
@@ -70,12 +72,14 @@ void	get_ray_value(t_struct *data, t_ray ray, int *dof, int type, t_line *line)
 		if ((int)ray.r[X] % 2 == 1)
 		{
 			line->tex_x = ray.r[X + 2] * data->cube->tex[EA].w_text;
-			ray.ver[COLOR] = 0x0000FF;
+			ray.texture[VERTICAL] = data->cube->tex[0];
+			//ray.ver[COLOR] = 0x0000FF;
 		}
 		else
 		{
 			line->tex_x = ray.r[X + 2] * data->cube->tex[WE].w_text;
-			ray.ver[COLOR] = 0xBB39EB;
+			ray.texture[VERTICAL] = data->cube->tex[1];
+			//ray.ver[COLOR] = 0xBB39EB;
 		}
 	}
 	dof[0] = dof[1];
@@ -126,15 +130,18 @@ float	check_dist(t_ray ray)
 		ray.r[X] = ray.ver[X];
 		ray.r[Y] = ray.ver[Y];
 		ray.dist = ray.ver[DIST];
-		ray.r[COLOR] = ray.ver[COLOR];
+		ray.texture[RENDER_TEXT] = ray.texture[VERTICAL];
 	}
 	else
 	{
 		ray.r[X] = ray.hor[X];
 		ray.r[Y] = ray.hor[Y];
 		ray.dist = ray.hor[DIST];
-		ray.r[COLOR] = ray.hor[COLOR];
+		ray.texture[RENDER_TEXT] = ray.texture[HORIZONTAL];
 	}
+	//printf("pointeur %p\n", &ray.texture[RENDER_TEXT]);
+	//printf("pointeur hor %p\n", &ray.texture[HORIZONTAL]);
+
 	return (ray.dist);
 }
 
@@ -148,6 +155,7 @@ void	draw_rays(t_struct *data)
 	//protection
 	line = malloc(sizeof(t_line));
 	//protection
+	ray.texture = malloc(sizeof(t_img) * 3);
 	ray.ra = data->cube->player.pa - DR * 30;
 	ray.ra = update_angle(ray.ra);
 	i = 0;

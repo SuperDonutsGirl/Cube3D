@@ -40,24 +40,33 @@ void	my_mlx_pixel_text_put(t_cube *cube, t_img tex, int x, int y)
 	int	pix_img;
 	//int h = tex.h_text;
 
-	//printf("address = %s adr.adress = %p\n", tex.address, tex.address);
 	//game->config.res[Y] -> h
 	// game->config.player.cam_height -> 160
 	// ray->line_height
 
-	
+	// line->tex_y = ((d * tex->height) / ray->line_height) / tex->size_l;
+	// float tex_y = 0 / 
+
 	pix_img = (x * cube->image.bits_per_pixel / 8) + (y * cube->image.line_length);
+	// printf("pix_x = %d\npix_y = %d\n\n", x, y);
+	pix_tex = ((tex.tex_x * tex.bits_per_pixel / 8) + (tex.tex_y * tex.line_length));
+	//printf("pix_tex = %d\n", pix_tex);
+		// //printf("pointeur %p\n", &tex.address[pix_tex]);
+		cube->image.address[pix_img] = tex.address[pix_tex];
+		cube->image.address[pix_img + 1] = tex.address[pix_tex + 1] >> 8;
+		cube->image.address[pix_img + 2] = tex.address[pix_tex + 2] >> 16;
 
-	pix_tex = ft_abs((x * tex.bits_per_pixel / 8) + (y * tex.line_length));
 
-	//info = line->y * data->cube->image.line_length + line->x * data->cube->image.bits_per_pixel / 8;
 
-	cube->image.address[pix_img] =
-			tex.address[pix_tex];
-	cube->image.address[pix_img + 1] = 
-			tex.address[pix_tex + 1];
-	cube->image.address[pix_img + 2] = 
-			tex.address[pix_tex + 2];
+
+// 	unsigned int	mlx_get_pixel(t_img *img, int x, int y)
+// {
+// 	char	*dst;
+
+// 	dst = img->addr
+// 		+ (y * img->line_length + x * (img->bits_per_pixel / 8));
+// 	return (*(unsigned int *)dst);
+// }
 
 }
 

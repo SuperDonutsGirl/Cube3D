@@ -93,7 +93,8 @@ enum e_position
 enum e_type
 {
 	HORIZONTAL,
-	VERTICAL
+	VERTICAL,
+	RENDER_TEXT
 };
 
 /*enum color*/
@@ -151,6 +152,10 @@ typedef struct s_img
 
 	int			w_text;
 	int			h_text;
+	int			tex_x;
+	int			tex_y;
+	int			tex_step;
+	
 
 }	t_img;
 
@@ -164,6 +169,7 @@ typedef	struct s_ray
 	float		line_h;
 	float		ra;
 	float		ca;
+	t_img		*texture;
 }	t_ray;
 
 typedef struct s_cube
@@ -244,6 +250,7 @@ int		msg_error(char *msg);
 //Raccourcis clavier
 int		close_on_click(int keycode);
 int		keypress(int keycode, t_struct *data);
+int		move_player(int keycode, t_struct *data);
 
 //Draw
 void	draw_player(t_struct *data, int color, int size_player);

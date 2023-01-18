@@ -64,14 +64,14 @@ void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry, int col
 	}
 }
 
-void	draw3d(t_struct *data, float *draw, int color, float end, t_line *line)
+void	draw3d(t_struct *data, float *draw, int color, float end, t_img texture)
 {
 	float	dist_x;
 	float	dist_y;
 	float	max;
 	int		i;
 
-	(void)line;
+
 	dist_x = draw[X + 2] - draw[X];
 	dist_y = draw[Y + 2] - draw[Y];
 	if (ft_abs(dist_x) > ft_abs(dist_y))
@@ -94,9 +94,21 @@ void	draw3d(t_struct *data, float *draw, int color, float end, t_line *line)
 				else
 				{
 					//printf("bordel\n");
-					my_mlx_pixel_text_put(data->cube, data->cube->tex[NO], draw[X] + i, draw[Y]);
+					my_mlx_pixel_text_put(data->cube, texture, draw[X] + i, draw[Y]);
+					
 				}
 				i++;
+				texture.tex_step++;
+			if (texture.tex_step == 64)
+			{
+				texture.tex_step = 0;
+				texture.tex_x++;
+				if (texture.tex_x == 64)
+				{
+					texture.tex_x = 0;
+					texture.tex_y++;
+				}
+			}
 			}
 		}
 		draw[X] += dist_x / max;
@@ -150,7 +162,7 @@ void	draw_cwf(t_struct *data, int i, t_ray ray, t_line *line)
 	{
 		//printf("draw cwf\n");
 		update_y_color(draw, data, end, ray);
-		draw3d(data, draw, draw[4], end, line);
+		draw3d(data, draw, draw[4], end, ray.texture[RENDER_TEXT]);
 		end = update_end(end, ray);
 	}
 }
