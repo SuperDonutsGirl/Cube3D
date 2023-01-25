@@ -19,51 +19,25 @@ void	init_img(t_struct *data)
 	data->cube->image.address = mlx_get_data_addr(data->cube->image.img,
 			&data->cube->image.bits_per_pixel, &data->cube->image.line_length,
 			&data->cube->image.endian);
-
-	// printf("img = %s adr.img = %p\n", data->cube->image.address, data->cube->image.address);
-	
 }
 
 void	init_textures(t_struct *data)
 {
-	//data->cube->image = malloc(sizeof(t_img) * 1);
-	//protection malloc
-
-	// data->cube->image.img = mlx_new_image(data->cube->mlx, WIN_WIDTH,
-	// 		WIN_HEIGHT);
-	// data->cube->image.address = mlx_get_data_addr(data->cube->image.img,
-	// 		&data->cube->image.bits_per_pixel, &data->cube->image.line_length,
-	// 		&data->cube->image.endian);
-
-	data->cube->tex = malloc(sizeof(t_img) * 4);
-	//protection malloc
-	int face = NO;
+	int	face;
+	
+	face = NO;
 	while (face < 4)
 	{
-		data->cube->tex[face].img = mlx_xpm_file_to_image(&data->cube->mlx, data->texture[face], &data->cube->tex[face].w_text, &data->cube->tex[face].h_text);
-		if (!data->cube->tex[face].img)
+		data->cube->tex[face] = malloc(sizeof(t_img));
+		data->cube->tex[face]->img = mlx_xpm_file_to_image(&data->cube->mlx, data->texture[face], &data->cube->tex[face]->w_text, &data->cube->tex[face]->h_text);
+		if (!data->cube->tex[face]->img)
 			printf("bordel de merde %s\n", data->texture[face]);
-		data->cube->tex[face].address = mlx_get_data_addr(data->cube->tex[face].img,
-													&data->cube->tex[face].bits_per_pixel,
-													&data->cube->tex[face].line_length,
-													&data->cube->tex[face].endian);
-		data->cube->tex[face].tex_x = 0;
-		data->cube->tex[face].tex_y = 0;
-		data->cube->tex[face].tex_step = 0;
+		data->cube->tex[face]->address = mlx_get_data_addr(data->cube->tex[face]->img,
+			&data->cube->tex[face]->bits_per_pixel, &data->cube->tex[face]->line_length,
+			&data->cube->tex[face]->endian);
+		data->cube->tex[face]->tex_x = 0;
 		face++;
 	}
-	printf("textNO = %s adr.No = %p\n", data->cube->tex[EA].address, data->cube->tex[EA].address);
-	
-
-
-	// int pix;
-	// for (int y = 0; y < 64; y++){
-	// 	for (int x = 0; x < 64; x++){
-	// 		pix = (x * data->cube->tex[0].bits_per_pixel / 8) + (y * data->cube->tex[0].line_length);
-	// 		printf("xpm[%d] = %d --", pix, data->cube->tex[0].address[pix]);
-	// 	}
-	// 	printf("\n");
-	// }
 }
 
 void	init_cube(t_struct *data)
@@ -82,18 +56,12 @@ void	init_cube(t_struct *data)
 			WIN_WIDTH, WIN_HEIGHT, "cub3d");
 	init_img(data);
 	init_textures(data);
-	// data->cube->img = mlx_new_image(data->cube->mlx, WIN_WIDTH,
-	// 		WIN_HEIGHT);
-	// data->cube->address = mlx_get_data_addr(data->cube->img,
-	// 		&data->cube->bits_per_pixel, &data->cube->line_length,
-	// 		&data->cube->endian);
 }
-
 
 static int moving(void *arg) {
 	t_struct *data = arg;
 	move_player(-1, data);
-	return 0;
+	return (0);
 }
 
 int	main(int argc, char **argv)

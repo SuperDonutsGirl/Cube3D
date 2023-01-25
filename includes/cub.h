@@ -76,17 +76,14 @@
 # define WIN_WIDTH	1024
 # define WIN_HEIGHT 512
 
-
-
-
-
 /*Enum pos*/
 enum e_position
 {
 	X,
 	Y,
 	DIST,
-	COLOR
+	COLOR,
+	POS_MAX
 };
 
 /*Enum type*/
@@ -115,23 +112,13 @@ enum e_texture
 
 typedef struct s_key
 {
-	int w;
+	int	w;
 	int	a;
-	int s;
-	int d;
-	int right;
-	int left;
+	int	s;
+	int	d;
+	int	right;
+	int	left;
 }	t_key;
-
-typedef struct		s_line
-{
-	int				x;
-	int				y;
-	int				y0;
-	int				y1;
-	int				tex_x;
-	int				tex_y;
-}					t_line;
 
 typedef struct s_player
 {
@@ -155,11 +142,9 @@ typedef struct s_img
 	int			tex_x;
 	int			tex_y;
 	int			tex_step;
-	
-
 }	t_img;
 
-typedef	struct s_ray
+typedef	struct	s_ray
 {
 	float		*r;
 	float		*hor;
@@ -167,9 +152,10 @@ typedef	struct s_ray
 	float		dist;
 	float		line_o;
 	float		line_h;
+	int			color;
 	float		ra;
 	float		ca;
-	t_img		*texture;
+	t_img		*texture[3];
 }	t_ray;
 
 typedef struct s_cube
@@ -177,12 +163,12 @@ typedef struct s_cube
 	void		*mlx;
 	void		*window;
 	t_img		image;
-	t_img		*tex;
+	t_img		*tex[4];
 	int			pos_x;
 	int			pos_y;
 
 	t_player	player;
-	t_ray		ray;
+	t_ray		*ray;
 }	t_cube;
 
 typedef struct s_struct
@@ -202,7 +188,6 @@ typedef struct s_struct
 
 	t_key	key;
 	int		pos_ray[2];
-	
 }	t_struct;
 
 /*Parsing*/
@@ -256,23 +241,22 @@ int		move_player(int keycode, t_struct *data);
 void	draw_player(t_struct *data, int color, int size_player);
 void	draw_mini_map(t_struct *data);
 void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color);
-void	draw_map_2d(t_struct *data);
 void	drawline(t_cube *cube, int color, float x, float y);
 
 //Raycasting
-void	bresenham(t_struct *data, float ox, float oy, float *r);
 float	dist(float ax, float ay, float bx, float by);
 int		*dof_vertical(t_struct *data, float *ray, float *o, float ra);
 int		*dof_horizontal(t_struct *data, float *ray, float *o, float ra);
 void	draw_rays(t_struct *data);
 
 //3D
-void	bresenham3d(t_struct *data, float ox, float oy, float rx, float ry, int color);
-void	draw_cwf(t_struct *data, int i, t_ray ray, t_line *line);
-void	my_mlx_pixel_text_put(t_cube *cube, t_img tex, int x, int y);
+void	draw_cwf(t_struct *data, int i, t_ray *ray);
+void	my_mlx_pixel_text_put(t_cube *cube, t_img *tex, int x,
+		int y, float max);
+unsigned int	mlx_get_pixel(t_img *img, int x, int y);
 
-
-int keyrelease(int keycode, t_struct *data);
-int	keypress(int keycode, t_struct *data);
+//Key
+int		keyrelease(int keycode, t_struct *data);
+int		keypress(int keycode, t_struct *data);
 
 #endif

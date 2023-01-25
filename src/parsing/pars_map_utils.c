@@ -52,12 +52,6 @@ void	update_with_space(t_struct *data)
 			exit_map_parsing(data, MALLOC, NULL);
 		i++;
 	}
-	// i = 0;
-	// while (data->map[i])
-	// {
-	// 	printf("-%s-\n", data->map[i]);
-	// 	i++;
-	// }
 }
 
 void	check_border(t_struct *data)

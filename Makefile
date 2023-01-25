@@ -5,7 +5,7 @@
 
 NAME	= cub3d
 CC 		= gcc
-CFLAGS	= -Wall -Wextra -Werror -Imlx -g -O3# -Imlx POUR MINILIBX
+CFLAGS	= -Wall -Wextra -Imlx -g -O3# -Imlx POUR MINILIBX
 DFLAGS	= -MMD -MF $(@:.o=.d)
 MAKE 		= 		make
 MAKE_CLEAN	= 		make clean

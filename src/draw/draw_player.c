@@ -32,7 +32,7 @@
 // 	}
 // }
 
-void	draw_player(t_struct *data, int color, int size_player)
+/*void	draw_player(t_struct *data, int color, int size_player)
 {
 	int	i;
 	int	j;
@@ -44,11 +44,11 @@ void	draw_player(t_struct *data, int color, int size_player)
 		j = 0;
 		while (j < size_player)
 		{
-			my_mlx_pixel_put(data->cube, j + data->cube->player.px, i + data->cube->player.py, color);
-
+			my_mlx_pixel_put(data->cube, j + data->cube->player.px, i + 
+				data->cube->player.py, color);
 			j++;
 		}
 	}
 	//draw_orientation_player(data->cube);
 	//draw_rays(data);
-}
+}*/
