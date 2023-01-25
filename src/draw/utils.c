@@ -12,43 +12,41 @@
 
 #include "../../includes/cub.h"
 
-void	draw3d(t_struct *data, float *draw, int color, float end, t_ray *ray)
+void	draw3d(t_struct *data, float *draw, float end, t_ray *ray)
 {
 	float	dist_y;
 	float	max;
+	float	t[2];
+	float	ty_step;
+	float	wx;
+	int		color;
 
 	dist_y = draw[Y + 2] - draw[Y];
 	max = ft_abs(dist_y);
-	//t_img *texture = data->cube->tex[NO];
-	float ty = 0;
-	float ty_step = 64.f/ray->line_h;
+	t[Y] = 0;
+	ty_step = 64.f / ray->line_h;
 	while (ft_abs(draw[Y + 2] - draw[Y]) != 0)
 	{
-		if (draw[Y] > 0 && draw[X] < WIN_WIDTH && draw[Y] < WIN_HEIGHT)
+		if (draw[Y] > 0 && draw[X] < WIN_W && draw[Y] < WIN_H)
 		{
-			if (end == 0 || end == WIN_HEIGHT)
-				my_mlx_pixel_put(data->cube, draw[X], draw[Y], color);
-			else{
-				// my_mlx_pixel_put(data->cube, draw[X] + i, draw[Y], 0xFF0000);
-				float wx;
-				if (data->cube->ray->ver[DIST] > data->cube->ray->hor[DIST]) {
+			if (end == 0 || end == WIN_H)
+				my_mlx_pixel_put(data->cube, draw[X], draw[Y], draw[4]);
+			else
+			{
+				if (data->cube->ray->ver[DIST] > data->cube->ray->hor[DIST])
 					wx = data->cube->player.px + cos(ray->ra) * ray->dist;
-				}
-				else {
+				else
 					wx = data->cube->player.py + sin(ray->ra) * ray->dist;
-				}
-
-				float tx = wx / 64.f;
-				tx = tx - floor(tx);
-				tx *= 64.f;
-				// tx = 1 - tx;
-				// printf("%f\n", ray->line_o);
-				int color = mlx_get_pixel(data->cube->ray->texture[RENDER_TEXT], tx, ty);
+				t[X] = wx / 64.f;
+				t[X] -= floor(t[X]);
+				t[X] *= 64.f;
+				color = my_mlx_get_pixel(
+						data->cube->ray->texture[RENDER_TEXT], t[X], t[Y]);
 				my_mlx_pixel_put(data->cube, draw[X], draw[Y], color);
 			}
 		}
 		draw[Y] += dist_y / max;
-				ty += ty_step;
+		t[Y] += ty_step;
 	}
 }
 
@@ -60,16 +58,13 @@ void	update_y_color(float *draw, t_struct *data, float end, t_ray *ray)
 		draw[Y] = ray->line_o;
 		draw[4] = data->color[CEILING];
 	}
-	else if (end == WIN_HEIGHT)
+	else if (end == WIN_H)
 	{
 		draw[Y] = ray->line_o + ray->line_h;
 		draw[4] = data->color[FLOOR];
 	}
 	else
-	{
 		draw[Y] = ray->line_o;
-		draw[4] = ray->color;
-	}
 }
 
 float	update_end(float end, t_ray *ray)
@@ -77,7 +72,7 @@ float	update_end(float end, t_ray *ray)
 	if (end == 0)
 		end = ray->line_o + ray->line_h;
 	else if (end == ray->line_o + ray->line_h)
-		end = WIN_HEIGHT;
+		end = WIN_H;
 	else
 		end = INT_MAX;
 	return (end);
@@ -96,7 +91,7 @@ void	draw_cwf(t_struct *data, int i, t_ray *ray)
 	while (end < INT_MAX)
 	{
 		update_y_color(draw, data, end, ray);
-		draw3d(data, draw, draw[4], end, ray);
+		draw3d(data, draw, end, ray);
 		end = update_end(end, ray);
 	}
 }

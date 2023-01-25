@@ -72,8 +72,8 @@
 # define ROT_SPEED	0.04
 
 /*Define Window */
-# define WIN_WIDTH	1024
-# define WIN_HEIGHT 512
+# define WIN_W	1024
+# define WIN_H 512
 
 # define FOV (PI / 2)
 
@@ -142,7 +142,7 @@ typedef struct s_img
 	int			h_text;
 }	t_img;
 
-typedef	struct	s_ray
+typedef struct s_ray
 {
 	float		*r;
 	float		*hor;
@@ -246,14 +246,12 @@ void	draw_rays(t_struct *data);
 
 //3D
 void	draw_cwf(t_struct *data, int i, t_ray *ray);
-void	my_mlx_pixel_text_put(t_cube *cube, t_img *tex, int x,
-		int y, float max);
-unsigned int	mlx_get_pixel(t_img *img, int x, int y);
+unsigned int	my_mlx_get_pixel(t_img *img, int x, int y);
 
 //Key
 int		keyrelease(int keycode, t_struct *data);
 int		keypress(int keycode, t_struct *data);
 
-int	is_wall(t_struct *data, float x, float y);
+int		is_wall(t_struct *data, float x, float y);
 
 #endif
