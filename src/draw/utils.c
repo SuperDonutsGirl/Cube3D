@@ -16,7 +16,6 @@ void	draw3d(t_struct *data, float *draw, int color, float end, t_ray *ray)
 {
 	float	dist_y;
 	float	max;
-	int		i;
 
 	dist_y = draw[Y + 2] - draw[Y];
 	max = ft_abs(dist_y);
@@ -25,11 +24,10 @@ void	draw3d(t_struct *data, float *draw, int color, float end, t_ray *ray)
 	float ty_step = 64.f/ray->line_h;
 	while (ft_abs(draw[Y + 2] - draw[Y]) != 0)
 	{
-		i = 0;
-		while (draw[Y] > 0 && i < 1 && draw[X] + i < WIN_WIDTH && draw[Y] < WIN_HEIGHT)
+		if (draw[Y] > 0 && draw[X] < WIN_WIDTH && draw[Y] < WIN_HEIGHT)
 		{
 			if (end == 0 || end == WIN_HEIGHT)
-				my_mlx_pixel_put(data->cube, draw[X] + i, draw[Y], color);
+				my_mlx_pixel_put(data->cube, draw[X], draw[Y], color);
 			else{
 				// my_mlx_pixel_put(data->cube, draw[X] + i, draw[Y], 0xFF0000);
 				float wx;
@@ -43,16 +41,15 @@ void	draw3d(t_struct *data, float *draw, int color, float end, t_ray *ray)
 				float tx = wx / 64.f;
 				tx = tx - floor(tx);
 				tx *= 64.f;
+				// tx = 1 - tx;
 				// printf("%f\n", ray->line_o);
 				int color = mlx_get_pixel(data->cube->ray->texture[RENDER_TEXT], tx, ty);
-				my_mlx_pixel_put(data->cube, draw[X] + i, draw[Y], color);
+				my_mlx_pixel_put(data->cube, draw[X], draw[Y], color);
 			}
-			i++;
 		}
 		draw[Y] += dist_y / max;
 				ty += ty_step;
 	}
-	my_mlx_pixel_text_put(data->cube, data->cube->ray->texture[RENDER_TEXT], 0, 0, 4);
 }
 
 void	update_y_color(float *draw, t_struct *data, float end, t_ray *ray)

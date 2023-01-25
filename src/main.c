@@ -35,7 +35,6 @@ void	init_textures(t_struct *data)
 		data->cube->tex[face]->address = mlx_get_data_addr(data->cube->tex[face]->img,
 			&data->cube->tex[face]->bits_per_pixel, &data->cube->tex[face]->line_length,
 			&data->cube->tex[face]->endian);
-		data->cube->tex[face]->tex_x = 0;
 		face++;
 	}
 }

@@ -61,7 +61,6 @@
 # define PI	3.141592653589793238
 # define P2  1.57079632679
 # define P3  4.71238898038
-# define DR  0.0174533
 
 # define SOUTH  1.57079632679
 # define NORTH  4.71238898038
@@ -75,6 +74,8 @@
 /*Define Window */
 # define WIN_WIDTH	1024
 # define WIN_HEIGHT 512
+
+# define FOV (PI / 2)
 
 /*Enum pos*/
 enum e_position
@@ -139,9 +140,6 @@ typedef struct s_img
 
 	int			w_text;
 	int			h_text;
-	int			tex_x;
-	int			tex_y;
-	int			tex_step;
 }	t_img;
 
 typedef	struct	s_ray
@@ -164,9 +162,6 @@ typedef struct s_cube
 	void		*window;
 	t_img		image;
 	t_img		*tex[4];
-	int			pos_x;
-	int			pos_y;
-
 	t_player	player;
 	t_ray		*ray;
 }	t_cube;

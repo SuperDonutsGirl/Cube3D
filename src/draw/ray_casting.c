@@ -136,34 +136,26 @@ void	draw_rays(t_struct *data)
 {
 	int				i;
 	static t_ray	ray;
-	int	n_rays = 60;
 
 	ray.r = malloc(sizeof(float) * 3);
 	//protection
-	ray.ra = data->cube->player.pa - DR * n_rays / 2;
 	i = 0;
-	float small = -PI / 4;
+	float small = -FOV / 2;
 	while (i < WIN_WIDTH)
 	{
-		// ray.ra = data->cube->player.pa + atan(((2 * i / 60) - 1) * atan(PI / 2));
-		if (i % 2)
-		{
+		
 		ray.ra = data->cube->player.pa + atan(small); 
 		ray.ra = update_angle(ray.ra);
 		ray.hor = get_data_ray(data, &ray, HORIZONTAL);
 		ray.ver = get_data_ray(data, &ray, VERTICAL);
-		//ray.ra = update_angle(ray.ra);
 		ray.dist = check_dist(&ray);
 		ray.ca = data->cube->player.pa - ray.ra;
 		ray.ca = update_angle(ray.ca);
-		ray.dist = ray.dist * cos(ray.ca);
-		ray.line_h = data->map_s * 320 / ray.dist;
+		ray.line_h = data->map_s * 320 / (ray.dist * cos(ray.ca));
 		ray.line_o = 160 - ray.line_h / 2;
 		data->cube->ray = &ray;
 		draw_cwf(data, i, &ray);
-		}
-		small += (PI / 2) / WIN_WIDTH;
-		// ray.ra += DR;
+		small += FOV / WIN_WIDTH;
 		i++;
 	}
 }
