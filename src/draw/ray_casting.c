@@ -12,19 +12,6 @@
 
 #include "../../includes/cub.h"
 
-void	collision(t_struct *data)
-{
-	if (data->key.s == 1)
-	{
-		data->cube->player.px += data->cube->player.pdx * MOVE_SPEED;
-		data->cube->player.py += data->cube->player.pdy * MOVE_SPEED;
-	}
-	if (data->key.w == 1)
-	{
-		data->cube->player.px -= data->cube->player.pdx * MOVE_SPEED;	
-		data->cube->player.py -= data->cube->player.pdy * MOVE_SPEED;
-	}
-}
 
 float	update_angle(float angle)
 {
@@ -77,13 +64,23 @@ void	get_ray_value(t_struct *data, t_ray *ray, int *dof, int type)
 	dof[0] = dof[1];
 }
 
+int	is_wall(t_struct *data, float x, float y)
+{
+	int		m[2];
+
+	m[Y] = ((int)y >> 6);
+	m[X] = ((int)x >> 6);
+	if (m[Y] >= 0 && m[X] >= 0 && m[Y] < (int)data->height
+		&& m[X] < (int)data->width && data->map[m[Y]][m[X]] == '1')
+		return (1);
+	return (0);
+}
+
 float	*get_data_ray(t_struct *data, t_ray *ray, int type)
 {
 	int		*dof;
 	float	o[2];
-	int		m[2];
-
-
+	
 	if (type == VERTICAL)
 	{
 		ray->ver = malloc(sizeof(float) * POS_MAX);
@@ -102,11 +99,8 @@ float	*get_data_ray(t_struct *data, t_ray *ray, int type)
 	}
 	while (dof[0] < dof[1])
 	{
-		m[Y] = ((int)ray->r[Y] >> 6);
-		m[X] = ((int)ray->r[X] >> 6);
-		if (m[Y] >= 0 && m[X] >= 0 && m[Y] < (int)data->height
-			&& m[X] < (int)data->width && data->map[m[Y]][m[X]] == '1')
-				get_ray_value(data, ray, dof, type);
+		if (is_wall(data, ray->r[X], ray->r[Y]))
+			get_ray_value(data, ray, dof, type);
 		else
 			update_data_ray(ray->r, o, dof);
 	}
@@ -115,6 +109,7 @@ float	*get_data_ray(t_struct *data, t_ray *ray, int type)
 	else
 		return (ray->ver);
 }
+
 
 float	check_dist(t_ray *ray)
 {
@@ -151,9 +146,6 @@ void	draw_rays(t_struct *data)
 	while (i < WIN_WIDTH)
 	{
 		// ray.ra = data->cube->player.pa + atan(((2 * i / 60) - 1) * atan(PI / 2));
-		
-		 if (ray.dist < 20)
-		 	collision(data);
 		if (i % 2)
 		{
 		ray.ra = data->cube->player.pa + atan(small); 

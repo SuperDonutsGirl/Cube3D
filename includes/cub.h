@@ -259,4 +259,6 @@ unsigned int	mlx_get_pixel(t_img *img, int x, int y);
 int		keyrelease(int keycode, t_struct *data);
 int		keypress(int keycode, t_struct *data);
 
+int	is_wall(t_struct *data, float x, float y);
+
 #endif

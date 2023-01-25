@@ -14,17 +14,30 @@
 
 static void	key_move_player(t_struct *data)
 {
+	float px;
+	float py;
+	float npx;
+	float npy;
+
+	px = data->cube->player.px;
+	py = data->cube->player.py;
 	if (data->key.s == 1)
 	{
-		
-		data->cube->player.px -= data->cube->player.pdx * MOVE_SPEED;
-		data->cube->player.py -= data->cube->player.pdy * MOVE_SPEED;
-
+		npx = px - 	data->cube->player.pdx * MOVE_SPEED;
+		npy = py - data->cube->player.pdy * MOVE_SPEED;
+		if (!is_wall(data, npx, py))
+			data->cube->player.px = npx;
+		if (!is_wall(data, px, npy))
+			data->cube->player.py = npy;
 	}
 	else if (data->key.w == 1)
 	{
-		data->cube->player.px += data->cube->player.pdx * MOVE_SPEED;	
-		data->cube->player.py += data->cube->player.pdy * MOVE_SPEED;
+		npx = px + 	data->cube->player.pdx * MOVE_SPEED;
+		npy = py + data->cube->player.pdy * MOVE_SPEED;
+		if (!is_wall(data, npx, py))
+			data->cube->player.px = npx;
+		if (!is_wall(data, px, npy))
+			data->cube->player.py = npy;
 	}
 }
 
