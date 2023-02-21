@@ -47,7 +47,7 @@ void	draw_cwf(t_struct *data, int i, t_ray *ray)
 
 	draw = malloc(sizeof(float) * 5);
 	if (!draw)
-		return ((void) NULL);
+		return ;
 	draw[X] = i + 0;
 	draw[X + 2] = i + 0;
 	end = 0;
@@ -57,6 +57,7 @@ void	draw_cwf(t_struct *data, int i, t_ray *ray)
 		draw3d(data, draw, end, ray);
 		end = update_end(end, ray);
 	}
+	ft_free(draw);
 }
 
 float	dist(float ax, float ay, float bx, float by)

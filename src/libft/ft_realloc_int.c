@@ -65,5 +65,6 @@ char	*realloc_set(char *line, int new_len, char charset)
 		return (NULL);
 	}
 	ft_strcpy_complete(new_line, line, charset, new_len);
+	free(line);
 	return (new_line);
 }

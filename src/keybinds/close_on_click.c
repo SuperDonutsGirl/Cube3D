@@ -15,6 +15,9 @@
 int	close_on_click(int keycode)
 {
 	if (keycode)
+	{
+		system("leaks cub3d");
 		exit(EXIT_SUCCESS);
+	}
 	return (0);
 }

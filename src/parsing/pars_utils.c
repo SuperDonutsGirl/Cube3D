@@ -29,6 +29,7 @@ void	exit_map_parsing(t_struct *data, char *msg, char *line)
 {
 	ft_free_split(data->map);
 	clear_after_init(data, line);
+	system("leaks cub3d");
 	exit (msg_error(msg));
 }
 

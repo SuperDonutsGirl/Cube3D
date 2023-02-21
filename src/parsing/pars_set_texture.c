@@ -37,14 +37,22 @@ void	parsing_texture(t_struct *data, char *line, int type)
 	path = ft_strdup(split[1]);
 	if (path[ft_strlen(path) - 1] == '\n')
 		path[ft_strlen(path) - 1] = '\0';
-	if (type == NO)
+	if (type == NO){
+		free(data->texture[NO]);
 		data->texture[NO] = ft_strdup(path);
-	else if (type == SO)
+	}
+	else if (type == SO){
+		free(data->texture[SO]);
 		data->texture[SO] = ft_strdup(path);
-	else if (type == WE)
+	}
+	else if (type == WE){
+		free(data->texture[WE]);
 		data->texture[WE] = ft_strdup(path);
-	else
+	}
+	else{
+		free(data->texture[EA]);
 		data->texture[EA] = ft_strdup(path);
+	}
 	if (!path || !ft_memcmp_reverse(path, ".xpm"))
 	{
 		clear_after_init(data, line);

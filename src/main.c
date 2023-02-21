@@ -85,5 +85,6 @@ int	main(int argc, char **argv)
 	mlx_hook(data->cube->window, 17, 0L, close_on_click, data->cube);
 	mlx_loop_hook(data->cube->mlx, moving, data);
 	mlx_loop(data->cube->mlx);
+	system("leaks cub3d");
 	exit(0);
 }

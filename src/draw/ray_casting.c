@@ -14,7 +14,9 @@
 
 float	*init_data_ray(t_struct *data, float *element)
 {
-	element = malloc(sizeof(float) * POS_MAX);
+	if (element)
+		ft_free(element);
+	element = malloc(sizeof(float) * 3);
 	if (!element)
 	{
 		printf("Malloc failure\n");
@@ -48,6 +50,7 @@ float	*get_data_ray(t_struct *data, t_ray *ray, int type)
 		else
 			update_data_ray(ray->r, o, dof);
 	}
+	ft_free(dof);
 	if (type == HORIZONTAL)
 		return (ray->hor);
 	else
@@ -100,4 +103,5 @@ void	draw_rays(t_struct *data)
 		small += FOV / WIN_W;
 		i++;
 	}
+	ft_free(ray.r);
 }

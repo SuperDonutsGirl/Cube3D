@@ -26,7 +26,6 @@ char	**split_line_and_check(t_struct *data, char *line)
 	i = 0;
 	while (split[i])
 		i++;
-	printf("line = %s\nI = %d\n",line, i);
 	if (i > 2)
 	{
 		clear_after_init(data, line);

@@ -99,7 +99,7 @@ char	*is_begin_map(t_struct *data, char *line)
 			exit_map_parsing(data, INVALID_MAP, line);
 		check_border(data);
 		update_with_space(data);
-		check_around_space(data);
+		// check_around_space(data);
 	}
 	return (line);
 }

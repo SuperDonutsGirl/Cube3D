@@ -64,6 +64,7 @@ static void	check_data(t_struct *data)
 		}
 		line = check_line(line, data);
 	}
+	ft_free(line);
 }
 
 void	parsing(int argc, char **argv, t_struct *data)
