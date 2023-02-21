@@ -26,6 +26,7 @@ char	**split_line_and_check(t_struct *data, char *line)
 	i = 0;
 	while (split[i])
 		i++;
+	printf("line = %s\nI = %d\n",line, i);
 	if (i > 2)
 	{
 		clear_after_init(data, line);
@@ -37,13 +38,22 @@ char	**split_line_and_check(t_struct *data, char *line)
 static char	**split_rgb(t_struct *data, char *line, char **split)
 {
 	char	**rgb;
+	int		i;
 
 	rgb = ft_split_charset(split[1], ",");
+	i = 0;
 	if (!rgb)
 	{
 		clear_after_init(data, line);
 		ft_free_split(split);
 		exit (msg_error(MALLOC));
+	}
+	while (rgb[i])
+		i++;
+	if (i != 3 || rgb[2][0] == '\n')
+	{
+		clear_after_init(data, line);
+		exit (msg_error(INVALID_SET));
 	}
 	return (rgb);
 }
