@@ -26,7 +26,7 @@ static int	check_ra_horizontal(t_struct *data, float *ray, float *o, float ra)
 
 	dof = 0;
 	tang = -1 / tan(ra);
-	if (ra > PI)
+	if (ra > M_PI)
 	{
 		ray[Y] = (((int)data->cube->player.py >> 6) << 6) - 0.0001;
 		ray[X] = (data->cube->player.py - ray[Y]) * tang
@@ -34,7 +34,7 @@ static int	check_ra_horizontal(t_struct *data, float *ray, float *o, float ra)
 		o[Y] = -data->map_s;
 		o[X] = -o[Y] * tang;
 	}
-	if (ra < PI)
+	if (ra < M_PI)
 	{
 		ray[Y] = (((int) data->cube->player.py >> 6) << 6) + data->map_s;
 		ray[X] = (data->cube->player.py - ray[Y]) * tang
@@ -42,7 +42,7 @@ static int	check_ra_horizontal(t_struct *data, float *ray, float *o, float ra)
 		o[Y] = data->map_s;
 		o[X] = -o[Y] * tang;
 	}
-	if (ra == 0 || ra == PI)
+	if (ra == 0 || ra == M_PI)
 		dof = update_data(data, ray);
 	return (dof);
 }
@@ -70,7 +70,7 @@ static int	check_ra_vertical(t_struct *data, float *ray, float *o, float ra)
 		o[X] = data->map_s;
 		o[Y] = -o[X] * tang;
 	}
-	if (ra == 0 || ra == PI)
+	if (ra == 0 || ra == M_PI)
 		dof = update_data(data, ray);
 	return (dof);
 }

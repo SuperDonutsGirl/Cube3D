@@ -58,13 +58,13 @@
 # define TEXT_WE "../../map/bluestone.png"
 
 /*Define MATH */
-# define PI	3.141592653589793238
+//# define PI	3.141592653589793238
 # define P2  1.57079632679
 # define P3  4.71238898038
 
 # define SOUTH  1.57079632679
 # define NORTH  4.71238898038
-# define WEST	PI
+# define WEST	3.141592653589793238
 # define EAST	6.28318530718
 
 /*Define Movement and rotation speed*/
@@ -75,7 +75,7 @@
 # define WIN_W	1024
 # define WIN_H 512
 
-# define FOV (PI / 2)
+# define FOV 1.57079632679
 
 /*Enum pos*/
 enum e_position
@@ -187,71 +187,74 @@ typedef struct s_struct
 
 /*Parsing*/
 		/*Pars arg*/
-int		ft_memcmp_reverse(char *s1, char *s2);
+int				ft_memcmp_reverse(char *s1, char *s2);
 		/*Principal functions*/
-void	init_data_parsing(t_struct *data);
-void	clear_after_init(t_struct *data, char *line);
-void	exit_map_parsing(t_struct *data, char *msg, char *line);
-void	parsing(int argc, char **argv, t_struct *data);
-void	parsing_color(t_struct *data, char *line, int type);
-void	parsing_texture(t_struct *data, char *line, int type);
+void			init_data_parsing(t_struct *data);
+void			clear_after_init(t_struct *data, char *line);
+void			exit_map_parsing(t_struct *data, char *msg, char *line);
+void			parsing(int argc, char **argv, t_struct *data);
+void			parsing_color(t_struct *data, char *line, int type);
+void			parsing_texture(t_struct *data, char *line, int type);
 		/*Pars line*/
-int		is_empty_line(char *line);
-int		cmp_setting(t_struct *data, char *line, char *type, int value);
-char	*is_begin_map(t_struct *data, char *line);
-int		every_info(int *info);
-int		first_line(char *line, int type);
+int				is_empty_line(char *line);
+int				cmp_setting(t_struct *data, char *line, char *type, int value);
+char			*is_begin_map(t_struct *data, char *line);
+int				every_info(int *info);
+int				first_line(char *line, int type);
 		/*Par map*/
-void	get_height(t_struct *data);
-char	*get_map(t_struct *data, char *line);
-void	only_good_char(t_struct *data);
-int		good_char(char c);
-void	update_with_space(t_struct *data);
-void	check_border(t_struct *data);
-void	check_around_space(t_struct *data);
-void	check_player(t_struct *data, char elmt, int y, int x);
+void			get_height(t_struct *data);
+char			*get_map(t_struct *data, char *line);
+void			only_good_char(t_struct *data);
+int				good_char(char c);
+void			update_with_space(t_struct *data);
+void			check_border(t_struct *data);
+void			check_around_space(t_struct *data);
+void			check_player(t_struct *data, char elmt, int y, int x);
 		/*utils*/
-char	**split_line_and_check(t_struct *data, char *line);
-void	get_fd(t_struct *data, char *file);
+char			**split_line_and_check(t_struct *data, char *line);
+void			get_fd(t_struct *data, char *file);
 
 /*GNL*/
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
 
-char	*get_next_line(int fd);
-char	*ft_strjoin_gnl(char *s1, char *s2);
-void	*ft_free(void *save);
+char			*get_next_line(int fd);
+char			*ft_strjoin_gnl(char *s1, char *s2);
+void			*ft_free(void *save);
 
 /*Global utils*/
-int		ft_strcmp(char *s1, char *s2);
-int		msg_error(char *msg);
+int				ft_strcmp(char *s1, char *s2);
+int				msg_error(char *msg);
 
 //Raccourcis clavier
-int		close_on_click(int keycode);
-int		keypress(int keycode, t_struct *data);
-int		move_player(int keycode, t_struct *data);
+int				close_on_click(int keycode);
+int				keypress(int keycode, t_struct *data);
+int				move_player(int keycode, t_struct *data);
 
 //Draw
-void	draw_player(t_struct *data, int color, int size_player);
-void	draw_mini_map(t_struct *data);
-void	my_mlx_pixel_put(t_cube *cube, int x, int y, int color);
-void	drawline(t_cube *cube, int color, float x, float y);
+void			draw_player(t_struct *data, int color, int size_player);
+void			draw_mini_map(t_struct *data);
+void			my_mlx_pixel_put(t_cube *cube, int x, int y, int color);
+void			drawline(t_cube *cube, int color, float x, float y);
+void			draw3d(t_struct *data, float *draw, float end, t_ray *ray);
 
 //Raycasting
-float	dist(float ax, float ay, float bx, float by);
-int		*dof_vertical(t_struct *data, float *ray, float *o, float ra);
-int		*dof_horizontal(t_struct *data, float *ray, float *o, float ra);
-void	draw_rays(t_struct *data);
-
+float			dist(float ax, float ay, float bx, float by);
+int				*dof_vertical(t_struct *data, float *ray, float *o, float ra);
+int				*dof_horizontal(t_struct *data, float *ray, float *o, float ra);
+void			draw_rays(t_struct *data);
+void			get_ray_value(t_struct *data, t_ray *ray, int *dof, int type);
+void			update_data_ray(float *ray, float *o, int *dof);
+float			update_angle(float angle);
 //3D
-void	draw_cwf(t_struct *data, int i, t_ray *ray);
+void			draw_cwf(t_struct *data, int i, t_ray *ray);
 unsigned int	my_mlx_get_pixel(t_img *img, int x, int y);
 
 //Key
-int		keyrelease(int keycode, t_struct *data);
-int		keypress(int keycode, t_struct *data);
+int				keyrelease(int keycode, t_struct *data);
+int				keypress(int keycode, t_struct *data);
 
-int		is_wall(t_struct *data, float x, float y);
+int				is_wall(t_struct *data, float x, float y);
 
 #endif

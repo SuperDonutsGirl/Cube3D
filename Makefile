@@ -5,7 +5,7 @@
 
 NAME	= cub3d
 CC 		= gcc
-CFLAGS	= -Wall -Wextra -Imlx -g -O3# -Imlx POUR MINILIBX
+CFLAGS	= -Wall -Wextra -Imlx -g# -Imlx POUR MINILIBX
 DFLAGS	= -MMD -MF $(@:.o=.d)
 MAKE 		= 		make
 MAKE_CLEAN	= 		make clean
@@ -40,10 +40,12 @@ LIB 			= $(SRCS_PATH)libft/libft.a
 
 SRCS			=	$(KEYBIND_PATH)keybinds.c		\
 					$(KEYBIND_PATH)close_on_click.c	\
+					$(DRAW_PATH)draw_3d.c			\
 					$(DRAW_PATH)draw_map.c			\
 					$(DRAW_PATH)draw_player.c		\
 					$(DRAW_PATH)ray_casting.c 		\
-					$(DRAW_PATH)utils.c 			\
+					$(DRAW_PATH)ray_utils.c			\
+					$(DRAW_PATH)draw_utils.c 		\
 					$(DRAW_PATH)ray_casting_utils.c \
 					$(GNL)gnl.c 				$(GNL)gnl_utils.c \
                     $(PARS)parsing.c 			$(PARS)pars_line.c			$(PARS)pars_init.c 	\

@@ -12,65 +12,14 @@
 
 #include "../../includes/cub.h"
 
-float	update_angle(float angle)
-{
-	if (angle < 0)
-		angle += 2 * PI;
-	if (angle > 2 * PI)
-		angle -= 2 * PI;
-	return (angle);
-}
-
-void	update_data_ray(float *ray, float *o, int *dof)
-{
-	ray[X] += o[X];
-	ray[Y] += o[Y];
-	dof[0] += 1;
-}
-
-void	get_ray_value(t_struct *data, t_ray *ray, int *dof, int type)
-{
-	if (type == HORIZONTAL)
-	{
-		ray->hor[X] = ray->r[X];
-		ray->hor[Y] = ray->r[Y];
-		ray->hor[DIST] = dist(data->cube->player.px, data->cube->player.py,
-				ray->r[X], ray->r[Y]);
-		if ((int)ray->r[Y] % 2 == 1)
-			ray->texture[HORIZONTAL] = data->cube->tex[1];
-		else
-			ray->texture[HORIZONTAL] = data->cube->tex[0];
-	}
-	else
-	{
-		ray->ver[X] = ray->r[X];
-		ray->ver[Y] = ray->r[Y];
-		ray->ver[DIST] = dist(data->cube->player.px, data->cube->player.py,
-				ray->r[X], ray->r[Y]);
-		if ((int)ray->r[X] % 2 == 1)
-			ray->texture[VERTICAL] = data->cube->tex[3];
-		else
-			ray->texture[VERTICAL] = data->cube->tex[2];
-	}
-	dof[0] = dof[1];
-}
-
-int	is_wall(t_struct *data, float x, float y)
-{
-	int		m[2];
-
-	m[Y] = ((int)y >> 6);
-	m[X] = ((int)x >> 6);
-	if (m[Y] >= 0 && m[X] >= 0 && m[Y] < (int)data->height
-		&& m[X] < (int)data->width && data->map[m[Y]][m[X]] == '1')
-		return (1);
-	return (0);
-}
-
 float	*init_data_ray(t_struct *data, float *element)
 {
 	element = malloc(sizeof(float) * POS_MAX);
-	//protection
+	if (!element)
+	{
+		printf("Malloc failure\n");
+		exit(1);
+	}
 	element[X] = data->cube->player.px;
 	element[Y] = data->cube->player.py;
 	element[DIST] = 1000000;
@@ -133,7 +82,8 @@ void	draw_rays(t_struct *data)
 	i = 0;
 	small = -FOV / 2;
 	ray.r = malloc(sizeof(float) * 3);
-	//protection
+	if (!ray.r)
+		exit(1);
 	while (i < WIN_W)
 	{
 		ray.ra = data->cube->player.pa + atan(small);
