@@ -33,7 +33,7 @@ void	init_textures(t_struct *data)
 				data->texture[face], &data->cube->tex[face]->w_text,
 				&data->cube->tex[face]->h_text);
 		if (!data->cube->tex[face]->img)
-			printf("bordel de merde %s\n", data->texture[face]);
+			exit(msg_error(MALLOC));
 		data->cube->tex[face]->address
 			= mlx_get_data_addr(data->cube->tex[face]->img,
 				&data->cube->tex[face]->bits_per_pixel,
@@ -85,6 +85,6 @@ int	main(int argc, char **argv)
 	mlx_hook(data->cube->window, 17, 0L, close_on_click, data->cube);
 	mlx_loop_hook(data->cube->mlx, moving, data);
 	mlx_loop(data->cube->mlx);
-	system("leaks cub3d");
+	//system("leaks cub3d");
 	exit(0);
 }

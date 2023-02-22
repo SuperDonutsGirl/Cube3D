@@ -98,7 +98,7 @@ int	move_player(int keycode, t_struct *data)
 	key_move_player_x(data);
 	if (keycode == ESC)
 	{
-		system("leaks cub3d");
+		//system("leaks cub3d");
 		exit(0);
 	}
 	data->cube->image.img = mlx_new_image(data->cube->mlx, WIN_W, WIN_H);

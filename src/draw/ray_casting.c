@@ -18,10 +18,7 @@ float	*init_data_ray(t_struct *data, float *element)
 		ft_free(element);
 	element = malloc(sizeof(float) * 3);
 	if (!element)
-	{
-		printf("Malloc failure\n");
-		exit(1);
-	}
+		exit(msg_error(MALLOC));
 	element[X] = data->cube->player.px;
 	element[Y] = data->cube->player.py;
 	element[DIST] = 1000000;
