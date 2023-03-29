@@ -30,17 +30,33 @@ char	**split_line_and_check(t_struct *data, char *line)
 	{
 		clear_after_init(data, line);
 		ft_free(split);
+		ft_free_split(data->texture);
 		exit (msg_error(INVALID_SET));
 	}
 	return (split);
 }
 
-static void	print_msg_exit(int type)
+static int	is_char(char **rgb)
 {
-	if (type == CEILING)
-		exit(msg_error(RGB_C));
-	else
-		exit(msg_error(RGB_F));
+	int	i;
+	int	j;
+
+	j = 0;
+	while (rgb[j])
+	{
+		i = 0;
+		while (rgb[j][i] && rgb[j][i] != '\n')
+		{
+			while (rgb[j][i] && ((rgb[j][i] >= 9 && rgb[j][i] <= 13)
+			|| rgb[j][i] == 32))
+				i++;
+			if (!ft_isdigit(rgb[j][i]))
+				return (1);
+			i++;
+		}
+		j++;
+	}
+	return (0);
 }
 
 static char	**split_rgb(t_struct *data, char *line, int type)
@@ -57,7 +73,7 @@ static char	**split_rgb(t_struct *data, char *line, int type)
 	}
 	while (rgb[i])
 		i++;
-	if (i != 3 || rgb[2][0] == '\n')
+	if (i != 3 || rgb[2][0] == '\n' || is_char(rgb))
 	{
 		clear_after_init(data, line);
 		ft_free_split(rgb);

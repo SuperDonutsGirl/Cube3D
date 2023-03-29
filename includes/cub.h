@@ -228,6 +228,7 @@ void			*ft_free(void *save);
 /*Global utils*/
 int				ft_strcmp(char *s1, char *s2);
 int				msg_error(char *msg);
+void			print_msg_exit(int type);
 
 //Raccourcis clavier
 int				close_on_click(int keycode);

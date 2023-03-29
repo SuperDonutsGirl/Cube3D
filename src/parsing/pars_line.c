@@ -70,6 +70,7 @@ int	cmp_setting(t_struct *data, char *line, char *type, int value)
 		{
 			clear_after_init(data, line);
 			ft_free_split(split);
+			ft_free_split(data->texture);
 			exit (msg_error(LOT_OF_SET));
 		}
 		ft_free_split(split);
@@ -84,6 +85,7 @@ char	*is_begin_map(t_struct *data, char *line)
 	if (!first_line(line, 0))
 	{
 		clear_after_init(data, line);
+		ft_free_split(data->texture);
 		exit (msg_error(INVALID_SET));
 	}
 	else

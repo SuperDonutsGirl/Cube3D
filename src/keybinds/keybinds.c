@@ -12,6 +12,11 @@
 
 #include "../../includes/cub.h"
 
+static int	sign(double n)
+{
+	return ((n < 0) * -1 + (n >= 0));
+}
+
 static void	key_move_player_x(t_struct *data)
 {
 	float	px;
@@ -25,18 +30,18 @@ static void	key_move_player_x(t_struct *data)
 	{
 		npx = px + data->cube->player.pdy * MOVE_SPEED;
 		npy = py - data->cube->player.pdx * MOVE_SPEED;
-		if (!is_wall(data, npx, py))
+		if (!is_wall(data, npx + 10 * sign(data->cube->player.pdy), py))
 			data->cube->player.px = npx;
-		if (!is_wall(data, px, npy))
+		if (!is_wall(data, px, npy - 10 * sign(data->cube->player.pdx)))
 			data->cube->player.py = npy;
 	}
 	else if (data->key.d == 1)
 	{
 		npx = px - data->cube->player.pdy * MOVE_SPEED;
 		npy = py + data->cube->player.pdx * MOVE_SPEED;
-		if (!is_wall(data, npx, py))
+		if (!is_wall(data, npx - 10 * sign(data->cube->player.pdy), py))
 			data->cube->player.px = npx;
-		if (!is_wall(data, px, npy))
+		if (!is_wall(data, px, npy + 10 * sign(data->cube->player.pdx)))
 			data->cube->player.py = npy;
 	}
 }
@@ -54,18 +59,18 @@ static void	key_move_player_y(t_struct *data)
 	{
 		npx = px - data->cube->player.pdx * MOVE_SPEED;
 		npy = py - data->cube->player.pdy * MOVE_SPEED;
-//		if (!is_wall(data, npx, py))
+		if (!is_wall(data, npx - 10 * sign(data->cube->player.pdx), py))
 			data->cube->player.px = npx;
-//		if (!is_wall(data, px, npy))
+		if (!is_wall(data, px, npy - 10 * sign(data->cube->player.pdy)))
 			data->cube->player.py = npy;
 	}
 	else if (data->key.w == 1)
 	{
 		npx = px + data->cube->player.pdx * MOVE_SPEED;
 		npy = py + data->cube->player.pdy * MOVE_SPEED;
-//		if (!is_wall(data, npx, py))
+		if (!is_wall(data, npx + 10 * sign(data->cube->player.pdx), py))
 			data->cube->player.px = npx;
-//		if (!is_wall(data, px, npy))
+		if (!is_wall(data, px, npy + 10 * sign(data->cube->player.pdy)))
 			data->cube->player.py = npy;
 	}
 }
@@ -97,10 +102,7 @@ int	move_player(int keycode, t_struct *data)
 	key_move_player_y(data);
 	key_move_player_x(data);
 	if (keycode == ESC)
-	{
-		system("leaks cub3d");
 		exit(0);
-	}
 	data->cube->image.img = mlx_new_image(data->cube->mlx, WIN_W, WIN_H);
 	data->cube->image.address = mlx_get_data_addr(data->cube->image.img,
 			&data->cube->image.bits_per_pixel,

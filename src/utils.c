@@ -38,6 +38,12 @@ int	ft_strcmp(char *s1, char *s2)
 int	msg_error(char *msg)
 {
 	printf("Error\n%s", msg);
-	system("leaks cub3d");
 	return (1);
+}
+
+void	print_msg_exit(int type)
+{
+	if (type == CEILING)
+		exit(msg_error(RGB_C));
+	exit(msg_error(RGB_F));
 }
