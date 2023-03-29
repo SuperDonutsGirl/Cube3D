@@ -6,7 +6,7 @@
 /*   By: pamartin <pamartin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:27:34 by pamartin          #+#    #+#             */
-/*   Updated: 2022/12/14 11:27:36 by pamartin         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:21:42 by dduraku          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 # include <limits.h>
 # include <math.h>
 //# include "../mlx/mlx.h"
-# include </usr/X11/include/mlx.h> //Path de la minilibx Pauline
+# include <mlx.h>
+//# include </usr/X11/include/mlx.h> //Path de la minilibx Pauline
 # include "keycodes.h"
 
 /*Error messages for argument parding*/
@@ -40,13 +41,14 @@
 # define RGB_C "Ceiling color isn't in RGB format"
 # define LOT_OF_SET "Too many settings"
 # define MISSING "Missing setting informations"
-# define INVALID_SET "Invalid setting's line"
+# define INVALID_SET "Invalid settings"
 
 /*Error message for map*/
 # define INVALID_MAP "Invalid map"
 
 /*Global error messages*/
 # define MALLOC "Malloc failed"
+# define XPM "XPM file not found"
 
 /*Gobal define*/
 # define WHITE "\t\v\r\f "

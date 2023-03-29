@@ -53,7 +53,6 @@ static char	**split_rgb(t_struct *data, char *line, int type)
 	if (!rgb)
 	{
 		clear_after_init(data, line);
-		// ft_free_split(split);
 		exit (msg_error(MALLOC));
 	}
 	while (rgb[i])
@@ -62,6 +61,7 @@ static char	**split_rgb(t_struct *data, char *line, int type)
 	{
 		clear_after_init(data, line);
 		ft_free_split(rgb);
+		ft_free_split(data->texture);
 		print_msg_exit(type);
 	}
 	return (rgb);
@@ -82,8 +82,6 @@ void	parsing_color(t_struct *data, char *line, int type)
 	int		nb;
 
 	rgb = split_rgb(data, line, type);
-	if (!rgb)
-		exit (msg_error(MALLOC));
 	i = 0;
 	while (rgb[i])
 	{

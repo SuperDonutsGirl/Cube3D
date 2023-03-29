@@ -73,14 +73,10 @@ float	check_dist(t_ray *ray)
 	return (ray->dist);
 }
 
-void	draw_rays(t_struct *data)
+static void	ray_to_draw(float small, t_struct *data, int i)
 {
-	int				i;
 	static t_ray	ray;
-	float			small;
 
-	i = 0;
-	small = -FOV / 2;
 	ray.r = malloc(sizeof(float) * 3);
 	if (!ray.r)
 		exit(1);
@@ -101,4 +97,9 @@ void	draw_rays(t_struct *data)
 		i++;
 	}
 	ft_free(ray.r);
+}
+
+void	draw_rays(t_struct *data)
+{
+	ray_to_draw(-FOV / 2, data, 0);
 }

@@ -19,7 +19,6 @@ void	clear_after_init(t_struct *data, char *line)
 	ft_free(data->info);
 	ft_free(data->color);
 	ft_free(data->player);
-	//ft_free_split(data->texture);
 	if (data->fd)
 		close(data->fd);
 	ft_free(data);
@@ -28,8 +27,8 @@ void	clear_after_init(t_struct *data, char *line)
 void	exit_map_parsing(t_struct *data, char *msg, char *line)
 {
 	ft_free_split(data->map);
+	ft_free_split(data->texture);
 	clear_after_init(data, line);
-	//system("leaks cub3d");
 	exit (msg_error(msg));
 }
 

@@ -12,6 +12,35 @@
 
 #include "../../includes/cub.h"
 
+static void	check_text(t_struct *data)
+{
+	char	*tmp;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (data->texture[i])
+	{
+		j = i + 1;
+		tmp = ft_strdup(data->texture[i]);
+		while (data->texture[j])
+		{
+			if (ft_strcmp(tmp, data->texture[j]) == 0)
+			{
+				free(tmp);
+				clear_after_init(data, NULL);
+				ft_free_split(data->texture);
+				ft_free_split(data->map);
+				msg_error(INVALID_SET);
+				exit (EXIT_FAILURE);
+			}
+			j++;
+		}
+		free(tmp);
+		i++;
+	}
+}
+
 static char	*check_settings(t_struct *data, char *line)
 {
 	if (!cmp_setting(data, line, "NO", 0))
@@ -65,6 +94,7 @@ static void	check_data(t_struct *data)
 		line = check_line(line, data);
 	}
 	ft_free(line);
+	check_text(data);
 }
 
 void	parsing(int argc, char **argv, t_struct *data)

@@ -28,6 +28,31 @@ static void	print_error(int type)
 	ft_free(msg);
 }
 
+t_struct	*fill_texture(t_struct *data, int type, char *path)
+{
+	if (type == NO)
+	{
+		free(data->texture[NO]);
+		data->texture[NO] = ft_strdup(path);
+	}
+	else if (type == SO)
+	{
+		free(data->texture[SO]);
+		data->texture[SO] = ft_strdup(path);
+	}
+	else if (type == WE)
+	{
+		free(data->texture[WE]);
+		data->texture[WE] = ft_strdup(path);
+	}
+	else
+	{
+		free(data->texture[EA]);
+		data->texture[EA] = ft_strdup(path);
+	}
+	return (data);
+}
+
 void	parsing_texture(t_struct *data, char *line, int type)
 {
 	char	**split;
@@ -37,26 +62,12 @@ void	parsing_texture(t_struct *data, char *line, int type)
 	path = ft_strdup(split[1]);
 	if (path[ft_strlen(path) - 1] == '\n')
 		path[ft_strlen(path) - 1] = '\0';
-	if (type == NO){
-		free(data->texture[NO]);
-		data->texture[NO] = ft_strdup(path);
-	}
-	else if (type == SO){
-		free(data->texture[SO]);
-		data->texture[SO] = ft_strdup(path);
-	}
-	else if (type == WE){
-		free(data->texture[WE]);
-		data->texture[WE] = ft_strdup(path);
-	}
-	else{
-		free(data->texture[EA]);
-		data->texture[EA] = ft_strdup(path);
-	}
+	data = fill_texture(data, type, path);
 	if (!path || !ft_memcmp_reverse(path, ".xpm"))
 	{
 		clear_after_init(data, line);
 		ft_free_split(split);
+		ft_free_split(data->texture);
 		ft_free(path);
 		print_error(type);
 		exit (EXIT_FAILURE);

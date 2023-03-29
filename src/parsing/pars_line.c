@@ -91,6 +91,7 @@ char	*is_begin_map(t_struct *data, char *line)
 		if (!every_info(data->info))
 		{
 			clear_after_init(data, line);
+			ft_free_split(data->texture);
 			exit (msg_error(MISSING));
 		}
 		line = get_map(data, line);
@@ -99,7 +100,6 @@ char	*is_begin_map(t_struct *data, char *line)
 			exit_map_parsing(data, INVALID_MAP, line);
 		check_border(data);
 		update_with_space(data);
-		// check_around_space(data);
 	}
 	return (line);
 }
